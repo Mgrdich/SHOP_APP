@@ -3,7 +3,7 @@
 import {Product} from "../models/products";
 
 
-const DUMMY_PRODUCTS: Product[] = [
+export const DUMMY_PRODUCTS: Product[] = [
     new Product(
         'p1',
         'u1',
