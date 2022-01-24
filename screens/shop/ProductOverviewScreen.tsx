@@ -1,9 +1,7 @@
 import React from 'react';
 import {StyleSheet} from "react-native";
 
-interface ProductOverviewScreenProps {
-
-}
+interface ProductOverviewScreenProps {}
 
 const ProductOverviewScreen: React.FC<ProductOverviewScreenProps> = () => {
     return (
