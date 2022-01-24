@@ -1,4 +1,4 @@
-interface IProducts {
+export interface IProduct {
     id: string,
     ownerId: string,
     title: string,
@@ -7,7 +7,7 @@ interface IProducts {
     price: number
 }
 
-class Products implements IProducts {
+export class Product implements IProduct {
 
     id = ''
     ownerId = ''
