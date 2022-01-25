@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, View} from "react-native";
 import StyledButton from "../Styled/StyledButton";
 import STYLING_COLORS from "../../constants/StylingColors";
+import TouchablePlatform from "../platform/TouchablePlatform";
 
 interface ProductItemProps {
     title: string
@@ -13,19 +14,21 @@ interface ProductItemProps {
 
 const ProductItem: React.FC<ProductItemProps> = ({imgSrc, price, title, onViewDetailPress, onCartPress}) => {
     return (
-        <View style={styles.product}>
-            <View style={styles.imageCont}>
-                <Image style={styles.image} source={{uri: imgSrc}}/>
+        <TouchablePlatform onPress={onViewDetailPress}>
+            <View style={styles.product}>
+                <View style={styles.imageCont}>
+                    <Image style={styles.image} source={{uri: imgSrc}}/>
+                </View>
+                <View style={styles.details}>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.price}>${price.toFixed(2)}</Text>
+                </View>
+                <View style={styles.actions}>
+                    <StyledButton primary title="View Details" onPress={onViewDetailPress}/>
+                    <StyledButton primary title="To Cart" onPress={onCartPress}/>
+                </View>
             </View>
-            <View style={styles.details}>
-                <Text style={styles.title}>{title}</Text>
-                <Text style={styles.price}>${price.toFixed(2)}</Text>
-            </View>
-            <View style={styles.actions}>
-                <StyledButton primary title="View Details" onPress={onViewDetailPress}/>
-                <StyledButton primary title="To Cart" onPress={onCartPress}/>
-            </View>
-        </View>
+        </TouchablePlatform>
     );
 };
 
