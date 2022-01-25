@@ -1,9 +1,9 @@
-import {createNativeStackNavigator} from "react-native-screens/native-stack";
 import React from "react";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductOverviewScreen from "../screens/shop/ProductOverviewScreen";
+import Util from "../util/Util";
 import {StyleSheet} from "react-native";
 import STYLING_COLORS from "../constants/StylingColors";
-import Util from "../util/Util";
 
 export enum PRODUCTS_STACK_SCREENS {
     ProductsOverview = 'ProductsOverview',
@@ -24,7 +24,7 @@ const ProductsNavigator: React.FC = () => {
             defaultScreenOptions={{
                 headerStyle: Util.isAndroid ? styles.headerStyle : '',
                 headerTintColor: Util.isAndroid ? 'white' : STYLING_COLORS.primary,
-                
+
             }}
         >
             <Products.Screen name={PRODUCTS_STACK_SCREENS.ProductsOverview}

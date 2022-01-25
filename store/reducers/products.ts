@@ -11,6 +11,6 @@ const initialState: IProductsState = {
     userProducts: DUMMY_PRODUCTS.filter(p => p.ownerId === 'u1')
 };
 
-export default function productsReducer(state: IProductsState, action): IProductsState {
+export default function productsReducer(state: IProductsState = initialState, action): IProductsState {
     return state
 }
