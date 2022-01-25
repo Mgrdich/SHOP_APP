@@ -6,7 +6,7 @@ import {ProductsNavigatorProps} from "../../navigation/types";
 import {PRODUCTS_STACK_SCREENS} from "../../navigation/ProductsNavigator";
 import ProductItem from "../../components/shop/ProductItem";
 
-type ProductsProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS>;
+type ProductsProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsOverview>;
 
 const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => {
 
@@ -20,7 +20,7 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
                 (<ProductItem title={itemData.item.title}
                               imgSrc={itemData.item.imageUrl}
                               price={itemData.item.price}
-                              onViewDetailPress={() => {}}
+                              onViewDetailPress={() => navigation.navigate(PRODUCTS_STACK_SCREENS.ProductsDetail as any)}
                               onCartPress={() => {}}
                     />
                 )
