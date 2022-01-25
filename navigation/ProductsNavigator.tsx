@@ -6,16 +6,14 @@ import {StyleSheet} from "react-native";
 import STYLING_COLORS from "../constants/StylingColors";
 
 export enum PRODUCTS_STACK_SCREENS {
-    ProductsOverview = 'ProductsOverview',
-    MealDetail = 'MealDetail'
+    ProductsOverview = 'ProductsOverview'
 }
 
 export type RootFavouriteStackParamList = {
-    [PRODUCTS_STACK_SCREENS.ProductsOverview]: undefined,
-    [PRODUCTS_STACK_SCREENS.MealDetail]: undefined
+    [PRODUCTS_STACK_SCREENS.ProductsOverview]: undefined
 }
 
-const Products = createNativeStackNavigator();
+const Products = createNativeStackNavigator<RootFavouriteStackParamList>();
 
 
 const ProductsNavigator: React.FC = () => {
@@ -24,11 +22,13 @@ const ProductsNavigator: React.FC = () => {
             defaultScreenOptions={{
                 headerStyle: Util.isAndroid ? styles.headerStyle : '',
                 headerTintColor: Util.isAndroid ? 'white' : STYLING_COLORS.primary,
-
             }}
         >
             <Products.Screen name={PRODUCTS_STACK_SCREENS.ProductsOverview}
                              component={ProductOverviewScreen}
+                             options={{
+                                 title:'All Products'
+                             }}
             />
         </Products.Navigator>
     );

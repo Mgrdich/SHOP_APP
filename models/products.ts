@@ -28,6 +28,6 @@ export class Product implements IProduct {
         this.title = title;
         this.imageUrl = imageUrl;
         this.description = description;
-        this.price = 0;
+        this.price = price;
     }
 }
