@@ -14,21 +14,26 @@ interface ProductItemProps {
 
 const ProductItem: React.FC<ProductItemProps> = ({imgSrc, price, title, onViewDetailPress, onCartPress}) => {
     return (
-        <TouchablePlatform onPress={onViewDetailPress}>
-            <View style={styles.product}>
-                <View style={styles.imageCont}>
-                    <Image style={styles.image} source={{uri: imgSrc}}/>
-                </View>
-                <View style={styles.details}>
-                    <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.price}>${price.toFixed(2)}</Text>
-                </View>
-                <View style={styles.actions}>
-                    <StyledButton primary title="View Details" onPress={onViewDetailPress}/>
-                    <StyledButton primary title="To Cart" onPress={onCartPress}/>
-                </View>
+        <View style={styles.product}>
+            <View style={styles.touchable}>
+                <TouchablePlatform onPress={onViewDetailPress} useForeground>
+                    <View>
+                        <View style={styles.imageCont}>
+                            <Image style={styles.image} source={{uri: imgSrc}}/>
+                        </View>
+
+                        <View style={styles.details}>
+                            <Text style={styles.title}>{title}</Text>
+                            <Text style={styles.price}>${price.toFixed(2)}</Text>
+                        </View>
+                        <View style={styles.actions}>
+                            <StyledButton primary title="View Details" onPress={onViewDetailPress}/>
+                            <StyledButton primary title="To Cart" onPress={onCartPress}/>
+                        </View>
+                    </View>
+                </TouchablePlatform>
             </View>
-        </TouchablePlatform>
+        </View>
     );
 };
 
@@ -74,6 +79,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: '20%',
         padding: 10
+    },
+    touchable: {
+        borderRadius: 10,
+        overflow: 'hidden'
     }
 });
 
