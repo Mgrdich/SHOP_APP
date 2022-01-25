@@ -20,7 +20,11 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
                 (<ProductItem title={itemData.item.title}
                               imgSrc={itemData.item.imageUrl}
                               price={itemData.item.price}
-                              onViewDetailPress={() => navigation.navigate(PRODUCTS_STACK_SCREENS.ProductsDetail as any)}
+                              onViewDetailPress={() => navigation.navigate(
+                                  PRODUCTS_STACK_SCREENS.ProductsDetail as any, {
+                                      productId: itemData.item.id
+                                  } as any
+                              )}
                               onCartPress={() => {}}
                     />
                 )

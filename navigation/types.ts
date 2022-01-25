@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import {RootFavouriteStackParamList} from "./ProductsNavigator";
+import {RootProductsStackParamList} from "./ProductsNavigator";
 
-export type ProductsNavigatorProps<T> = NativeStackScreenProps<RootFavouriteStackParamList, T>;
+export type ProductsNavigatorProps<T> = NativeStackScreenProps<RootProductsStackParamList, T>;
 
 export type ScreenNavigationProp<T> = ProductsNavigatorProps<T>['navigation'];
 

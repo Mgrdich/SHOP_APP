@@ -1,5 +1,5 @@
 import React from "react";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProductOverviewScreen from "../screens/shop/ProductOverviewScreen";
 import Util from "../util/Util";
 import {StyleSheet} from "react-native";
@@ -11,32 +11,34 @@ export enum PRODUCTS_STACK_SCREENS {
     ProductsDetail = 'ProductsDetail',
 }
 
-export type RootFavouriteStackParamList = {
+export type RootProductsStackParamList = {
     [PRODUCTS_STACK_SCREENS.ProductsOverview]: undefined;
-    [PRODUCTS_STACK_SCREENS.ProductsDetail]: undefined;
+    [PRODUCTS_STACK_SCREENS.ProductsDetail]: {
+        productId: string
+    }
 }
 
-const Products = createNativeStackNavigator<RootFavouriteStackParamList>();
+const Products = createNativeStackNavigator<RootProductsStackParamList>();
 
 
 const ProductsNavigator: React.FC = () => {
     return (
         <Products.Navigator
-            defaultScreenOptions = {{
+            defaultScreenOptions={{
                 headerStyle: Util.isAndroid ? styles.headerStyle : '',
                 headerTintColor: Util.isAndroid ? 'white' : STYLING_COLORS.primary,
             }}
         >
             <Products.Screen name={PRODUCTS_STACK_SCREENS.ProductsOverview}
                              component={ProductOverviewScreen}
-                             options = {{
-                                 title:'All Products'
+                             options={{
+                                 title: 'All Products'
                              }}
             />
             <Products.Screen name={PRODUCTS_STACK_SCREENS.ProductsDetail}
                              component={ProductDetailScreen}
-                             options = {{
-                                 title:'Product Detail'
+                             options={{
+                                 title: 'Product Detail'
                              }}
             />
         </Products.Navigator>
