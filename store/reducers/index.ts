@@ -7,8 +7,7 @@ export interface IState {
     products: IProductsState
 }
 
-
-const rootReducer = combineReducers({
+const rootReducer = combineReducers<IState>({
     products: productsReducer
 });
 
