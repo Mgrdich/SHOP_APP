@@ -5,6 +5,7 @@ import Util from "../util/Util";
 import {StyleSheet} from "react-native";
 import STYLING_COLORS from "../constants/StylingColors";
 import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
+import {ProductsNavigatorProps} from "./types";
 
 export enum PRODUCTS_STACK_SCREENS {
     ProductsOverview = 'ProductsOverview',
@@ -14,7 +15,8 @@ export enum PRODUCTS_STACK_SCREENS {
 export type RootProductsStackParamList = {
     [PRODUCTS_STACK_SCREENS.ProductsOverview]: undefined;
     [PRODUCTS_STACK_SCREENS.ProductsDetail]: {
-        productId: string
+        productId: string,
+        productTitle: string
     }
 }
 
@@ -37,9 +39,11 @@ const ProductsNavigator: React.FC = () => {
             />
             <Products.Screen name={PRODUCTS_STACK_SCREENS.ProductsDetail}
                              component={ProductDetailScreen}
-                             options={{
-                                 title: 'Product Detail'
-                             }}
+                             options={({route}) => (
+                                 {
+                                     title: route.params.productTitle
+                                 }
+                             )}
             />
         </Products.Navigator>
     );
