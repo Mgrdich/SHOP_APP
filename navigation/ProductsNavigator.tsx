@@ -6,6 +6,7 @@ import {StyleSheet} from "react-native";
 import ProductOverviewScreen from "../screens/shop/ProductOverviewScreen";
 import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 import {PRODUCTS_STACK_SCREENS, RootProductsStackParamList} from "./ProductsNavigationTypes";
+import {PROJECT_FONTS} from "../constants/Fonts";
 
 const Products = createNativeStackNavigator<RootProductsStackParamList>();
 
@@ -15,6 +16,12 @@ const ProductsNavigator: React.FC = () => {
             defaultScreenOptions={{
                 headerStyle: Util.isAndroid ? styles.headerStyle : '',
                 headerTintColor: Util.isAndroid ? 'white' : STYLING_COLORS.primary,
+                headerTitleStyle: {
+                    fontFamily: PROJECT_FONTS.openSansBold
+                },
+                headerBackTitleStyle: {
+                    fontFamily: PROJECT_FONTS.openSans
+                }
             }}
         >
             <Products.Screen name={PRODUCTS_STACK_SCREENS.ProductsOverview}

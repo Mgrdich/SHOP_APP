@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TextProps} from "react-native";
+import {PROJECT_FONTS} from "../../constants/Fonts";
 
 interface StyledTextProps extends TextProps {
     bold?: boolean
@@ -13,10 +14,10 @@ const StyledText: React.FC<StyledTextProps> = ({children, style = {}, bold, ...p
 
 const styles = StyleSheet.create({
     text: {
-        fontFamily: 'open-sans'
+        fontFamily:  PROJECT_FONTS.openSans
     },
     boldText: {
-        fontFamily: 'open-sans-bold'
+        fontFamily: PROJECT_FONTS.openSansBold
     }
 });
 
