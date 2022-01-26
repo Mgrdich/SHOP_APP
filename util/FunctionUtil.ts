@@ -1,4 +1,4 @@
-class FunctionUtil {
+export default class FunctionUtil {
 
     /**
      * @description Math.random should be unique because of its seeding algorithm.

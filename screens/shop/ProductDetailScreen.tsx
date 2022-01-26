@@ -1,12 +1,13 @@
 import React from 'react';
 import {Image, ScrollView, StyleSheet} from "react-native";
 import {ProductsNavigatorProps} from "../../navigation/types";
-import {useAppSelector} from "../../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {Product} from "../../models/products";
 import StyledText from "../../components/Styled/StyledText";
 import StyledButton from "../../components/Styled/StyledButton";
 import StylingColors from "../../constants/StylingColors";
 import {PRODUCTS_STACK_SCREENS} from "../../navigation/ProductsNavigationTypes";
+import {addToCart} from "../../store/actions/cart";
 
 type ProductDetailScreenProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsDetail>;
 
@@ -15,6 +16,7 @@ const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({navigation, ro
     const product: Product | undefined = useAppSelector(state => {
         return state.products.availableProducts.find(prod => prod.id === prodId);
     });
+    const dispatch = useAppDispatch();
 
     if (!product) {
         return <Text>Something went wrong</Text>
@@ -25,7 +27,7 @@ const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({navigation, ro
             <Image style={styles.image} source={{uri: product.imageUrl}}/>
             <StyledButton title="Add to Cart"
                           primary
-                          onPress={() => {}}
+                          onPress={() => {dispatch(addToCart(product as Product))}}
                           style = {styles.action}
 
             />

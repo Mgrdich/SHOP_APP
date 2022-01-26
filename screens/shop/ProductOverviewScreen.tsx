@@ -1,16 +1,18 @@
 import React from 'react';
 import {FlatList, ListRenderItemInfo} from "react-native";
-import {useAppSelector} from "../../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {Product} from "../../models/products";
 import {ProductsNavigatorProps} from "../../navigation/types";
 import ProductItem from "../../components/shop/ProductItem";
 import {PRODUCTS_STACK_SCREENS} from "../../navigation/ProductsNavigationTypes";
+import {addToCart} from "../../store/actions/cart";
 
 type ProductsProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsOverview>;
 
 const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => {
 
     const products: Product[] = useAppSelector(state => state.products.availableProducts);
+    const dispatch = useAppDispatch();
 
     return (
         <FlatList
@@ -26,7 +28,7 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
                                       productTitle:itemData.item.title
                                   } as any
                               )}
-                              onCartPress={() => {}}
+                              onCartPress={() => dispatch(addToCart(itemData.item))}
                     />
                 )
             }
