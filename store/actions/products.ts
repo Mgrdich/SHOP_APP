@@ -1,3 +1,3 @@
-export enum Products_ACTION  {
+export enum PRODUCTS_ACTIONS  {
 
-};
+}
