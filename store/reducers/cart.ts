@@ -1,7 +1,8 @@
-import {IProduct} from "../../models/products";
+import {Product} from "../../models/products";
+import {CART_ACTIONS} from "../actions/cart";
 
 type cartItemType = {
-    [key: string]: IProduct
+    [key: string]: Product
 }
 
 export interface ICartState {
@@ -14,6 +15,14 @@ const initialState: ICartState = {
     totalAmount: 0
 };
 
-export default function cartReducer(state: ICartState = initialState, action): ICartState {
+type cartActionType = {
+    type: CART_ACTIONS | undefined
+}
+
+export default function cartReducer(state: ICartState = initialState, action: cartActionType): ICartState {
+    switch (action.type) {
+        case CART_ACTIONS.ADD_TO_CART:
+
+    }
     return state
 }
