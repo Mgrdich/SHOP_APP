@@ -1,7 +1,8 @@
 import {Product} from "../../models/products";
 import {CART_ACTIONS} from "../actions/cart";
 import {CartItem} from "../../models/cartItem";
-import {ActionType} from "./helper";
+import {ActionType} from "../actions/types";
+import createReducer from "./helper";
 
 type cartItemType = {
     [key: string]: CartItem
@@ -50,12 +51,8 @@ function addToCard(state: ICartState, action: cartActionType): ICartState {
     }
 }
 
+const cartReducer = createReducer<ICartState, CART_ACTIONS>(initialState, {
+    [CART_ACTIONS.ADD_TO_CART]: addToCard
+});
 
-export default function cartReducer(state: ICartState = initialState, action: cartActionType): ICartState {
-
-    switch (action.type) {
-        case CART_ACTIONS.ADD_TO_CART:
-            addToCard(state, action);
-    }
-    return state
-}
+export default cartReducer;

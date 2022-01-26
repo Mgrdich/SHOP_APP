@@ -1,11 +1,11 @@
 import {Product} from "../../models/products";
-import {ActionFunction} from "./types";
+import {ActionType} from "./types";
 
 export enum CART_ACTIONS {
     ADD_TO_CART = 'ADD_TO_CART',
 }
 
-type CartAction = ActionFunction<CART_ACTIONS>
+type CartAction = ActionType<CART_ACTIONS>
 
 export const addToCart = (product: Product): CartAction => {
     return {
