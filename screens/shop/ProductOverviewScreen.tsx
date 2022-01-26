@@ -3,8 +3,8 @@ import {FlatList, ListRenderItemInfo} from "react-native";
 import {useAppSelector} from "../../hooks/redux";
 import {Product} from "../../models/products";
 import {ProductsNavigatorProps} from "../../navigation/types";
-import {PRODUCTS_STACK_SCREENS} from "../../navigation/ProductsNavigator";
 import ProductItem from "../../components/shop/ProductItem";
+import {PRODUCTS_STACK_SCREENS} from "../../navigation/ProductsNavigationTypes";
 
 type ProductsProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsOverview>;
 
