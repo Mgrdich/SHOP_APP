@@ -1,8 +1,9 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, View} from "react-native";
 import StyledButton from "../Styled/StyledButton";
 import STYLING_COLORS from "../../constants/StylingColors";
 import TouchablePlatform from "../platform/TouchablePlatform";
+import StyledText from "../Styled/StyledText";
 
 interface ProductItemProps {
     title: string
@@ -23,8 +24,8 @@ const ProductItem: React.FC<ProductItemProps> = ({imgSrc, price, title, onViewDe
                         </View>
 
                         <View style={styles.details}>
-                            <Text style={styles.title}>{title}</Text>
-                            <Text style={styles.price}>${price.toFixed(2)}</Text>
+                            <StyledText bold style={styles.title}>{title}</StyledText>
+                            <StyledText style={styles.price}>${price.toFixed(2)}</StyledText>
                         </View>
                         <View style={styles.actions}>
                             <StyledButton primary title="View Details" onPress={onViewDetailPress}/>
