@@ -26,6 +26,8 @@ const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({navigation, ro
             <StyledButton title="Add to Cart"
                           primary
                           onPress={() => {}}
+                          style = {styles.action}
+
             />
             <StyledText style={styles.price}>${product.price.toFixed()}</StyledText>
             <StyledText style={styles.description}>{product.description}</StyledText>
@@ -46,7 +48,12 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 14,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginHorizontal: 20
+    },
+    action: {
+        marginVertical: 10,
+        alignItems: 'center'
     }
 });
 

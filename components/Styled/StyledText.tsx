@@ -12,8 +12,12 @@ const StyledText: React.FC<StyledTextProps> = ({children, style = {}, bold, ...p
 };
 
 const styles = StyleSheet.create({
-    text: {},
-    boldText: {}
+    text: {
+        fontFamily: 'open-sans'
+    },
+    boldText: {
+        fontFamily: 'open-sans-bold'
+    }
 });
 
 export default StyledText;

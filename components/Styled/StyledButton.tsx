@@ -1,13 +1,14 @@
 import React from 'react';
-import {Button, ButtonProps, StyleSheet, View} from "react-native";
+import {Button, ButtonProps, StyleProp, StyleSheet, View, ViewStyle} from "react-native";
 import StylingColors from "../../constants/StylingColors";
 
 interface StyledButtonProps extends ButtonProps {
     primary?: boolean,
-    accent?: boolean
+    accent?: boolean,
+    style?: StyleProp<ViewStyle>
 }
 
-const StyledButton: React.FC<StyledButtonProps> = ({primary, accent, ...props}) => {
+const StyledButton: React.FC<StyledButtonProps> = ({primary, accent, style ,...props}) => {
     let colorStyle = '';
 
     if (primary) {
@@ -17,7 +18,7 @@ const StyledButton: React.FC<StyledButtonProps> = ({primary, accent, ...props}) 
     }
 
     return (
-        <View>
+        <View style={style}>
             <Button color={colorStyle} {...props}/>
         </View>
     );
