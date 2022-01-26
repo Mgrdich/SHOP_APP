@@ -1,8 +1,8 @@
 import React from 'react';
-import {FlatList, ListRenderItemInfo, StyleSheet, Text} from "react-native";
+import {FlatList, ListRenderItemInfo} from "react-native";
 import {useAppSelector} from "../../hooks/redux";
 import {Product} from "../../models/products";
-import {ProductsNavigationProp, ProductsNavigatorProps} from "../../navigation/types";
+import {ProductsNavigatorProps} from "../../navigation/types";
 import {PRODUCTS_STACK_SCREENS} from "../../navigation/ProductsNavigator";
 import ProductItem from "../../components/shop/ProductItem";
 
@@ -33,7 +33,5 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
         />
     );
 };
-
-const styles = StyleSheet.create({});
 
 export default ProductOverviewScreen;

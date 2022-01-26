@@ -1,27 +1,13 @@
 import React from "react";
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import ProductOverviewScreen from "../screens/shop/ProductOverviewScreen";
 import Util from "../util/Util";
-import {StyleSheet} from "react-native";
 import STYLING_COLORS from "../constants/StylingColors";
+import {StyleSheet} from "react-native";
+import ProductOverviewScreen from "../screens/shop/ProductOverviewScreen";
 import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
-import {ProductsNavigatorProps} from "./types";
-
-export enum PRODUCTS_STACK_SCREENS {
-    ProductsOverview = 'ProductsOverview',
-    ProductsDetail = 'ProductsDetail',
-}
-
-export type RootProductsStackParamList = {
-    [PRODUCTS_STACK_SCREENS.ProductsOverview]: undefined;
-    [PRODUCTS_STACK_SCREENS.ProductsDetail]: {
-        productId: string,
-        productTitle: string
-    }
-}
+import {PRODUCTS_STACK_SCREENS, RootProductsStackParamList} from "./ProductsNavigationTypes";
 
 const Products = createNativeStackNavigator<RootProductsStackParamList>();
-
 
 const ProductsNavigator: React.FC = () => {
     return (

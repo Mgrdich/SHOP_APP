@@ -1,5 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootProductsStackParamList} from "./ProductsNavigator";
+import {RootProductsStackParamList} from "./ProductsNavigationTypes";
+
 
 export type ProductsNavigatorProps<T> = NativeStackScreenProps<RootProductsStackParamList, T>;
 
