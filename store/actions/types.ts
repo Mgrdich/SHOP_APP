@@ -1,4 +1,4 @@
-export interface ActionFunction<T> {
+export interface ActionType<T> {
     type: T,
 
     [key: string]: any

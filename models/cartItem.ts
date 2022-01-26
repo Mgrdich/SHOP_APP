@@ -1,5 +1,5 @@
 export interface ICartItem {
-    id: string
+    id?: string
     quantity: number,
     prodPrice: number,
     prodTitle: string,
@@ -13,10 +13,12 @@ export class CartItem implements ICartItem {
     prodTitle = ''
     sum = 0
 
-    constructor(quantity: number,
-                prodPrice: number,
-                prodTitle: string,
-                sum: number
+    constructor({
+                    quantity,
+                    prodPrice,
+                    prodTitle,
+                    sum
+                }: ICartItem
     ) {
         this.id = FunctionUtil.generateId()
         this.quantity = quantity;

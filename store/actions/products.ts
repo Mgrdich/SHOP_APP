@@ -1,5 +1,5 @@
-import {ActionFunction} from "./types";
+import {ActionType} from "./types";
 
 export enum PRODUCTS_ACTIONS {}
 
-type CartAction = ActionFunction<PRODUCTS_ACTIONS>
+type ProductActionType = ActionType<PRODUCTS_ACTIONS>
