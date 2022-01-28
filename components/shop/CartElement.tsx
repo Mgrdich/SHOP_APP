@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import StyledText from "../Styled/StyledText";
+import IconButton from "../UI/IconButton";
+import StylingColors from "../../constants/StylingColors";
 
 interface CartElementProps {
     deletable: boolean,
@@ -27,16 +29,12 @@ const CartElement: React.FC<CartElementProps> = ({deletable, onRemove, quantity,
             <View style={styles.itemData}>
                 <StyledText style={styles.mainText}>${amount.toFixed(2)}</StyledText>
                 {deletable && (
-                    <TouchableOpacity
-                        onPress={onRemove}
-                        style={styles.deleteButton}
-                    >
-                        <Ionicons
-                            name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-                            size={23}
-                            color="red"
-                        />
-                    </TouchableOpacity>
+                    <IconButton iconName={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+                                iconSize={23}
+                                iconColor={StylingColors.red}
+                                onPress={onRemove}
+                                style={styles.deleteButton}
+                    />
                 )}
             </View>
         </View>
