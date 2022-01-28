@@ -10,16 +10,18 @@ import {Ionicons} from '@expo/vector-icons';
 import StyledText from "../Styled/StyledText";
 import IconButton from "../UI/IconButton";
 import StylingColors from "../../constants/StylingColors";
+import Util from "../../util/Util";
 
 interface CartElementProps {
-    deletable: boolean,
-    onRemove: Function,
     quantity: number,
     title: string,
     amount: number
+    onRemove?: Function,
+    onAdd?: Function,
+    onSubtract?: Function,
 }
 
-const CartElement: React.FC<CartElementProps> = ({deletable, onRemove, quantity, title, amount}) => {
+const CartElement: React.FC<CartElementProps> = ({onRemove, onSubtract, onAdd quantity, title, amount}) => {
     return (
         <View style={styles.cartItem}>
             <View style={styles.itemData}>
@@ -28,12 +30,28 @@ const CartElement: React.FC<CartElementProps> = ({deletable, onRemove, quantity,
             </View>
             <View style={styles.itemData}>
                 <StyledText style={styles.mainText}>${amount.toFixed(2)}</StyledText>
-                {deletable && (
-                    <IconButton iconName={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+                {onRemove && (
+                    <IconButton iconName={Util.isAndroid ? 'md-trash' : 'ios-trash'}
                                 iconSize={23}
                                 iconColor={StylingColors.red}
                                 onPress={onRemove}
                                 style={styles.deleteButton}
+                    />
+                )}
+                {onAdd && (
+                    <IconButton iconName={Util.isAndroid ? 'md-add-circle' : 'ios-add-circle'}
+                                iconSize={23}
+                                iconColor={StylingColors.red}
+                                onPress={onAdd}
+                                style={styles.addButton}
+                    />
+                )}
+                {onSubtract && (
+                    <IconButton iconName={Util.isAndroid ? 'md-remove-circle' : 'ios-remove-circle'}
+                                iconSize={23}
+                                iconColor={StylingColors.red}
+                                onPress={onSubtract}
+                                style={styles.subtractButton}
                     />
                 )}
             </View>
@@ -64,7 +82,9 @@ const styles = StyleSheet.create({
     },
     deleteButton: {
         marginLeft: 20
-    }
+    },
+    addButton: {},
+    subtractButton: {}
 });
 
 export default CartElement;

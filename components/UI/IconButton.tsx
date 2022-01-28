@@ -3,7 +3,7 @@ import {TouchableOpacity, TouchableOpacityProps} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 
 interface IconButtonProps extends TouchableOpacityProps {
-    iconName: string,
+    iconName: string, // Can be Fixed if Ionicons @types installed //TODO
     iconSize: number,
     iconColor: string
 }
