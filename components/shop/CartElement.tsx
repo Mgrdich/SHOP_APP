@@ -21,7 +21,7 @@ interface CartElementProps {
     onSubtract?: Function,
 }
 
-const CartElement: React.FC<CartElementProps> = ({onRemove, onSubtract, onAdd quantity, title, amount}) => {
+const CartElement: React.FC<CartElementProps> = ({onRemove, onSubtract, onAdd, quantity, title, amount}) => {
     return (
         <View style={styles.cartItem}>
             <View style={styles.itemData}>
