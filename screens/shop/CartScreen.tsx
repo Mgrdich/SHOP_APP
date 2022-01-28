@@ -7,15 +7,19 @@ import {ProductsNavigatorProps} from "../../navigation/types";
 import {PRODUCTS_STACK_SCREENS} from "../../navigation/ProductsNavigationTypes";
 import StyledButton from "../../components/Styled/StyledButton";
 import CartElement from "../../components/shop/CartElement";
-import {CartItem} from "../../models/cartItem";
+import {ICartItem} from "../../models/cartItem";
 
 type CartScreenProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.CartScreen>;
+
+interface ICartItemsElement extends ICartItem {
+    productId: string
+}
 
 const CartScreen: React.FC<CartScreenProps> = ({navigation, route}) => {
     const cartTotalAmount: number = useAppSelector(state => state.cart.totalAmount);
 
-    const cartItems: CartItem[] = useAppSelector(state => {
-        const transformedCartItems: CartItem[] = [];
+    const cartItems: ICartItemsElement[] = useAppSelector(state => {
+        const transformedCartItems: ICartItemsElement[] = [];
         for (const key in state.cart.items) {
             transformedCartItems.push({
                 productId: key,
@@ -32,8 +36,7 @@ const CartScreen: React.FC<CartScreenProps> = ({navigation, route}) => {
                     Total <StyledText style={styles.amount}>${cartTotalAmount}</StyledText>
                 </StyledText>
                 <StyledButton title="Order Now" accent
-                              onPress={() => {
-                              }}
+                              onPress={() => {}}
                               disabled={!cartItems.length}
                 />
             </View>
@@ -41,7 +44,8 @@ const CartScreen: React.FC<CartScreenProps> = ({navigation, route}) => {
                 <StyledText bold style={styles.cartItemsText}>Cart Items</StyledText>
                 <FlatList data={cartItems}
                           style={styles.flatList}
-                          renderItem={(item: ListRenderItemInfo<CartItem>) => (
+                          keyExtractor={(item => item.productId)}
+                          renderItem={(item: ListRenderItemInfo<ICartItemsElement>) => (
                               <CartElement
                                   title={item.item.prodTitle}
                                   amount={item.item.sum}
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
         fontSize: 25
     },
     flatList: {
-        width:'100%'
+        width: '100%'
     }
 });
 
