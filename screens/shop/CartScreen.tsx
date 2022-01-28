@@ -28,17 +28,18 @@ const CartScreen: React.FC<CartScreenProps> = ({navigation, route}) => {
                 ...state.cart.items[key]
             })
         }
-        return transformedCartItems;
+        return transformedCartItems.sort((a, b) => a.productId > b.productId ? 1 : -1);
     });
 
     return (
         <View style={styles.screen}>
             <View style={styles.summary}>
                 <StyledText bold style={styles.summaryText}>
-                    Total <StyledText style={styles.amount}>${cartTotalAmount}</StyledText>
+                    Total <StyledText style={styles.amount}>${cartTotalAmount.toFixed(2)}</StyledText>
                 </StyledText>
                 <StyledButton title="Order Now" accent
-                              onPress={() => {}}
+                              onPress={() => {
+                              }}
                               disabled={!cartItems.length}
                 />
             </View>
