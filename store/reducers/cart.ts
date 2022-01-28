@@ -20,7 +20,7 @@ const initialState: ICartState = {
 
 type cartActionType = ActionType<CART_ACTIONS>
 
-function addToCard(state: ICartState, action: cartActionType): ICartState {
+function addToCart(state: ICartState, action: cartActionType): ICartState {
     const addedProduct: Product = action.product;
     const prodPrice: number = addedProduct.price;
     const prodTitle: string = addedProduct.title;
@@ -51,8 +51,22 @@ function addToCard(state: ICartState, action: cartActionType): ICartState {
     }
 }
 
+function removeFromCart(state: ICartState, action: cartActionType): ICartState {
+    let currentCartItems: cartItemType = {...state.items};
+    let currentCartItem: CartItem = currentCartItems[action.productId];
+    let totalAmount: number = state.totalAmount - currentCartItem.sum;
+
+    delete currentCartItems[action.productId];
+    return {
+        ...state,
+        items: currentCartItems,
+        totalAmount
+    };
+}
+
 const cartReducer = createReducer<ICartState, CART_ACTIONS>(initialState, {
-    [CART_ACTIONS.ADD_TO_CART]: addToCard
+    [CART_ACTIONS.ADD_TO_CART]: addToCart,
+    [CART_ACTIONS.REMOVE_FROM_CART]: removeFromCart
 });
 
 export default cartReducer;

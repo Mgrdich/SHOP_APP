@@ -1,13 +1,14 @@
 import React from 'react';
 import {FlatList, ListRenderItemInfo, StyleSheet, View} from "react-native";
 import StyledText from "../../components/Styled/StyledText";
-import {useAppSelector} from "../../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import StylingColors from "../../constants/StylingColors";
 import {ProductsNavigatorProps} from "../../navigation/types";
 import {PRODUCTS_STACK_SCREENS} from "../../navigation/ProductsNavigationTypes";
 import StyledButton from "../../components/Styled/StyledButton";
 import CartElement from "../../components/shop/CartElement";
 import {ICartItem} from "../../models/cartItem";
+import {removeFromCart} from "../../store/actions/cart";
 
 type CartScreenProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.CartScreen>;
 
@@ -16,6 +17,7 @@ interface ICartItemsElement extends ICartItem {
 }
 
 const CartScreen: React.FC<CartScreenProps> = ({navigation, route}) => {
+    const dispatch = useAppDispatch();
     const cartTotalAmount: number = useAppSelector(state => state.cart.totalAmount);
 
     const cartItems: ICartItemsElement[] = useAppSelector(state => {
@@ -50,7 +52,7 @@ const CartScreen: React.FC<CartScreenProps> = ({navigation, route}) => {
                                   title={item.item.prodTitle}
                                   amount={item.item.sum}
                                   deletable
-                                  onRemove={() => {}}
+                                  onRemove={() => dispatch(removeFromCart(item.item.productId))}
                                   quantity={item.item.quantity}
                               />
                           )}

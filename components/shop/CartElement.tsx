@@ -1,12 +1,9 @@
 import React from 'react';
 import {
     View,
-    Text,
     StyleSheet,
-    TouchableOpacity,
-    Platform
 } from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
+
 import StyledText from "../Styled/StyledText";
 import IconButton from "../UI/IconButton";
 import StylingColors from "../../constants/StylingColors";
