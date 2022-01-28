@@ -64,9 +64,30 @@ function removeFromCart(state: ICartState, action: cartActionType): ICartState {
     };
 }
 
+function setQuantity(state: ICartState, action: cartActionType): ICartState {
+    let currentCartItems: cartItemType = {...state.items};
+    let currentCartItem: CartItem = {...currentCartItems[action.productId]}; // TODO check if this needs destructure ?
+    let totalAmount: number = state.totalAmount - currentCartItem.sum; // remove price from cart
+
+    currentCartItem.quantity = action.quantity > 0 ? action.quantity : 1;
+    currentCartItem.sum = currentCartItem.quantity * currentCartItem.prodPrice;
+
+    totalAmount += currentCartItem.sum; // add new price
+
+    currentCartItems[action.productId] = currentCartItem;
+
+
+    return {
+        ...state,
+        items: currentCartItems,
+        totalAmount
+    }
+}
+
 const cartReducer = createReducer<ICartState, CART_ACTIONS>(initialState, {
     [CART_ACTIONS.ADD_TO_CART]: addToCart,
-    [CART_ACTIONS.REMOVE_FROM_CART]: removeFromCart
+    [CART_ACTIONS.REMOVE_FROM_CART]: removeFromCart,
+    [CART_ACTIONS.SET_ITEM_QUANTITY]: setQuantity
 });
 
 export default cartReducer;
