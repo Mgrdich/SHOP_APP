@@ -11,11 +11,12 @@ import {addToCart} from "../../store/actions/cart";
 
 type ProductDetailScreenProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsDetail>;
 
-const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({navigation, route}) => {
+const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({route}) => {
     const prodId: string = route.params.productId;
     const product: Product | undefined = useAppSelector(state => {
         return state.products.availableProducts.find(prod => prod.id === prodId);
     });
+
     const dispatch = useAppDispatch();
 
     if (!product) {
