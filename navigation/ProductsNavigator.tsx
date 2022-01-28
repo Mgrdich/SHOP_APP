@@ -9,6 +9,7 @@ import {PRODUCTS_STACK_SCREENS, RootProductsStackParamList} from "./ProductsNavi
 import {PROJECT_FONTS} from "../constants/Fonts";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import HeaderButton from "../components/UI/HeaderButton";
+import CartScreen from "../screens/shop/CartScreen";
 
 const Products = createNativeStackNavigator<RootProductsStackParamList>();
 
@@ -28,7 +29,7 @@ const ProductsNavigator: React.FC = () => {
         >
             <Products.Screen name={PRODUCTS_STACK_SCREENS.ProductsOverview}
                              component={ProductOverviewScreen}
-                             options={({route}) => (
+                             options={({route , navigation}) => (
                                  {
                                      title: 'All Products',
                                      headerRight: () => (
@@ -36,7 +37,9 @@ const ProductsNavigator: React.FC = () => {
                                              <Item
                                                  title="Cart"
                                                  iconName={Util.isAndroid ? 'md-cart' : 'ios-cart'}
-                                                 onPress={() => {}}
+                                                 onPress={() => {
+                                                     navigation.navigate(PRODUCTS_STACK_SCREENS.CartScreen)
+                                                 }}
                                              />
                                          </HeaderButtons>
                                      )
@@ -50,6 +53,13 @@ const ProductsNavigator: React.FC = () => {
                                      title: route.params.productTitle
                                  }
                              )}
+            />
+
+            <Products.Screen name={PRODUCTS_STACK_SCREENS.CartScreen}
+                             component={CartScreen}
+                             options={{
+                                 title: "Cart"
+                             }}
             />
         </Products.Navigator>
     );
