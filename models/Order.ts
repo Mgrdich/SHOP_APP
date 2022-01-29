@@ -6,6 +6,7 @@ interface IOrder {
     items: ICartItemsElement[],
     totalAmount: number,
     date: Date
+    readableDate: string
 }
 
 class Order implements IOrder {
@@ -13,11 +14,13 @@ class Order implements IOrder {
     items = []
     totalAmount = 0
     date = new Date()
+    readableDate = ''
 
     constructor(items: CartItem[], totalAmount: number, date: Date) {
         this.items = items;
         this.totalAmount = totalAmount;
         this.date = date;
+        this.readableDate = this.date.toString()
     }
 
 }
