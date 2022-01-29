@@ -4,6 +4,8 @@ import {DRAWERS, RootDrawerParams} from "./DrawerNavigatorTypes";
 import StylingColors from "../constants/StylingColors";
 import OrdersNavigator from "./OrderNavigator";
 import ProductsNavigator from "./ProductsNavigator";
+import {createDrawerNavigator} from "@react-navigation/drawer";
+import {PROJECT_FONTS} from "../constants/Fonts";
 
 const Drawers = createDrawerNavigator<RootDrawerParams>();
 
@@ -34,6 +36,8 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     DrawerLabelStyle: {
-        fontFamily: "open-sans-bold"
+        fontFamily: PROJECT_FONTS.openSansBold
     }
 });
+
+export default DrawerNavigator;
