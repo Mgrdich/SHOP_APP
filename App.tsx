@@ -4,6 +4,7 @@ import MainNavigator from "./navigation/MainNavigator";
 import {useState} from "react";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
+import 'react-native-gesture-handler';
 
 
 function fetchFonts(): Promise<void> {
