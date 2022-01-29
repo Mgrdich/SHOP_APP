@@ -31,6 +31,15 @@ const ProductsNavigator: React.FC = () => {
                                                  }}
                                              />
                                          </HeaderButtons>
+                                     ),
+                                     headerLeft:()=> (
+                                         <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                                             <Item
+                                                 title="navigation"
+                                                 iconName={Util.isAndroid ? 'md-menu' : 'ios-menu'}
+                                                 onPress={() => navigation.toggleDrawer()}
+                                             />
+                                         </HeaderButtons>
                                      )
                                  }
                              )}
