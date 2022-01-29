@@ -8,4 +8,13 @@ export default class FunctionUtil {
     static generateId(length: number = 9): string {
         return '_' + Math.random().toString(36).substr(2, length);
     }
+
+
+    /**
+     * @description to fixed to a 2 digit number
+     * default to fixed 2 numbers
+     * */
+    static toFixedNumber(number: number, toFixedNumber: number = 2): number {
+        return parseFloat(number.toFixed(toFixedNumber));
+    }
 }

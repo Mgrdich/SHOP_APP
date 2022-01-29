@@ -3,6 +3,7 @@ import {CART_ACTIONS} from "../actions/cart";
 import {CartItem} from "../../models/cartItem";
 import {ActionType} from "../actions/types";
 import createReducer from "./helper";
+import FU from "../../util/FunctionUtil";
 
 type cartItemType = {
     [key: string]: CartItem
@@ -31,7 +32,7 @@ function addToCart(state: ICartState, action: cartActionType): ICartState {
         let item: CartItem = state.items[addedProduct.id];
         cartItem = new CartItem({...item});
         cartItem.quantity++;
-        cartItem.sum += cartItem.prodPrice;
+        cartItem.sum = FU.toFixedNumber(cartItem.sum + cartItem.prodPrice);
     } else {
         cartItem = new CartItem({
             quantity: 1,
@@ -54,7 +55,7 @@ function addToCart(state: ICartState, action: cartActionType): ICartState {
 function removeFromCart(state: ICartState, action: cartActionType): ICartState {
     let currentCartItems: cartItemType = {...state.items};
     let currentCartItem: CartItem = currentCartItems[action.productId];
-    let totalAmount: number = state.totalAmount - currentCartItem.sum;
+    let totalAmount: number = FU.toFixedNumber(state.totalAmount - currentCartItem.sum);
 
     delete currentCartItems[action.productId];
     return {
@@ -67,7 +68,7 @@ function removeFromCart(state: ICartState, action: cartActionType): ICartState {
 function setQuantity(state: ICartState, action: cartActionType): ICartState {
     let currentCartItems: cartItemType = {...state.items};
     let currentCartItem: CartItem = {...currentCartItems[action.productId]}; // TODO check if this needs destructure ?
-    let totalAmount: number = state.totalAmount - currentCartItem.sum; // remove price from cart
+    let totalAmount: number = FU.toFixedNumber(state.totalAmount - currentCartItem.sum); // remove price from cart
 
     currentCartItem.quantity = action.quantity > 0 ? action.quantity : 1;
     currentCartItem.sum = currentCartItem.quantity * currentCartItem.prodPrice;
