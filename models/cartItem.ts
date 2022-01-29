@@ -8,6 +8,10 @@ export interface ICartItem {
     sum: number,
 }
 
+export interface ICartItemsElement extends ICartItem {
+    productId: string
+}
+
 export class CartItem implements ICartItem {
     id = ''
     quantity = 0

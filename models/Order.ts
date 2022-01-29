@@ -1,9 +1,9 @@
-import {CartItem} from "./cartItem";
+import {CartItem, ICartItemsElement} from "./cartItem";
 import FunctionUtil from "../util/FunctionUtil";
 
 interface IOrder {
     id: string,
-    items: CartItem[],
+    items: ICartItemsElement[],
     totalAmount: number,
     date: Date
 }

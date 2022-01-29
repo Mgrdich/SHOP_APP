@@ -7,14 +7,12 @@ import {ProductsNavigatorProps} from "../../navigation/types";
 import {PRODUCTS_STACK_SCREENS} from "../../navigation/ProductsNavigationTypes";
 import StyledButton from "../../components/Styled/StyledButton";
 import CartElement from "../../components/shop/CartElement";
-import {ICartItem} from "../../models/cartItem";
 import {removeFromCart} from "../../store/actions/cart";
+import {addOrder} from "../../store/actions/orders";
+import {ICartItemsElement} from "../../models/cartItem";
 
 type CartScreenProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.CartScreen>;
 
-interface ICartItemsElement extends ICartItem {
-    productId: string
-}
 
 const CartScreen: React.FC<CartScreenProps> = ({navigation, route}) => {
     const dispatch = useAppDispatch();
@@ -39,6 +37,7 @@ const CartScreen: React.FC<CartScreenProps> = ({navigation, route}) => {
                 </StyledText>
                 <StyledButton title="Order Now" accent
                               onPress={() => {
+                                  dispatch(addOrder(cartItems, cartTotalAmount))
                               }}
                               disabled={!cartItems.length}
                 />
