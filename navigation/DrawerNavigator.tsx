@@ -17,18 +17,19 @@ const DrawerNavigator: React.FC = () => {
             screenOptions={{
                 drawerActiveTintColor: styles.DrawerTintColor.color,
                 drawerLabelStyle: styles.DrawerLabelStyle,
-                headerShown: false
+                headerShown: false,
+                drawerInactiveTintColor: StylingColors.primary
             }}
         >
             <Drawers.Screen name={DRAWERS.ProductsStack}
                             component={ProductsNavigator}
                             options={(navigation, route) => (
                                 {
-                                    drawerIcon:(drawerConfig) => (
+                                    drawerIcon: (drawerConfig) => (
                                         <Ionicons
                                             name={Util.isAndroid ? 'md-cart' : 'ios-cart'}
                                             size={23}
-                                            color={"red"}
+                                            color={drawerConfig.color}
                                         />
                                     )
                                 }
@@ -38,11 +39,11 @@ const DrawerNavigator: React.FC = () => {
                             component={OrdersNavigator}
                             options={(navigation, route) => (
                                 {
-                                    drawerIcon:(drawerConfig) => (
+                                    drawerIcon: (drawerConfig) => (
                                         <Ionicons
                                             name={Util.isAndroid ? 'md-list' : 'ios-list'}
                                             size={23}
-                                            color={"red"}
+                                            color={drawerConfig.color}
                                         />
                                     )
                                 }
