@@ -6,6 +6,7 @@ import {ProductsNavigatorProps} from "../../navigation/types";
 import ProductItem from "../../components/shop/ProductItem";
 import {PRODUCTS_STACK_SCREENS} from "../../navigation/ProductsNavigationTypes";
 import {addToCart} from "../../store/actions/cart";
+import StyledButton from "../../components/Styled/StyledButton";
 
 type ProductsProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsOverview>;
 
@@ -22,14 +23,27 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
                 (<ProductItem title={itemData.item.title}
                               imgSrc={itemData.item.imageUrl}
                               price={itemData.item.price}
-                              onViewDetailPress={() => navigation.navigate(
+                              onSelect={() => navigation.navigate(
                                   PRODUCTS_STACK_SCREENS.ProductsDetail as any, {
                                       productId: itemData.item.id,
-                                      productTitle:itemData.item.title
+                                      productTitle: itemData.item.title
                                   } as any
                               )}
-                              onCartPress={() => dispatch(addToCart(itemData.item))}
-                    />
+                    >
+                        <StyledButton primary
+                                      title="View Details"
+                                      onPress={() => navigation.navigate(
+                                          PRODUCTS_STACK_SCREENS.ProductsDetail as any, {
+                                              productId: itemData.item.id,
+                                              productTitle: itemData.item.title
+                                          } as any
+                                      )}
+                        />
+                        <StyledButton primary
+                                      title="To Cart"
+                                      onPress={() => dispatch(addToCart(itemData.item))}
+                        />
+                    </ProductItem>
                 )
             }
         />

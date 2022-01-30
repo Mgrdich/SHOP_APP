@@ -13,9 +13,9 @@ const Users = createNativeStackNavigator<RootUsersStackParamList>();
 const OrdersNavigator: React.FC = () => {
     return (
         <Users.Navigator
-            screenOptions={screenDefaultOptions}
-            defaultScreenOptions={({route, navigation}) => (
+            screenOptions={({route, navigation}) => (
                 {
+                    ...screenDefaultOptions,
                     headerLeft: () => (
                         <HeaderButtons HeaderButtonComponent={HeaderButton}>
                             <Item

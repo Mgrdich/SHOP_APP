@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image, StyleSheet, View} from "react-native";
-import StyledButton from "../Styled/StyledButton";
 import STYLING_COLORS from "../../constants/StylingColors";
 import TouchablePlatform from "../platform/TouchablePlatform";
 import StyledText from "../Styled/StyledText";
@@ -9,15 +8,15 @@ interface ProductItemProps {
     title: string
     imgSrc: string,
     price: number,
-    onViewDetailPress?: Function,
-    onCartPress?: Function
+    onSelect: Function,
+    children: React.ReactNode
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({imgSrc, price, title, onViewDetailPress, onCartPress}) => {
+const ProductItem: React.FC<ProductItemProps> = ({imgSrc, price, title, onSelect, children}) => {
     return (
         <View style={styles.product}>
             <View style={styles.touchable}>
-                <TouchablePlatform onPress={onViewDetailPress} useForeground>
+                <TouchablePlatform onPress={onSelect} useForeground>
                     <View>
                         <View style={styles.imageCont}>
                             <Image style={styles.image} source={{uri: imgSrc}}/>
@@ -28,12 +27,7 @@ const ProductItem: React.FC<ProductItemProps> = ({imgSrc, price, title, onViewDe
                             <StyledText style={styles.price}>${price.toFixed(2)}</StyledText>
                         </View>
                         <View style={styles.actions}>
-                            {onViewDetailPress &&
-                            <StyledButton primary title="View Details" onPress={onViewDetailPress}/>
-                            }
-                            {onCartPress &&
-                            <StyledButton primary title="To Cart" onPress={onCartPress}/>
-                            }
+                            {children}
                         </View>
                     </View>
                 </TouchablePlatform>
