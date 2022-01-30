@@ -15,6 +15,16 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
     const products: Product[] = useAppSelector(state => state.products.availableProducts);
     const dispatch = useAppDispatch();
 
+
+    const redirectToProductDetails = (id: string, title: string) => {
+        navigation.navigate(
+            PRODUCTS_STACK_SCREENS.ProductsDetail as any, {
+                productId: id,
+                productTitle: title
+            } as any
+        );
+    };
+
     return (
         <FlatList
             data={products}
@@ -23,21 +33,11 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
                 (<ProductItem title={itemData.item.title}
                               imgSrc={itemData.item.imageUrl}
                               price={itemData.item.price}
-                              onSelect={() => navigation.navigate(
-                                  PRODUCTS_STACK_SCREENS.ProductsDetail as any, {
-                                      productId: itemData.item.id,
-                                      productTitle: itemData.item.title
-                                  } as any
-                              )}
+                              onSelect={() => redirectToProductDetails(itemData.item.id, itemData.item.title)}
                     >
                         <StyledButton primary
                                       title="View Details"
-                                      onPress={() => navigation.navigate(
-                                          PRODUCTS_STACK_SCREENS.ProductsDetail as any, {
-                                              productId: itemData.item.id,
-                                              productTitle: itemData.item.title
-                                          } as any
-                                      )}
+                                      onPress={() => redirectToProductDetails(itemData.item.id, itemData.item.title)}
                         />
                         <StyledButton primary
                                       title="To Cart"
