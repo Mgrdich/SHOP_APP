@@ -5,12 +5,13 @@ import ProductItem from "../../components/shop/ProductItem";
 import {Product} from "../../models/products";
 import StyledButton from "../../components/Styled/StyledButton";
 import {deleteProduct} from "../../store/actions/products";
+import {USERS_STACK_SCREENS} from "../../navigation/UserNavigatorTypes";
+import {UsersNavigatorProps} from "../../navigation/types";
 
-interface UserProductsScreenProps {
 
-}
+type UserProductsScreenTypeProps = UsersNavigatorProps<USERS_STACK_SCREENS.USERS>;
 
-const UserProductsScreen: React.FC<UserProductsScreenProps> = () => {
+const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = () => {
     const userProduct = useAppSelector(state => state.products.userProducts);
     const dispatch = useAppDispatch();
 
