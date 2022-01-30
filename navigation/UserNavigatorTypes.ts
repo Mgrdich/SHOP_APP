@@ -5,5 +5,7 @@ export enum USERS_STACK_SCREENS {
 
 export type RootUsersStackParamList = {
     [USERS_STACK_SCREENS.USERS]: undefined,
-    [USERS_STACK_SCREENS.EDIT_USER]: undefined
+    [USERS_STACK_SCREENS.EDIT_USER]: {
+        prodId: string
+    }
 }

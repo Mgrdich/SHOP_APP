@@ -31,10 +31,30 @@ const OrdersNavigator: React.FC = () => {
             <Users.Screen
                 name={USERS_STACK_SCREENS.USERS}
                 component={UserProductsScreen}
+                options={({route, navigation}) => (
+                    {
+                        headerRight: () => (
+                            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                                <Item
+                                    title="navigation"
+                                    iconName={Util.isAndroid ? 'md-create' : 'ios-create-outline'}
+                                    onPress={() => navigation.navigate(USERS_STACK_SCREENS.EDIT_USER, {
+                                        prodId: ''
+                                    })}
+                                />
+                            </HeaderButtons>
+                        )
+                    }
+                )}
             />
             <Users.Screen
                 name={USERS_STACK_SCREENS.EDIT_USER}
                 component={EditProductsScreen}
+                options={({route, navigation}) => (
+                    {
+                        headerLeft: null
+                    }
+                )}
             />
         </Users.Navigator>
     );

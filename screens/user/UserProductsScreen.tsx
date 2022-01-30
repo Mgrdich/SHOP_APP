@@ -11,22 +11,28 @@ import {UsersNavigatorProps} from "../../navigation/types";
 
 type UserProductsScreenTypeProps = UsersNavigatorProps<USERS_STACK_SCREENS.USERS>;
 
-const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = () => {
+const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = ({navigation}) => {
     const userProduct = useAppSelector(state => state.products.userProducts);
     const dispatch = useAppDispatch();
+
+    const onEditRedirect = (id: string) => {
+        navigation.navigate(USERS_STACK_SCREENS.EDIT_USER as any, {
+            prodId: id
+        } as any);
+    };
 
     return (
         <FlatList
             data={userProduct}
-            keyExtractor={item=>item.id}
-            renderItem={(item: ListRenderItemInfo<Product>)=>(
+            keyExtractor={item => item.id}
+            renderItem={(item: ListRenderItemInfo<Product>) => (
                 <ProductItem title={item.item.title}
                              imgSrc={item.item.imageUrl}
                              price={item.item.price}
-                             onSelect={()=>{}}
+                             onSelect={() => onEditRedirect(item.item.id)}
                 >
-                    <StyledButton primary title="Edit" onPress={()=>{}}/>
-                    <StyledButton primary title="Delete" onPress={()=>dispatch(deleteProduct(item.item.id))}/>
+                    <StyledButton primary title="Edit" onPress={() => onEditRedirect(item.item.id)}/>
+                    <StyledButton primary title="Delete" onPress={() => dispatch(deleteProduct(item.item.id))}/>
                 </ProductItem>
             )}
         />
