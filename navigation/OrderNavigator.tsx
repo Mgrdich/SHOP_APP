@@ -15,7 +15,7 @@ const OrdersNavigator: React.FC = () => {
             screenOptions={screenDefaultOptions}
         >
             <Orders.Screen
-                name={ORDERS_STACK_SCREENS}
+                name={ORDERS_STACK_SCREENS.Orders}
                 component={OrderScreen}
                 options={({route, navigation}) => (
                     {

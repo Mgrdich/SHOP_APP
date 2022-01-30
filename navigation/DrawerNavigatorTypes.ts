@@ -1,9 +1,9 @@
 export enum DRAWERS {
-    Products = 'Products',
-    Orders = 'Orders'
+    ProductsStack = 'ProductsStack',
+    OrdersStack = 'OrdersStack'
 }
 
 export type RootDrawerParams = {
-    [DRAWERS.Products]: undefined,
-    [DRAWERS.Orders]: undefined
+    [DRAWERS.ProductsStack]: undefined,
+    [DRAWERS.OrdersStack]: undefined
 }

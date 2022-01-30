@@ -20,7 +20,7 @@ const DrawerNavigator: React.FC = () => {
                 headerShown: false
             }}
         >
-            <Drawers.Screen name={DRAWERS.Products}
+            <Drawers.Screen name={DRAWERS.ProductsStack}
                             component={ProductsNavigator}
                             options={(navigation, route) => (
                                 {
@@ -34,7 +34,7 @@ const DrawerNavigator: React.FC = () => {
                                 }
                             )}
             />
-            <Drawers.Screen name={DRAWERS.Orders}
+            <Drawers.Screen name={DRAWERS.OrdersStack}
                             component={OrdersNavigator}
                             options={(navigation, route) => (
                                 {
