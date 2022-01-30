@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleSheet} from "react-native";
+import {ProductsNavigatorProps} from "../../navigation/types";
 
-interface EditProductsScreenProps {
 
-}
+// type EditProductsScreenProps = ProductsNavigatorProps<''>;
 
-const EditProductsScreen: React.FC<EditProductsScreenProps> = () => {
+const EditProductsScreen: React.FC/*<EditProductsScreenProps>*/ = () => {
     return (
         <>
         </>

@@ -8,6 +8,7 @@ import {createDrawerNavigator} from "@react-navigation/drawer";
 import {PROJECT_FONTS} from "../constants/Fonts";
 import {Ionicons} from "@expo/vector-icons";
 import Util from "../util/Util";
+import UserNavigator from "./UserNavigator";
 
 const Drawers = createDrawerNavigator<RootDrawerParams>();
 
@@ -42,6 +43,20 @@ const DrawerNavigator: React.FC = () => {
                                     drawerIcon: (drawerConfig) => (
                                         <Ionicons
                                             name={Util.isAndroid ? 'md-list' : 'ios-list'}
+                                            size={23}
+                                            color={drawerConfig.color}
+                                        />
+                                    )
+                                }
+                            )}
+            />
+            <Drawers.Screen name={DRAWERS.UsersStack}
+                            component={UserNavigator}
+                            options={(navigation, route) => (
+                                {
+                                    drawerIcon: (drawerConfig) => (
+                                        <Ionicons
+                                            name={Util.isAndroid ? 'md-create' : 'ios-create'}
                                             size={23}
                                             color={drawerConfig.color}
                                         />
