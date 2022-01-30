@@ -24,8 +24,18 @@ function deleteProduct(state: IProductsState, action: productActionType): IProdu
     }
 }
 
+function createProduct(state: IProductsState, action: productActionType): IProductsState {
+    return state;
+}
+
+function editProduct(state: IProductsState, action: productActionType): IProductsState {
+    return state;
+}
+
 const productsReducer = createReducer<IProductsState, PRODUCTS_ACTIONS>(initialState, {
-    [PRODUCTS_ACTIONS.DELETE_PRODUCT]: deleteProduct
+    [PRODUCTS_ACTIONS.DELETE_PRODUCT]: deleteProduct,
+    [PRODUCTS_ACTIONS.EDIT_PRODUCT]: editProduct,
+    [PRODUCTS_ACTIONS.CREATE_PRODUCT]: createProduct
 });
 
 export default productsReducer;
