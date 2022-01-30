@@ -9,8 +9,8 @@ interface ProductItemProps {
     title: string
     imgSrc: string,
     price: number,
-    onViewDetailPress: Function,
-    onCartPress: Function
+    onViewDetailPress?: Function,
+    onCartPress?: Function
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({imgSrc, price, title, onViewDetailPress, onCartPress}) => {
@@ -28,8 +28,12 @@ const ProductItem: React.FC<ProductItemProps> = ({imgSrc, price, title, onViewDe
                             <StyledText style={styles.price}>${price.toFixed(2)}</StyledText>
                         </View>
                         <View style={styles.actions}>
+                            {onViewDetailPress &&
                             <StyledButton primary title="View Details" onPress={onViewDetailPress}/>
+                            }
+                            {onCartPress &&
                             <StyledButton primary title="To Cart" onPress={onCartPress}/>
+                            }
                         </View>
                     </View>
                 </TouchablePlatform>
