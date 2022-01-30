@@ -11,16 +11,16 @@ interface IOrder {
 
 class Order implements IOrder {
     id = FunctionUtil.generateId()
-    items = []
-    totalAmount = 0
+    items: ICartItemsElement[];
+    totalAmount: number;
     date = new Date()
-    readableDate = ''
+    readableDate: string;
 
-    constructor(items: CartItem[], totalAmount: number, date: Date) {
+    constructor(items: ICartItemsElement[], totalAmount: number, date: Date) {
         this.items = items;
         this.totalAmount = totalAmount;
         this.date = date;
-        this.readableDate = this.date.toString()
+        this.readableDate = this.date.toLocaleDateString()
     }
 
 }

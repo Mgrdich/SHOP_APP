@@ -13,11 +13,11 @@ export interface ICartItemsElement extends ICartItem {
 }
 
 export class CartItem implements ICartItem {
-    id = ''
-    quantity = 0
-    prodPrice = 0
-    prodTitle = ''
-    sum = 0
+    id: string;
+    quantity: number;
+    prodPrice: number;
+    prodTitle: string;
+    sum: number;
 
     constructor({
                     quantity,

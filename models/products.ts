@@ -9,12 +9,12 @@ export interface IProduct {
 
 export class Product implements IProduct {
 
-    id = ''
-    ownerId = ''
-    title = ''
-    imageUrl = ''
-    description = ''
-    price = 0
+    id: string;
+    ownerId: string;
+    title: string;
+    imageUrl: string;
+    description: string;
+    price: number;
 
     constructor(id: string,
                 ownerId: string,
