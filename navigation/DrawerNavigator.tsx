@@ -4,11 +4,11 @@ import {DRAWERS, RootDrawerParams} from "./DrawerNavigatorTypes";
 import StylingColors from "../constants/StylingColors";
 import OrdersNavigator from "./OrderNavigator";
 import ProductsNavigator from "./ProductsNavigator";
+import UserNavigator from "./UserNavigator";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {PROJECT_FONTS} from "../constants/Fonts";
 import {Ionicons} from "@expo/vector-icons";
 import Util from "../util/Util";
-import UserNavigator from "./UserNavigator";
 
 const Drawers = createDrawerNavigator<RootDrawerParams>();
 
