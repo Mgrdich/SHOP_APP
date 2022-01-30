@@ -89,11 +89,29 @@ function clearCart(state: ICartState, action: cartActionType): ICartState {
     return initialState;
 }
 
+function deleteProductFromCart(state: ICartState, action: cartActionType): ICartState {
+    console.log("Worksss");
+    if (!state.items[action.pId]) {
+        return state
+    }
+    const updatedItems = {...state.items}
+
+    const itemTotal = state.items[action.pId].sum;
+    delete updatedItems[action.pId];
+
+    return {
+        ...state,
+        items: updatedItems,
+        totalAmount: FU.toFixedNumber(state.totalAmount - itemTotal)
+    };
+}
+
 const cartReducer = createReducer<ICartState, CART_ACTIONS>(initialState, {
     [CART_ACTIONS.ADD_TO_CART]: addToCart,
     [CART_ACTIONS.REMOVE_FROM_CART]: removeFromCart,
     [CART_ACTIONS.SET_ITEM_QUANTITY]: setQuantity,
-    [CART_ACTIONS.CLEAR_CART]: clearCart
+    [CART_ACTIONS.CLEAR_CART]: clearCart,
+    [CART_ACTIONS.DELETE_PRODUCT]: deleteProductFromCart
 });
 
 export default cartReducer;

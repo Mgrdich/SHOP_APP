@@ -1,11 +1,13 @@
 import {Product} from "../../models/products";
 import {ActionType} from "./types";
+import {PRODUCTS_ACTIONS} from "./products";
 
 export enum CART_ACTIONS {
     ADD_TO_CART = 'ADD_TO_CART',
     REMOVE_FROM_CART = 'REMOVE_FROM_CART',
     SET_ITEM_QUANTITY = 'SET_ITEM_QUANTITY',
-    CLEAR_CART = 'CLEAR_CART'
+    CLEAR_CART = 'CLEAR_CART',
+    DELETE_PRODUCT= PRODUCTS_ACTIONS.DELETE_PRODUCT
 }
 
 type CartAction = ActionType<CART_ACTIONS>
