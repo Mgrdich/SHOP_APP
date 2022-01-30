@@ -14,7 +14,7 @@ const initialState: IOrdersState = {
 type orderActionType = ActionType<ORDERS_ACTIONS>
 
 function addOrder(state: IOrdersState, action: orderActionType): IOrdersState {
-    const newOrder: Order = new Order(action.orderDate.items, action.orderDate.amount, new Date());
+    const newOrder: Order = new Order(action.orderData.items, action.orderData.amount, new Date());
     return {
         ...state,
         orders: state.orders.concat(newOrder)

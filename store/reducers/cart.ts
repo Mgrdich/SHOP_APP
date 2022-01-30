@@ -85,10 +85,15 @@ function setQuantity(state: ICartState, action: cartActionType): ICartState {
     }
 }
 
+function clearCart(state: ICartState, action: cartActionType): ICartState {
+    return initialState;
+}
+
 const cartReducer = createReducer<ICartState, CART_ACTIONS>(initialState, {
     [CART_ACTIONS.ADD_TO_CART]: addToCart,
     [CART_ACTIONS.REMOVE_FROM_CART]: removeFromCart,
-    [CART_ACTIONS.SET_ITEM_QUANTITY]: setQuantity
+    [CART_ACTIONS.SET_ITEM_QUANTITY]: setQuantity,
+    [CART_ACTIONS.CLEAR_CART]: clearCart
 });
 
 export default cartReducer;
