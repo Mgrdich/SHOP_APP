@@ -2,14 +2,14 @@ import React from 'react';
 import {StyleSheet, TextInput, TextInputProps, View} from "react-native";
 import StyledText from "../Styled/StyledText";
 
-interface InputLabelProps extends TextInputProps{
+interface InputLabelProps extends TextInputProps {
     title: string
 }
 
-const InputLabel: React.FC<InputLabelProps> = ({title,textInputProps}) => {
+const InputLabel: React.FC<InputLabelProps> = ({title, ...textInputProps}) => {
     return (
         <View style={styles.formControl}>
-            <StyledText style={styles.label} bold>{title}</StyledText>
+            <StyledText bold style={styles.label}>{title}</StyledText>
             <TextInput {...textInputProps} style={styles.input}/>
         </View>
     );

@@ -52,7 +52,18 @@ const OrdersNavigator: React.FC = () => {
                 component={EditProductsScreen}
                 options={({route, navigation}) => (
                     {
-                        headerLeft: null
+                        headerLeft: null,
+                        title: route.params.prodId ? 'Edit Product' : 'Add Product',
+                        headerRight: () => (
+                            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                                <Item
+                                    title="Save"
+                                    iconName={Util.isAndroid ? 'md-checkmark' : 'ios-checkmark'}
+                                    onPress={() => {route.params.submit()}}
+                                />
+                            </HeaderButtons>
+                        )
+
                     }
                 )}
             />
