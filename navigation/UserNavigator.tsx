@@ -6,7 +6,7 @@ import {RootUsersStackParamList, USERS_STACK_SCREENS} from "./UserNavigatorTypes
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import HeaderButton from "../components/UI/HeaderButton";
 import UserProductsScreen from "../screens/user/UserProductsScreen";
-import EditProductsScreen from "../screens/user/EditProductsScreen";
+import AddEditProductsScreen from "../screens/user/AddEditProductsScreen";
 
 const Users = createNativeStackNavigator<RootUsersStackParamList>();
 
@@ -49,7 +49,7 @@ const OrdersNavigator: React.FC = () => {
             />
             <Users.Screen
                 name={USERS_STACK_SCREENS.EDIT_USER}
-                component={EditProductsScreen}
+                component={AddEditProductsScreen}
                 options={({route, navigation}) => (
                     {
                         headerLeft: null,

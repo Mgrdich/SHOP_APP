@@ -6,9 +6,9 @@ import StyledText from "../../components/Styled/StyledText";
 import InputLabel from "../../components/UI/InputLabel";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 
-type EditProductsScreenProps = UsersNavigatorProps<USERS_STACK_SCREENS.EDIT_USER>;
+type AddEditProductsScreenProps = UsersNavigatorProps<USERS_STACK_SCREENS.EDIT_USER>;
 
-const EditProductsScreen: React.FC<EditProductsScreenProps> = ({navigation, route}) => {
+const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation, route}) => {
     const prodId: string = route.params.prodId;
     const editedProduct = useAppSelector(state =>
         state.products.userProducts.find(prod => prod.id === prodId)
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default EditProductsScreen;
+export default AddEditProductsScreen;
