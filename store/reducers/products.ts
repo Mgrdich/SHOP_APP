@@ -1,8 +1,9 @@
 import {Product} from "../../models/products";
 import {DUMMY_PRODUCTS} from "../../data/dummy-data";
-import {PRODUCTS_ACTIONS} from "../actions/products";
+import {productDataType, PRODUCTS_ACTIONS} from "../actions/products";
 import createReducer from "./helper";
 import {ActionType} from "../actions/types";
+import FunctionUtil from "../../util/FunctionUtil";
 
 export interface IProductsState {
     availableProducts: Product[]
@@ -25,11 +26,42 @@ function deleteProduct(state: IProductsState, action: productActionType): IProdu
 }
 
 function createProduct(state: IProductsState, action: productActionType): IProductsState {
-    return state;
+    const productData: productDataType = action.productData;
+
+    const newProduct: Product = new Product(
+        FunctionUtil.generateId(),
+        'u1',
+        productData.title,
+        productData.imageUrl,
+        productData.description,
+        productData.price
+    );
+
+    return {
+        ...state,
+        availableProducts: state.availableProducts.concat(newProduct),
+        userProducts: state.userProducts.concat(newProduct)
+    };
 }
 
 function editProduct(state: IProductsState, action: productActionType): IProductsState {
-    return state;
+    const productIndex:number = state.userProducts.findIndex(prod=> prod.id === action.pId);
+    const productData: productDataType = action.productData;
+
+
+    const updatedProduct = new Product(
+        action.pId,
+        state.userProducts[productIndex].ownerId,
+        productData.title,
+        productData.imageUrl,
+        productData.description,
+        productData.price
+    );
+
+    return {
+        ...state,
+
+    }
 }
 
 const productsReducer = createReducer<IProductsState, PRODUCTS_ACTIONS>(initialState, {

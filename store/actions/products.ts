@@ -15,10 +15,10 @@ export function deleteProduct(id: string): ProductActionType {
     }
 }
 
-// TODO check whether to refactor this
-type productType = { title: string, description: string, imageUrl: string, price: string };
 
-export function createProduct(product: productType): ProductActionType {
+export type productDataType = { title: string, description: string, imageUrl: string, price: number };
+
+export function createProduct(product: productDataType): ProductActionType {
     return {
         type: PRODUCTS_ACTIONS.CREATE_PRODUCT,
         productData: {
@@ -30,7 +30,7 @@ export function createProduct(product: productType): ProductActionType {
     }
 }
 
-export function editProduct(id: string, product: productType): ProductActionType {
+export function editProduct(id: string, product: productDataType): ProductActionType {
     return {
         type: PRODUCTS_ACTIONS.EDIT_PRODUCT,
         pId: id,
