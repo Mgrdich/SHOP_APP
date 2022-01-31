@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, ListRenderItemInfo, StyleSheet} from "react-native";
+import {Alert, FlatList, ListRenderItemInfo, StyleSheet} from "react-native";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import ProductItem from "../../components/shop/ProductItem";
 import {Product} from "../../models/products";
@@ -21,6 +21,17 @@ const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = ({navigation})
         } as any);
     };
 
+    const deleteHandler = (id: string) => {
+        Alert.alert('Are you sure?', 'Do you really want to delete this item?', [
+            {text: 'No', style: 'default'},
+            {
+                text: 'Yes', style: 'destructive', onPress: () => {
+                    dispatch(deleteProduct(id));
+                }
+            }
+        ]);
+    };
+
     return (
         <FlatList
             data={userProduct}
@@ -32,7 +43,7 @@ const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = ({navigation})
                              onSelect={() => onEditRedirect(item.item.id)}
                 >
                     <StyledButton primary title="Edit" onPress={() => onEditRedirect(item.item.id)}/>
-                    <StyledButton primary title="Delete" onPress={() => dispatch(deleteProduct(item.item.id))}/>
+                    <StyledButton primary title="Delete" onPress={() => deleteHandler(item.item.id)}/>
                 </ProductItem>
             )}
         />

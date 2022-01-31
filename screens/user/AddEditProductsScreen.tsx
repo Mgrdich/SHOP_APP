@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, View} from "react-native";
+import {Alert, ScrollView, StyleSheet, View} from "react-native";
 import {UsersNavigatorProps} from "../../navigation/types";
 import {USERS_STACK_SCREENS} from "../../navigation/UserNavigatorTypes";
 import StyledText from "../../components/Styled/StyledText";
@@ -51,9 +51,6 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
 
     return (
         <ScrollView>
-            <StyledText>
-                {route.params.prodId}
-            </StyledText>
             <View style={styles.form}>
                 <InputLabel value={title}
                             onChangeText={text => setTitle(text)}
