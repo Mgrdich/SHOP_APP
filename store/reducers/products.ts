@@ -45,9 +45,8 @@ function createProduct(state: IProductsState, action: productActionType): IProdu
 }
 
 function editProduct(state: IProductsState, action: productActionType): IProductsState {
-    const productIndex:number = state.userProducts.findIndex(prod=> prod.id === action.pId);
+    const productIndex: number = state.userProducts.findIndex(prod => prod.id === action.pId);
     const productData: productDataType = action.productData;
-
 
     const updatedProduct = new Product(
         action.pId,
@@ -58,10 +57,18 @@ function editProduct(state: IProductsState, action: productActionType): IProduct
         productData.price
     );
 
+    const updatedUserProducts:Product[] = [...state.userProducts];
+    updatedUserProducts[productIndex] = updatedProduct;
+
+    const availableProductIndex:number = state.availableProducts.findIndex(prod => prod.id === action.pId);
+    const availableProducts:Product[] = [...state.availableProducts];
+    updatedUserProducts[availableProductIndex] = updatedProduct;
+
     return {
         ...state,
-
-    }
+        userProducts:updatedUserProducts,
+        availableProducts: availableProducts
+    };
 }
 
 const productsReducer = createReducer<IProductsState, PRODUCTS_ACTIONS>(initialState, {
