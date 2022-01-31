@@ -90,7 +90,6 @@ function clearCart(state: ICartState, action: cartActionType): ICartState {
 }
 
 function deleteProductFromCart(state: ICartState, action: cartActionType): ICartState {
-    console.log("Worksss");
     if (!state.items[action.pId]) {
         return state
     }

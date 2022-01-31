@@ -63,7 +63,7 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
                             onChangeText={text => setImageUrl(text)}
                             title="Image Url"
                 />
-                <InputLabel value={price.toString()}
+                <InputLabel value={price ? price.toString() : price}
                             onChangeText={text => setPrice(parseFloat(text))}
                             title="Price"
                             keyboardType="numeric"
