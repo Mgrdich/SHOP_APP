@@ -17,4 +17,13 @@ export default class FunctionUtil {
     static toFixedNumber(number: number, toFixedNumber: number = 2): number {
         return parseFloat(number.toFixed(toFixedNumber));
     }
+
+
+    static isNumber(element: any): boolean {
+        return typeof element === 'number';
+    }
+
+    static isString(element: any): boolean {
+        return typeof element === 'string';
+    }
 }
