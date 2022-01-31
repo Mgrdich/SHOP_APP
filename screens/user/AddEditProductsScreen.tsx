@@ -5,6 +5,7 @@ import {USERS_STACK_SCREENS} from "../../navigation/UserNavigatorTypes";
 import StyledText from "../../components/Styled/StyledText";
 import InputLabel from "../../components/UI/InputLabel";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import {createProduct, editProduct, productDataType} from "../../store/actions/products";
 
 type AddEditProductsScreenProps = UsersNavigatorProps<USERS_STACK_SCREENS.EDIT_USER>;
 
@@ -13,6 +14,7 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
     const editedProduct = useAppSelector(state =>
         state.products.userProducts.find(prod => prod.id === prodId)
     );
+    const isEditPage: boolean = !!editedProduct;
 
     const dispatch = useAppDispatch();
 
@@ -21,17 +23,30 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
     const [imageUrl, setImageUrl] = useState<string>(
         editedProduct ? editedProduct.imageUrl : ''
     );
-    const [price, setPrice] = useState<string>('');
+    const [price, setPrice] = useState<number>(editedProduct ? editedProduct.price : null);
     const [description, setDescription] = useState<string>(
         editedProduct ? editedProduct.description : ''
     );
 
     const submitHandler = useCallback(function () {
+        let obj: productDataType = {
+            title: title,
+            price: price,
+            description: description,
+            imageUrl: imageUrl
+        };
+
+        if (isEditPage) {
+            dispatch(editProduct(prodId, obj));
+        } else {
+            dispatch(createProduct(obj));
+        }
+
         navigation.goBack();
-    }, []);
+    }, [isEditPage, title, imageUrl, price, description, dispatch]);
 
     useEffect(() => {
-        navigation.setParams({ submit: submitHandler });
+        navigation.setParams({submit: submitHandler});
     }, [submitHandler]);
 
     return (
@@ -49,7 +64,7 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
                             title="Image Url"
                 />
                 <InputLabel value={price}
-                            onChangeText={text => setPrice(text)}
+                            onChangeText={text => setPrice(parseFloat(text))}
                             title="Price"
                 />
                 <InputLabel value={description}
