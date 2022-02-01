@@ -61,7 +61,8 @@ function formReducer(state: State, action: Action): State {
     }
 }
 
-function useForm(initialState, config: useFormConfig): {
+export default function useForm(initialState, config?: useFormConfig): {
+    // store the config with Ref if the user should assign it once
     state: State,
     resetFormToInitial: Function,
     deleteFormData: Function,
@@ -73,7 +74,7 @@ function useForm(initialState, config: useFormConfig): {
         errors: {}
     }
 
-    // TODO some kind of bug
+    // TODO some kind of bug with ts-lint
     const [state, dispatch] = useReducer(formReducer, initialRedState as any);
 
     const resetFormToInitial = useCallback(function () {
@@ -84,15 +85,13 @@ function useForm(initialState, config: useFormConfig): {
         dispatch({type: USE_FORM_ACTION.RESET_TO_INITIAL, initialState});
     }, [dispatch]);
 
-    const onChangeHandler = useCallback(function (event: SyntheticEvent) {
+    const onChangeHandler = useCallback(function (name, value) {
         // couple of dispatches get thrown into a single render which is and optimization
-
-        const {name, value} = event.target;
 
         // update values
         dispatch({type: USE_FORM_ACTION.UPDATE, name: name, value: value});
 
-        if (config.validationRules.length) {
+        if (config?.validationRules.length) {
             for (const rule of config.validationRules) {
                 if (!rule.validate(value)) {
                     dispatch({type: USE_FORM_ACTION.SET_INPUT_ERROR, name: name, value: value});
@@ -100,8 +99,7 @@ function useForm(initialState, config: useFormConfig): {
             }
         }
 
-    }, [dispatch, config.validationRules]);
-
+    }, [dispatch, config?.validationRules]);
 
     return {state, resetFormToInitial, deleteFormData, onChangeHandler};
 }
