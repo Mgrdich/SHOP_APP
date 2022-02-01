@@ -1,8 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, ScrollView, StyleSheet, View} from "react-native";
+import {ScrollView, StyleSheet, View} from "react-native";
 import {UsersNavigatorProps} from "../../navigation/types";
 import {USERS_STACK_SCREENS} from "../../navigation/UserNavigatorTypes";
-import StyledText from "../../components/Styled/StyledText";
 import InputLabel from "../../components/UI/InputLabel";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {createProduct, editProduct, productDataType} from "../../store/actions/products";
@@ -55,6 +54,8 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
                 <InputLabel value={title}
                             onChangeText={text => setTitle(text)}
                             title="Title"
+                            autoCapitalize="sentences"
+                            autoCorrect
                 />
                 <InputLabel value={imageUrl}
                             onChangeText={text => setImageUrl(text)}
@@ -63,7 +64,7 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
                 <InputLabel value={price ? price.toString() : price}
                             onChangeText={text => setPrice(parseFloat(text))}
                             title="Price"
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                 />
                 <InputLabel value={description}
                             onChangeText={text => setDescription(text)}
