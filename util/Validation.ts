@@ -29,7 +29,7 @@ class Validation {
         );
     }
 
-    static maxLengthRule(inputName, maxCharacters) {
+    static maxLengthRule(inputName: string, maxCharacters: number): validationRuleType {
         return Validation.createValidationRule(
             'maxLength',
             `${inputName} cannot contain more than ${maxCharacters} characters`,
@@ -37,7 +37,7 @@ class Validation {
         );
     }
 
-    static passwordMatchRule() {
+    static passwordMatchRule(): validationRuleType {
         return Validation.createValidationRule(
             'passwordMatch',
             `passwords do not match`,

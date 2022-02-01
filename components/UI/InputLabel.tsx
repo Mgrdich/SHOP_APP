@@ -3,14 +3,19 @@ import {StyleSheet, TextInput, TextInputProps, View} from "react-native";
 import StyledText from "../Styled/StyledText";
 
 interface InputLabelProps extends TextInputProps {
-    title: string
+    title: string,
+    isValid?:boolean,
+    errorMessage?:string
 }
 
-const InputLabel: React.FC<InputLabelProps> = ({title, ...textInputProps}) => {
+const InputLabel: React.FC<InputLabelProps> = ({title, isValid, errorMessage,...textInputProps}) => {
     return (
         <View style={styles.formControl}>
             <StyledText bold style={styles.label}>{title}</StyledText>
             <TextInput {...textInputProps} style={styles.input}/>
+            {errorMessage && !isValid && (
+                <StyledText className="error">{errorMessage}</StyledText>
+            )}
         </View>
     );
 };
