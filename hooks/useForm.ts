@@ -1,4 +1,4 @@
-import {Dispatch, ReducerAction, SyntheticEvent, useCallback, useReducer} from "react";
+import {SyntheticEvent, useCallback, useReducer} from "react";
 
 enum USE_FORM_ACTION {
     RESET_TO_INITIAL = 'RESET_TO_INITIAL',
@@ -12,8 +12,12 @@ type useFormConfig = {
 }
 
 interface State {
-    formData: {},
-    errors: {}
+    formData: {
+        [key: string]: any
+    },
+    errors: {
+        [key: string]: any
+    }
 }
 
 interface Action {
@@ -56,16 +60,15 @@ function formReducer(state:State, action:Action):State {
     }
 }
 
-
 function useForm(initialState, config: useFormConfig) {
 
     const initialRedState: State = {
-        formData: {},
+        formData: initialState,
         errors: {}
     }
 
     // TODO some kind of bug
-    const [state, dispatch]= useReducer(formReducer, initialRedState as any);
+    const [state, dispatch] = useReducer(formReducer, initialRedState as any);
 
     const resetFormToInitial = useCallback(function () {
         dispatch({type: USE_FORM_ACTION.DELETE_DORM_DATA});
