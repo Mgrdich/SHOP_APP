@@ -1,4 +1,4 @@
-import {useCallback, useReducer} from "react";
+import {SyntheticEvent, useCallback, useReducer} from "react";
 import {ActionType} from "../store/actions/types";
 
 enum USE_FORM_ACTION {
@@ -21,9 +21,12 @@ function formReducer<T>(state: formStateType<T>, action: ActionType<USE_FORM_ACT
     switch (action.type) {
         case USE_FORM_ACTION.UPDATE:
             return {
-                ...state
+                ...state,
+                formData: {
+                    ...state.formData,
+                    [action.name]: action.value
+                }
             }
-
         case USE_FORM_ACTION.RESET_TO_INITIAL:
             return {
                 ...state,
@@ -51,11 +54,11 @@ function formReducer<T>(state: formStateType<T>, action: ActionType<USE_FORM_ACT
 
 
 function useForm<T>(initialState: T, config: useFormConfig) {
-    const formState: formStateType<T> = {
+
+    const [state, dispatch] = useReducer<formStateType<T>>(formReducer, {
         formData: initialState,
         errors: {}
-    };
-    const [state, dispatch] = useReducer<formStateType<T>>(formReducer, formState);
+    });
 
     const resetFormToInitial = useCallback(function () {
         dispatch({type: USE_FORM_ACTION.DELETE_DORM_DATA});
@@ -65,5 +68,24 @@ function useForm<T>(initialState: T, config: useFormConfig) {
         dispatch({type: USE_FORM_ACTION.RESET_TO_INITIAL, initialState});
     }, [dispatch]);
 
-    return {state, resetFormToInitial, deleteFormData}
+    const onChangeHandler = useCallback(function (event: SyntheticEvent) {
+        // couple of dispatches get thrown into a single render which is and optimization
+
+        const { name, value } = event;
+
+        // update values
+        dispatch({type:USE_FORM_ACTION.UPDATE, name:name, value:value});
+
+        if(config.validationRules.length) {
+            for (const rule of config.validationRules) {
+                if(!rule.validate(value)) {
+                    dispatch({type:USE_FORM_ACTION.SET_INPUT_ERROR, name:name, value:value});
+                }
+            }
+        }
+
+    }, [dispatch, config.validationRules]);
+
+
+    return {state, resetFormToInitial, deleteFormData, onChangeHandler}
 }
