@@ -22,10 +22,11 @@ interface State {
 
 interface Action {
     type: USE_FORM_ACTION
+
     [key: string]: any
 }
 
-function formReducer(state:State, action:Action):State {
+function formReducer(state: State, action: Action): State {
     switch (action.type) {
         case USE_FORM_ACTION.UPDATE:
             return {
@@ -60,7 +61,12 @@ function formReducer(state:State, action:Action):State {
     }
 }
 
-function useForm(initialState, config: useFormConfig) {
+function useForm(initialState, config: useFormConfig): {
+    state: State,
+    resetFormToInitial: Function,
+    deleteFormData: Function,
+    onChangeHandler: Function
+} {
 
     const initialRedState: State = {
         formData: initialState,
@@ -97,5 +103,5 @@ function useForm(initialState, config: useFormConfig) {
     }, [dispatch, config.validationRules]);
 
 
-    return {state, resetFormToInitial, deleteFormData, onChangeHandler}
+    return {state, resetFormToInitial, deleteFormData, onChangeHandler};
 }
