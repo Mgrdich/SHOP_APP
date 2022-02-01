@@ -29,5 +29,19 @@ class Validation {
         );
     }
 
-    
+    static maxLengthRule(inputName, maxCharacters) {
+        return Validation.createValidationRule(
+            'maxLength',
+            `${inputName} cannot contain more than ${maxCharacters} characters`,
+            (inputValue, formObj) => inputValue.length <= maxCharacters
+        );
+    }
+
+    static passwordMatchRule() {
+        return Validation.createValidationRule(
+            'passwordMatch',
+            `passwords do not match`,
+            (inputValue, formObj) => inputValue === formObj.password.value
+        );
+    }
 }
