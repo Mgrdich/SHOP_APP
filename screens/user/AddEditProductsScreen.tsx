@@ -1,10 +1,11 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View} from "react-native";
 import {UsersNavigatorProps} from "../../navigation/types";
 import {USERS_STACK_SCREENS} from "../../navigation/UserNavigatorTypes";
 import InputLabel from "../../components/UI/InputLabel";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {createProduct, editProduct, productDataType} from "../../store/actions/products";
+import useForm from "../../hooks/useForm";
 
 type AddEditProductsScreenProps = UsersNavigatorProps<USERS_STACK_SCREENS.EDIT_USER>;
 
@@ -15,60 +16,51 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
     );
     const isEditPage: boolean = !!editedProduct;
 
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();  
 
-    // TODO Hook me up in a custom one
-    const [title, setTitle] = useState<string>(editedProduct ? editedProduct.title : '');
-    const [imageUrl, setImageUrl] = useState<string>(
-        editedProduct ? editedProduct.imageUrl : ''
-    );
-    const [price, setPrice] = useState<number>(editedProduct ? editedProduct.price : null);
-    const [description, setDescription] = useState<string>(
-        editedProduct ? editedProduct.description : ''
-    );
+    const {state, onChangeHandler} = useForm({
+        title: editedProduct ? editedProduct.title : '',
+        imageUrl: editedProduct ? editedProduct.imageUrl : '',
+        price: editedProduct ? editedProduct.price : null,
+        description: editedProduct ? editedProduct.description : ''
+    });
 
     const submitHandler = useCallback(function () {
-        let obj: productDataType = {
-            title: title,
-            price: price,
-            description: description,
-            imageUrl: imageUrl
-        };
-
         if (isEditPage) {
-            dispatch(editProduct(prodId, obj));
+            dispatch(editProduct(prodId, state.formData as productDataType));
         } else {
-            dispatch(createProduct(obj));
+            dispatch(createProduct(state.formData as productDataType));
         }
 
         navigation.goBack();
-    }, [isEditPage, title, imageUrl, price, description, dispatch]);
+    }, [isEditPage, state.formData, dispatch]);
 
     useEffect(() => {
         navigation.setParams({submit: submitHandler});
     }, [submitHandler]);
 
+
     return (
         <ScrollView>
             <View style={styles.form}>
-                <InputLabel value={title}
-                            onChangeText={text => setTitle(text)}
+                <InputLabel onChangeText={(text) => onChangeHandler('title', text)}
                             title="Title"
                             autoCapitalize="sentences"
                             autoCorrect
+                            value={state.formData['title']}
                 />
-                <InputLabel value={imageUrl}
-                            onChangeText={text => setImageUrl(text)}
+                <InputLabel onChangeText={(text) => onChangeHandler('imageUrl', text)}
                             title="Image Url"
+                            value={state.formData['imageUrl']}
                 />
-                <InputLabel value={price ? price.toString() : price}
-                            onChangeText={text => setPrice(parseFloat(text))}
+                <InputLabel onChangeText={(text) => onChangeHandler('price', parseFloat(text))}
                             title="Price"
                             keyboardType="decimal-pad"
+                            value={state.formData['price'].toString()}
                 />
-                <InputLabel value={description}
-                            onChangeText={text => setDescription(text)}
+                <InputLabel onChangeText={(text) => onChangeHandler('description', text)}
                             title="Description"
+                            value={state.formData['description']}
                 />
             </View>
         </ScrollView>
