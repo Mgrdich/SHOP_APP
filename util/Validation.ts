@@ -1,4 +1,4 @@
-import FU  from "./FunctionUtil";
+import FU from "./FunctionUtil";
 
 export type validationRuleType = {
     name: string,
@@ -6,7 +6,23 @@ export type validationRuleType = {
     validate: (...args) => boolean,
 };
 
+enum ValidationRules {
+    required = 'required',
+    number = 'number',
+    minLength = 'minLength',
+    maxLength = 'maxLength',
+    passwordMatch = 'passwordMatch'
+}
+
 export default class Validation {
+    private static RULES = {
+        [ValidationRules.required]: Validation.requiredRule,
+        [ValidationRules.number]: Validation.numberRule,
+        [ValidationRules.minLength]: Validation.minLengthRule,
+        [ValidationRules.maxLength]: Validation.maxLengthRule,
+        [ValidationRules.passwordMatch]: Validation.passwordMatchRule,
+    };
+
     private static createValidationRule(ruleName: string, errorMessage: string, validateFunc: Function): validationRuleType {
         return {
             name: ruleName,
@@ -17,13 +33,13 @@ export default class Validation {
 
     static requiredRule(inputName: string): validationRuleType {
         return Validation.createValidationRule(
-            'required',
+            ValidationRules.required,
             `${inputName} required`,
             (inputValue, formObj) => inputValue.length !== 0
         );
     }
 
-    static numberRule(inputName:string | number):validationRuleType {
+    static numberRule(inputName: string | number): validationRuleType {
         return Validation.createValidationRule(
             'required',
             `${inputName} required`,
@@ -40,7 +56,7 @@ export default class Validation {
 
     static minLengthRule(inputName: string, minCharacters: number): validationRuleType {
         return Validation.createValidationRule(
-            'minLength',
+            ValidationRules.minLength,
             `${inputName} should contain atleast ${minCharacters} characters`,
             (inputValue, formObj) => inputValue.length >= minCharacters
         );
@@ -48,17 +64,23 @@ export default class Validation {
 
     static maxLengthRule(inputName: string, maxCharacters: number): validationRuleType {
         return Validation.createValidationRule(
-            'maxLength',
+            ValidationRules.maxLength,
             `${inputName} cannot contain more than ${maxCharacters} characters`,
             (inputValue, formObj) => inputValue.length <= maxCharacters
         );
     }
 
-    static passwordMatchRule(): validationRuleType {
+    static passwordMatchRule(inputName: string): validationRuleType {
         return Validation.createValidationRule(
-            'passwordMatch',
-            `passwords do not match`,
+            ValidationRules.passwordMatch,
+            `${inputName} do not match`,
             (inputValue, formObj) => inputValue === formObj.password.value
         );
+    }
+
+    static combineRules(inputName: string, rules: ValidationRules[]): validationRuleType[] {
+        return rules.map(function (item:ValidationRules) {
+            return Validation.RULES[item](inputName);
+        });
     }
 }
