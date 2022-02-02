@@ -18,12 +18,19 @@ export default class FunctionUtil {
         return parseFloat(number.toFixed(toFixedNumber));
     }
 
-
     static isNumber(element: any): boolean {
         return typeof element === 'number';
     }
 
     static isString(element: any): boolean {
         return typeof element === 'string';
+    }
+
+    static isArray(element: any): boolean {
+        return Array.isArray(element);
+    }
+
+    static isNaN(element: any): boolean {
+        return isNaN(element);
     }
 }

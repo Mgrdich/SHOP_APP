@@ -1,4 +1,6 @@
 import {useCallback, useReducer} from "react";
+import {validationRuleType} from "../util/Validation";
+import FunctionUtil from "../util/FunctionUtil";
 
 enum USE_FORM_ACTION {
     RESET_TO_INITIAL = 'RESET_TO_INITIAL',
@@ -7,8 +9,10 @@ enum USE_FORM_ACTION {
     UPDATE = 'UPDATE'
 }
 
+type itemValidationConfig = validationRuleType | validationRuleType[]
+
 type useFormConfig = {
-    validationRules: validationRuleType[],
+    [key: string]: itemValidationConfig
 }
 
 interface State {
@@ -61,7 +65,7 @@ function formReducer(state: State, action: Action): State {
     }
 }
 
-export default function useForm(initialState, config?: useFormConfig): {
+export default function useForm(initialState, validationConfig?: useFormConfig): {
     // store the config with Ref if the user should assign it once
     state: State,
     resetFormToInitial: Function,
@@ -91,17 +95,32 @@ export default function useForm(initialState, config?: useFormConfig): {
         // update values
         dispatch({type: USE_FORM_ACTION.UPDATE, name: name, value: value});
 
-        if (config?.validationRules.length) {
-            for (const rule of config.validationRules) {
-                if (!rule.validate(value)) {
-                    dispatch({type: USE_FORM_ACTION.SET_INPUT_ERROR, name: name, value: value});
-                    // errors are in order
-                    break;
+        if (validationConfig) {
+            const validationItemConfig: itemValidationConfig = validationConfig[name];
+
+            if (FunctionUtil.isArray(validationConfig[name])) {
+
+                for (const rule of validationItemConfig) {
+                    if (!rule.validate(value)) {
+                        dispatch({type: USE_FORM_ACTION.SET_INPUT_ERROR, name: name, error: rule.message});
+                        // errors are in order
+                        break;
+                    }
                 }
+                return;
+            }
+            const isValid: boolean = (validationItemConfig as validationRuleType).validate(value);
+
+            if(!isValid) {
+                dispatch({
+                    type: USE_FORM_ACTION.SET_INPUT_ERROR,
+                    name: name,
+                    error: (validationItemConfig as validationRuleType).message
+                });
             }
         }
 
-    }, [dispatch, config?.validationRules]);
+    }, [dispatch, validationConfig]);
 
     return {state, resetFormToInitial, deleteFormData, onChangeHandler};
 }

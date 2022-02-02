@@ -1,10 +1,12 @@
-type validationRuleType = {
+import FU  from "./FunctionUtil";
+
+export type validationRuleType = {
     name: string,
     message: string,
-    validate: Function,
+    validate: (...args) => boolean,
 };
 
-class Validation {
+export default class Validation {
     private static createValidationRule(ruleName: string, errorMessage: string, validateFunc: Function): validationRuleType {
         return {
             name: ruleName,
@@ -18,6 +20,21 @@ class Validation {
             'required',
             `${inputName} required`,
             (inputValue, formObj) => inputValue.length !== 0
+        );
+    }
+
+    static numberRule(inputName:string | number):validationRuleType {
+        return Validation.createValidationRule(
+            'required',
+            `${inputName} required`,
+            (inputValue, formObj) => {
+                if (FU.isString(inputValue)) {
+                    inputName = parseFloat(inputName as string);
+                    return !FU.isNaN(inputName);
+                }
+
+                return FU.isNumber(inputValue);
+            }
         );
     }
 

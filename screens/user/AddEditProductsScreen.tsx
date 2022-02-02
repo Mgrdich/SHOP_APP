@@ -6,8 +6,17 @@ import InputLabel from "../../components/UI/InputLabel";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {createProduct, editProduct, productDataType} from "../../store/actions/products";
 import useForm from "../../hooks/useForm";
+import Validation from "../../util/Validation";
+
 
 type AddEditProductsScreenProps = UsersNavigatorProps<USERS_STACK_SCREENS.EDIT_USER>;
+
+enum FORM_NAMES {
+    title = 'title',
+    imageUrl = 'imageUrl',
+    price = 'price',
+    description = 'description'
+}
 
 const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation, route}) => {
     const prodId: string = route.params.prodId;
@@ -16,13 +25,18 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
     );
     const isEditPage: boolean = !!editedProduct;
 
-    const dispatch = useAppDispatch();  
+    const dispatch = useAppDispatch();
 
     const {state, onChangeHandler} = useForm({
-        title: editedProduct ? editedProduct.title : '',
-        imageUrl: editedProduct ? editedProduct.imageUrl : '',
-        price: editedProduct ? editedProduct.price : null,
-        description: editedProduct ? editedProduct.description : ''
+        [FORM_NAMES.title]: editedProduct ? editedProduct.title : '',
+        [FORM_NAMES.imageUrl]: editedProduct ? editedProduct.imageUrl : '',
+        [FORM_NAMES.price]: editedProduct ? editedProduct.price : null,
+        [FORM_NAMES.description]: editedProduct ? editedProduct.description : ''
+    }, {
+        [FORM_NAMES.title]: Validation.requiredRule(FORM_NAMES.title),
+        [FORM_NAMES.imageUrl]: [Validation.requiredRule(FORM_NAMES.imageUrl)],
+        [FORM_NAMES.price]: [Validation.requiredRule(FORM_NAMES.price), Validation.numberRule(FORM_NAMES.price)],
+        [FORM_NAMES.description]: [Validation.requiredRule(FORM_NAMES.description)]
     });
 
     const submitHandler = useCallback(function () {
