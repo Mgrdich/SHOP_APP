@@ -1,4 +1,4 @@
-import {SyntheticEvent, useCallback, useReducer} from "react";
+import {useCallback, useReducer} from "react";
 
 enum USE_FORM_ACTION {
     RESET_TO_INITIAL = 'RESET_TO_INITIAL',
@@ -95,6 +95,8 @@ export default function useForm(initialState, config?: useFormConfig): {
             for (const rule of config.validationRules) {
                 if (!rule.validate(value)) {
                     dispatch({type: USE_FORM_ACTION.SET_INPUT_ERROR, name: name, value: value});
+                    // errors are in order
+                    break;
                 }
             }
         }
