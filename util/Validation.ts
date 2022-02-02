@@ -11,7 +11,8 @@ export enum ValidationRules {
     number = 'number',
     minLength = 'minLength',
     maxLength = 'maxLength',
-    passwordMatch = 'passwordMatch'
+    passwordMatch = 'passwordMatch',
+    email = 'email'
 }
 
 export default class Validation {
@@ -78,8 +79,17 @@ export default class Validation {
         );
     }
 
+    // TODO REGEX Me
+    static emailRule(inputName:string): validationRuleType {
+        return Validation.createValidationRule(
+            ValidationRules.email,
+            `${inputName} not a valid mail`,
+            (inputValue, formObj) => inputValue === formObj.password.value
+        );
+    }
+
     static combineRules(inputName: string, rules: ValidationRules[]): validationRuleType[] {
-        return rules.map(function (item:ValidationRules) {
+        return rules.map(function (item: ValidationRules) {
             return Validation.RULES[item](inputName);
         });
     }
