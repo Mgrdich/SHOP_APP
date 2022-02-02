@@ -72,7 +72,7 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
                 <InputLabel onChangeText={(text) => onChangeHandler('price', parseFloat(text))}
                             title="Price"
                             keyboardType="decimal-pad"
-                            value={state.formData['price']?.toString()}
+                            value={state.formData['price']}
                 />
                 <InputLabel onChangeText={(text) => onChangeHandler('description', text)}
                             title="Description"

@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, TextInput, TextInputProps, View} from "react-native";
 import StyledText from "../Styled/StyledText";
+import FU from "../../util/FunctionUtil";
 
 interface InputLabelProps extends TextInputProps {
     title: string,
@@ -8,12 +9,17 @@ interface InputLabelProps extends TextInputProps {
     errorMessage?:string
 }
 
-// TODO maybe add number support
-const InputLabel: React.FC<InputLabelProps> = ({title, isValid, errorMessage,...textInputProps}) => {
+const InputLabel: React.FC<InputLabelProps> = ({title, isValid, errorMessage, value ,...textInputProps}) => {
+    let strValue: string = '';
+
+    if (value) {
+        strValue = FU.isString(value) ? value : value.toString();
+    }
+
     return (
         <View style={styles.formControl}>
             <StyledText bold style={styles.label}>{title}</StyledText>
-            <TextInput {...textInputProps} style={styles.input}/>
+            <TextInput {...textInputProps} style={styles.input} value={strValue}/>
             {errorMessage && !isValid && (
                 <StyledText className="error">{errorMessage}</StyledText>
             )}
