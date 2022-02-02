@@ -8,6 +8,7 @@ interface InputLabelProps extends TextInputProps {
     errorMessage?:string
 }
 
+// TODO maybe add number support
 const InputLabel: React.FC<InputLabelProps> = ({title, isValid, errorMessage,...textInputProps}) => {
     return (
         <View style={styles.formControl}>

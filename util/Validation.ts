@@ -6,7 +6,7 @@ export type validationRuleType = {
     validate: (...args) => boolean,
 };
 
-enum ValidationRules {
+export enum ValidationRules {
     required = 'required',
     number = 'number',
     minLength = 'minLength',

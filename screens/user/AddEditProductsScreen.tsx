@@ -6,7 +6,7 @@ import InputLabel from "../../components/UI/InputLabel";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {createProduct, editProduct, productDataType} from "../../store/actions/products";
 import useForm from "../../hooks/useForm";
-import Validation from "../../util/Validation";
+import Validation, {ValidationRules} from "../../util/Validation";
 
 
 type AddEditProductsScreenProps = UsersNavigatorProps<USERS_STACK_SCREENS.EDIT_USER>;
@@ -34,9 +34,11 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
         [FORM_NAMES.description]: editedProduct ? editedProduct.description : ''
     }, {
         [FORM_NAMES.title]: Validation.requiredRule(FORM_NAMES.title),
-        [FORM_NAMES.imageUrl]: [Validation.requiredRule(FORM_NAMES.imageUrl)],
-        [FORM_NAMES.price]: [Validation.requiredRule(FORM_NAMES.price), Validation.numberRule(FORM_NAMES.price)],
-        [FORM_NAMES.description]: [Validation.requiredRule(FORM_NAMES.description)]
+        [FORM_NAMES.imageUrl]: Validation.requiredRule(FORM_NAMES.imageUrl),
+        [FORM_NAMES.price]: Validation.combineRules(FORM_NAMES.price,
+            [ValidationRules.required, ValidationRules.number]
+        ),
+        [FORM_NAMES.description]: Validation.requiredRule(FORM_NAMES.description)
     });
 
     const submitHandler = useCallback(function () {
@@ -70,7 +72,7 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
                 <InputLabel onChangeText={(text) => onChangeHandler('price', parseFloat(text))}
                             title="Price"
                             keyboardType="decimal-pad"
-                            value={state.formData['price'].toString()}
+                            value={state.formData['price']?.toString()}
                 />
                 <InputLabel onChangeText={(text) => onChangeHandler('description', text)}
                             title="Description"
