@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useReducer, useRef} from "react";
 import {validationRuleType} from "../util/Validation";
 import FU from "../util/FunctionUtil";
+import {Dictionary} from "../types";
 
 enum USE_FORM_ACTION {
     RESET_TO_INITIAL = 'RESET_TO_INITIAL',
@@ -12,30 +13,20 @@ enum USE_FORM_ACTION {
 
 type itemValidationConfig = validationRuleType | validationRuleType[]
 
-type useFormConfig = {
-    [key: string]: itemValidationConfig
-}
+type useFormConfig = Dictionary<itemValidationConfig>;
 
 interface State {
-    formData: {
-        [key: string]: any
-    },
-    errors: {
-        [key: string]: any
-    },
-    touchedFields: {
-        [key: string]: any
-    },
+    formData: Dictionary,
+    errors: Dictionary,
+    touchedFields: Dictionary,
     isFormTouched: boolean,
     isAllFormTouched: boolean,
     isValidWithCurrentChanges: boolean,
     isValid: boolean
 }
 
-interface Action {
+interface Action extends Dictionary{
     type: USE_FORM_ACTION
-
-    [key: string]: any
 }
 
 function formReducer(state: State, action: Action): State {
@@ -116,7 +107,7 @@ function formReducer(state: State, action: Action): State {
  * @description validation Config is a static parameter but in every render it captures the new config
  * so the Validation is
  * */
-export default function useForm(initialState, validationConfig?: useFormConfig): {
+export default function useForm(initialState: Dictionary, validationConfig?: useFormConfig): {
     state: State,
     resetFormToInitial: Function,
     deleteFormData: Function,
