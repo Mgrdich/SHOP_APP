@@ -1,6 +1,6 @@
 import {useCallback, useReducer} from "react";
 import {validationRuleType} from "../util/Validation";
-import FunctionUtil from "../util/FunctionUtil";
+import FU from "../util/FunctionUtil";
 
 enum USE_FORM_ACTION {
     RESET_TO_INITIAL = 'RESET_TO_INITIAL',
@@ -65,6 +65,7 @@ function formReducer(state: State, action: Action): State {
     }
 }
 
+// Check touch functionality
 export default function useForm(initialState, validationConfig?: useFormConfig): {
     // store the config with Ref if the user should assign it once
     state: State,
@@ -72,11 +73,10 @@ export default function useForm(initialState, validationConfig?: useFormConfig):
     deleteFormData: Function,
     onChangeHandler: Function
 } {
-
     const initialRedState: State = {
         formData: initialState,
         errors: {}
-    }
+    };
 
     // TODO some kind of bug with ts-lint
     const [state, dispatch] = useReducer(formReducer, initialRedState as any);
@@ -98,7 +98,7 @@ export default function useForm(initialState, validationConfig?: useFormConfig):
         if (validationConfig) {
             const validationItemConfig: itemValidationConfig = validationConfig[name];
 
-            if (FunctionUtil.isArray(validationConfig[name])) {
+            if (FU.isArray(validationConfig[name])) {
 
                 for (const rule of validationItemConfig) {
                     if (!rule.validate(value)) {
@@ -109,6 +109,7 @@ export default function useForm(initialState, validationConfig?: useFormConfig):
                 }
                 return;
             }
+
             const isValid: boolean = (validationItemConfig as validationRuleType).validate(value);
 
             if(!isValid) {

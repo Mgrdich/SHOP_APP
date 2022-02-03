@@ -15,6 +15,10 @@ export enum ValidationRules {
     email = 'email'
 }
 
+let VALIDATION_REGEXES = {
+    email: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+}
+
 export default class Validation {
     private static RULES = {
         [ValidationRules.required]: Validation.requiredRule,
@@ -79,13 +83,17 @@ export default class Validation {
         );
     }
 
-    // TODO REGEX Me
-    static emailRule(inputName:string): validationRuleType {
+    static emailRule(inputName: string): validationRuleType {
         return Validation.createValidationRule(
             ValidationRules.email,
             `${inputName} not a valid mail`,
-            (inputValue, formObj) => inputValue === formObj.password.value
-        );
+            (inputValue, formObj) => {
+                if (!FU.isString(inputValue)) {
+                    return false;
+                }
+
+                return (inputValue as string).match(VALIDATION_REGEXES.email);
+            });
     }
 
     static combineRules(inputName: string, rules: ValidationRules[]): validationRuleType[] {
