@@ -4,7 +4,7 @@ import FU from "../util/FunctionUtil";
 
 enum USE_FORM_ACTION {
     RESET_TO_INITIAL = 'RESET_TO_INITIAL',
-    DELETE_DORM_DATA = 'DELETE_DORM_DATA',
+    DELETE_FORM_DATA = 'DELETE_FORM_DATA',
     SET_INPUT_ERROR = 'SET_INPUT_ERROR',
     DELETE_INPUT_ERROR = 'DELETE_INPUT_ERROR',
     UPDATE = 'UPDATE'
@@ -48,16 +48,20 @@ function formReducer(state: State, action: Action): State {
                 touchedFields: {
                     ...state.formData,
                     [action.name]: true
-                }
+                },
+                isAllFormTouched: false,
+                isFormTouched: true
             }
         case USE_FORM_ACTION.RESET_TO_INITIAL:
             return {
                 ...state,
                 formData: {...action.initialState},
                 errors: {},
-                touchedFields: {}
+                touchedFields: {},
+                isAllFormTouched: false,
+                isFormTouched: false
             }
-        case USE_FORM_ACTION.DELETE_DORM_DATA:
+        case USE_FORM_ACTION.DELETE_FORM_DATA:
             return {
                 ...state,
                 formData: {},
@@ -116,7 +120,7 @@ export default function useForm(initialState, validationConfig?: useFormConfig):
 
     const resetFormToInitial = useRef<Function>(function () {
         // static function code optimizations
-        dispatch({type: USE_FORM_ACTION.DELETE_DORM_DATA});
+        dispatch({type: USE_FORM_ACTION.DELETE_FORM_DATA});
     });
 
     const deleteFormData = useRef<Function>(function () {
