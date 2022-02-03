@@ -27,7 +27,9 @@ interface State {
         [key: string]: any
     },
     isFormTouched: boolean,
-    isAllFormTouched: boolean
+    isAllFormTouched: boolean,
+    isValidWithCurrentChanges: boolean,
+    isValid: boolean
 }
 
 interface Action {
@@ -38,10 +40,9 @@ interface Action {
 
 function formReducer(state: State, action: Action): State {
     switch (action.type) {
-        case USE_FORM_ACTION.UPDATE:
-
+        case USE_FORM_ACTION.UPDATE: {
             const touchedFields = {
-                ...state.formData,
+                ...state.touchedFields,
                 [action.name]: true
             };
 
@@ -50,13 +51,20 @@ function formReducer(state: State, action: Action): State {
                 [action.name]: action.value
             }
 
+            const allFormTouched: boolean = Object.keys(formData).length === Object.keys(touchedFields).length;
+
+            let isError: boolean = !!Object.keys(state.errors).length;
+
             return {
                 ...state,
                 formData: formData,
                 touchedFields: touchedFields,
-                isAllFormTouched: Object.keys(formData).length === Object.keys(touchedFields).length,
-                isFormTouched: true
+                isAllFormTouched: allFormTouched,
+                isFormTouched: true,
+                isValidWithCurrentChanges: !isError,
+                isValid: allFormTouched && !isError
             }
+        }
         case USE_FORM_ACTION.RESET_TO_INITIAL:
             return {
                 ...state,
@@ -64,7 +72,9 @@ function formReducer(state: State, action: Action): State {
                 errors: {},
                 touchedFields: {},
                 isAllFormTouched: false,
-                isFormTouched: false
+                isFormTouched: false,
+                isValidWithCurrentChanges: false,
+                isValid: false
             }
         case USE_FORM_ACTION.DELETE_FORM_DATA:
             return {
@@ -73,20 +83,28 @@ function formReducer(state: State, action: Action): State {
                 errors: {},
                 touchedFields: {}
             };
-        case USE_FORM_ACTION.DELETE_INPUT_ERROR:
+        case USE_FORM_ACTION.DELETE_INPUT_ERROR: {
             const newErrors = {...state.errors};
             delete newErrors[action.name]
+
+            let isError: boolean = !!Object.keys(newErrors).length;
+
             return {
                 ...state,
-                errors: newErrors
+                errors: newErrors,
+                isValidWithCurrentChanges: !isError,
+                isValid: state.isAllFormTouched && !isError
             }
+        }
         case USE_FORM_ACTION.SET_INPUT_ERROR:
             return {
                 ...state,
                 errors: {
                     ...state.errors,
                     [action.name]: action.error
-                }
+                },
+                isValidWithCurrentChanges: false,
+                isValid: false
             }
         default:
             return state
@@ -110,7 +128,9 @@ export default function useForm(initialState, validationConfig?: useFormConfig):
         errors: {},
         touchedFields: {},
         isAllFormTouched: false,
-        isFormTouched: false
+        isFormTouched: false,
+        isValidWithCurrentChanges: false,
+        isValid: false
     };
 
     const [state, dispatch] = useReducer(formReducer, initialRedState as any);
@@ -176,6 +196,10 @@ export default function useForm(initialState, validationConfig?: useFormConfig):
     });
 
     const validateForm = useCallback<() => boolean>(function (): boolean {
+        // this is for fast checking this function call shouldn't be called in this case anyways be smart
+        if (state.isAllFormTouched) {
+            return state.isValid;
+        }
         for (let inputName in validationConfigRef.current) {
             if (!state.errors[inputName]) {
                 // with errors already validated
