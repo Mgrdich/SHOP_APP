@@ -6,6 +6,7 @@ enum USE_FORM_ACTION {
     RESET_TO_INITIAL = 'RESET_TO_INITIAL',
     DELETE_DORM_DATA = 'DELETE_DORM_DATA',
     SET_INPUT_ERROR = 'SET_INPUT_ERROR',
+    DELETE_INPUT_ERROR = 'DELETE_INPUT_ERROR',
     UPDATE = 'UPDATE'
 }
 
@@ -52,6 +53,13 @@ function formReducer(state: State, action: Action): State {
                 formData: {},
                 errors: {}
             };
+        case USE_FORM_ACTION.DELETE_INPUT_ERROR:
+            const newErrors = {...state.errors};
+            delete newErrors[action.name]
+            return {
+                ...state,
+                errors: newErrors
+            }
         case USE_FORM_ACTION.SET_INPUT_ERROR:
             return {
                 ...state,
@@ -98,7 +106,7 @@ export default function useForm(initialState, validationConfig?: useFormConfig):
         if (validationConfig) {
             const validationItemConfig: itemValidationConfig = validationConfig[name];
 
-            if (FU.isArray(validationConfig[name])) {
+            if (FU.isArray(validationItemConfig)) {
 
                 for (const rule of validationItemConfig) {
                     if (!rule.validate(value)) {
@@ -107,18 +115,32 @@ export default function useForm(initialState, validationConfig?: useFormConfig):
                         break;
                     }
                 }
+
+                if (state.errors[name]) {
+                    dispatch({type: USE_FORM_ACTION.SET_INPUT_ERROR, name: name});
+                }
+                 
                 return;
             }
 
             const isValid: boolean = (validationItemConfig as validationRuleType).validate(value);
 
-            if(!isValid) {
-                dispatch({
-                    type: USE_FORM_ACTION.SET_INPUT_ERROR,
-                    name: name,
-                    error: (validationItemConfig as validationRuleType).message
-                });
+            if (isValid) {
+                if (state.errors[name]) {
+                    dispatch({
+                        type: USE_FORM_ACTION.DELETE_INPUT_ERROR,
+                        name: name,
+                        error: (validationItemConfig as validationRuleType).message
+                    });
+                }
+                return;
             }
+
+            dispatch({
+                type: USE_FORM_ACTION.SET_INPUT_ERROR,
+                name: name,
+                error: (validationItemConfig as validationRuleType).message
+            });
         }
 
     }, [dispatch, validationConfig]);
