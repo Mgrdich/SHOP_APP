@@ -39,17 +39,22 @@ interface Action {
 function formReducer(state: State, action: Action): State {
     switch (action.type) {
         case USE_FORM_ACTION.UPDATE:
+
+            const touchedFields = {
+                ...state.formData,
+                [action.name]: true
+            };
+
+            const formData = {
+                ...state.formData,
+                [action.name]: action.value
+            }
+
             return {
                 ...state,
-                formData: {
-                    ...state.formData,
-                    [action.name]: action.value
-                },
-                touchedFields: {
-                    ...state.formData,
-                    [action.name]: true
-                },
-                isAllFormTouched: false,
+                formData: formData,
+                touchedFields: touchedFields,
+                isAllFormTouched: Object.keys(formData).length === Object.keys(touchedFields).length,
                 isFormTouched: true
             }
         case USE_FORM_ACTION.RESET_TO_INITIAL:
