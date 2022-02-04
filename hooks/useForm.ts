@@ -136,6 +136,11 @@ export default function useForm(initialState: Dictionary, validationConfig?: use
     const [state, dispatch] = useReducer(formReducer, initialRedState as any);
 
     const validationConfigRef = useRef<useFormConfig | undefined>(validationConfig);
+    const stateRef = useRef<State>(state);
+
+    useEffect(function () {
+        stateRef.current = state;
+    });
 
     useEffect(function () {
         validationConfigRef.current = validationConfig;
@@ -195,8 +200,10 @@ export default function useForm(initialState: Dictionary, validationConfig?: use
 
     });
 
-    const validateForm = useCallback<() => boolean>(function (): boolean {
+    const validateForm = useRef<() => boolean>(function (): boolean {
         // this is for fast checking this function call shouldn't be called in this case anyways be smart
+        let state = stateRef.current;
+
         if (state.isAllFormTouched) {
             return state.isValid;
         }
@@ -208,11 +215,11 @@ export default function useForm(initialState: Dictionary, validationConfig?: use
         }
 
         return !Object.keys(state.errors).length;
-    }, [state, validationConfigRef, onChangeHandler]);
+    });
 
     return {
         state,
-        validateForm,
+        validateForm:validateForm.current,
         resetFormToInitial: resetFormToInitial.current,
         deleteFormData: deleteFormData.current,
         onChangeHandler: onChangeHandler.current
