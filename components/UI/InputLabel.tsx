@@ -2,11 +2,11 @@ import React from 'react';
 import {StyleSheet, TextInput, TextInputProps, View} from "react-native";
 import StyledText from "../Styled/StyledText";
 import FU from "../../util/FunctionUtil";
+import STYLING_COLORS from "../../constants/StylingColors";
 
 interface InputLabelProps extends TextInputProps {
     title: string,
-    isValid?:boolean,
-    errorMessage?:string
+    errorMessage?: string
 }
 
 const InputLabel: React.FC<InputLabelProps> = ({title, isValid, errorMessage, value ,...textInputProps}) => {
@@ -20,8 +20,8 @@ const InputLabel: React.FC<InputLabelProps> = ({title, isValid, errorMessage, va
         <View style={styles.formControl}>
             <StyledText bold style={styles.label}>{title}</StyledText>
             <TextInput {...textInputProps} style={styles.input} value={strValue}/>
-            {errorMessage && !isValid && (
-                <StyledText className="error">{errorMessage}</StyledText>
+            {errorMessage && (
+                <StyledText style={styles.error}>{errorMessage}</StyledText>
             )}
         </View>
     );
@@ -39,6 +39,9 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         borderBottomColor: '#ccc',
         borderBottomWidth: 1
+    },
+    error: {
+        color: STYLING_COLORS.red
     }
 });
 

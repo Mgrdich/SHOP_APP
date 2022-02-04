@@ -102,7 +102,7 @@ function formReducer(state: State, action: Action): State {
     }
 }
 
-// Check touch functionality
+
 /**
  * @description validation Config is a static parameter but in every render it captures the new config
  * so the Validation is
@@ -124,6 +124,7 @@ export default function useForm(initialState: Dictionary, validationConfig?: use
         isValid: false
     };
 
+    // TODO some kind of bug with ts-lint
     const [state, dispatch] = useReducer(formReducer, initialRedState as any);
 
     const validationConfigRef = useRef<useFormConfig | undefined>(validationConfig);
@@ -131,8 +132,6 @@ export default function useForm(initialState: Dictionary, validationConfig?: use
     useEffect(function () {
         validationConfigRef.current = validationConfig;
     }, [validationConfig]);
-
-    // TODO some kind of bug with ts-lint
 
     const resetFormToInitial = useRef<Function>(function () {
         // static function code optimizations

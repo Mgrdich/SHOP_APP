@@ -64,19 +64,23 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
                             autoCapitalize="sentences"
                             autoCorrect
                             value={state.formData['title']}
+                            errorMessage={state.errors['title']}
                 />
                 <InputLabel onChangeText={(text) => onChangeHandler('imageUrl', text)}
                             title="Image Url"
                             value={state.formData['imageUrl']}
+                            errorMessage={state.errors['imageUrl']}
                 />
                 <InputLabel onChangeText={(text) => onChangeHandler('price', parseFloat(text))}
                             title="Price"
                             keyboardType="decimal-pad"
                             value={state.formData['price']}
+                            errorMessage={state.errors['price']}
                 />
                 <InputLabel onChangeText={(text) => onChangeHandler('description', text)}
                             title="Description"
                             value={state.formData['description']}
+                            errorMessage={state.errors['description']}
                 />
             </View>
         </ScrollView>
