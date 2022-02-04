@@ -3,7 +3,7 @@ import FU from "./FunctionUtil";
 export type validationRuleType = {
     name: string,
     message: string,
-    validate: (...args) => boolean,
+    validate: (inputName:string , formObj?:any) => boolean,
 };
 
 export enum ValidationRules {
@@ -40,7 +40,7 @@ export default class Validation {
         return Validation.createValidationRule(
             ValidationRules.required,
             `${inputName} required`,
-            (inputValue, formObj) => {
+            (inputValue) => {
                 if(!inputValue) {
                     return false
                 }
@@ -58,7 +58,7 @@ export default class Validation {
         return Validation.createValidationRule(
             'required',
             `${inputName} should be a number`,
-            (inputValue, formObj) => {
+            (inputValue) => {
                 if (FU.isString(inputValue)) {
                     inputName = parseFloat(inputName as string);
                     return !FU.isNaN(inputName);
@@ -73,7 +73,7 @@ export default class Validation {
         return Validation.createValidationRule(
             ValidationRules.minLength,
             `${inputName} should contain atleast ${minCharacters} characters`,
-            (inputValue, formObj) => inputValue.length >= minCharacters
+            (inputValue) => inputValue.length >= minCharacters
         );
     }
 
@@ -81,7 +81,7 @@ export default class Validation {
         return Validation.createValidationRule(
             ValidationRules.maxLength,
             `${inputName} cannot contain more than ${maxCharacters} characters`,
-            (inputValue, formObj) => inputValue.length <= maxCharacters
+            (inputValue) => inputValue.length <= maxCharacters
         );
     }
 
@@ -97,7 +97,7 @@ export default class Validation {
         return Validation.createValidationRule(
             ValidationRules.email,
             `${inputName} not a valid mail`,
-            (inputValue, formObj) => {
+            (inputValue) => {
                 if (!FU.isString(inputValue)) {
                     return false;
                 }
