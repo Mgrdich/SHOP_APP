@@ -34,7 +34,9 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
         [FORM_NAMES.description]: editedProduct ? editedProduct.description : ''
     }, {
         [FORM_NAMES.title]: Validation.requiredRule(FORM_NAMES.title),
-        [FORM_NAMES.imageUrl]: Validation.requiredRule(FORM_NAMES.imageUrl),
+        [FORM_NAMES.imageUrl]: Validation.combineRules(FORM_NAMES.imageUrl,
+            [ValidationRules.required, ValidationRules.url]
+        ),
         [FORM_NAMES.price]: Validation.combineRules(FORM_NAMES.price,
             [ValidationRules.required, ValidationRules.number]
         ),

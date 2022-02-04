@@ -3,7 +3,7 @@ import FU from "./FunctionUtil";
 export type validationRuleType = {
     name: string,
     message: string,
-    validate: (inputName:string , formObj?:any) => boolean,
+    validate: (inputName: any, formObj?: any) => boolean,
 };
 
 export enum ValidationRules {
@@ -12,11 +12,13 @@ export enum ValidationRules {
     minLength = 'minLength',
     maxLength = 'maxLength',
     passwordMatch = 'passwordMatch',
-    email = 'email'
+    email = 'email',
+    url = 'url'
 }
 
 let VALIDATION_REGEXES = {
-    email: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    email: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    url: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
 }
 
 export default class Validation {
@@ -26,6 +28,7 @@ export default class Validation {
         [ValidationRules.minLength]: Validation.minLengthRule,
         [ValidationRules.maxLength]: Validation.maxLengthRule,
         [ValidationRules.passwordMatch]: Validation.passwordMatchRule,
+        [ValidationRules.url]: Validation.urlRule,
     };
 
     private static createValidationRule(ruleName: string, errorMessage: string, validateFunc: Function): validationRuleType {
@@ -41,11 +44,11 @@ export default class Validation {
             ValidationRules.required,
             `${inputName} required`,
             (inputValue) => {
-                if(!inputValue) {
+                if (!inputValue) {
                     return false
                 }
 
-                if(FU.isString(inputValue)) {
+                if (FU.isString(inputValue)) {
                     return inputValue?.length !== 0
                 }
 
@@ -90,6 +93,20 @@ export default class Validation {
             ValidationRules.passwordMatch,
             `${inputName} do not match`,
             (inputValue, formObj) => inputValue === formObj.password.value
+        );
+    }
+
+    static urlRule(inputName: string): validationRuleType {
+        return Validation.createValidationRule(
+            ValidationRules.passwordMatch,
+            `${inputName} do not match`,
+            (inputValue) => {
+                if (!FU.isString(inputValue)) {
+                    return false;
+                }
+
+                return (inputValue as string).match(VALIDATION_REGEXES.url);
+            }
         );
     }
 
