@@ -22,7 +22,8 @@ interface State {
     isFormTouched: boolean,
     isAllFormTouched: boolean,
     isValidWithCurrentChanges: boolean,
-    isValid: boolean
+    isValid: boolean,
+    isNotValid: boolean
 }
 
 interface Action extends Dictionary{
@@ -45,6 +46,7 @@ function formReducer(state: State, action: Action): State {
             const allFormTouched: boolean = Object.keys(formData).length === Object.keys(touchedFields).length;
 
             let isError: boolean = !!Object.keys(state.errors).length;
+            let isValid: boolean = allFormTouched && !isError;
 
             return {
                 ...state,
@@ -53,7 +55,8 @@ function formReducer(state: State, action: Action): State {
                 isAllFormTouched: allFormTouched,
                 isFormTouched: true,
                 isValidWithCurrentChanges: !isError,
-                isValid: allFormTouched && !isError
+                isValid: isValid,
+                isNotValid: !isValid
             }
         }
         case USE_FORM_ACTION.RESET_TO_INITIAL:
@@ -65,7 +68,8 @@ function formReducer(state: State, action: Action): State {
                 isAllFormTouched: false,
                 isFormTouched: false,
                 isValidWithCurrentChanges: false,
-                isValid: false
+                isValid: false,
+                isNotValid: true
             }
         case USE_FORM_ACTION.DELETE_FORM_DATA:
             return {
@@ -79,12 +83,14 @@ function formReducer(state: State, action: Action): State {
             delete newErrors[action.name]
 
             let isError: boolean = !!Object.keys(newErrors).length;
+            let isValid = state.isAllFormTouched && !isError;
 
             return {
                 ...state,
                 errors: newErrors,
                 isValidWithCurrentChanges: !isError,
-                isValid: state.isAllFormTouched && !isError
+                isValid: isValid,
+                isNotValid: !isValid
             }
         }
         case USE_FORM_ACTION.SET_INPUT_ERROR:
@@ -95,7 +101,8 @@ function formReducer(state: State, action: Action): State {
                     [action.name]: action.error
                 },
                 isValidWithCurrentChanges: false,
-                isValid: false
+                isValid: false,
+                isNotValid: true
             }
         default:
             return state
@@ -121,7 +128,8 @@ export default function useForm(initialState: Dictionary, validationConfig?: use
         isAllFormTouched: false,
         isFormTouched: false,
         isValidWithCurrentChanges: false,
-        isValid: false
+        isValid: false,
+        isNotValid: true
     };
 
     // TODO some kind of bug with ts-lint
