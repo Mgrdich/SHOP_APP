@@ -32,7 +32,7 @@ const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({route}) => {
                           style = {styles.action}
 
             />
-            <StyledText style={styles.price}>${product.price.toFixed()}</StyledText>
+            <StyledText style={styles.price}>${product.price?.toFixed()}</StyledText>
             <StyledText style={styles.description}>{product.description}</StyledText>
         </ScrollView>
     );
