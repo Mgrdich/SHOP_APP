@@ -27,7 +27,7 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
 
     const dispatch = useAppDispatch();
 
-    const {state, onChangeHandler} = useForm({
+    const {state, onChangeHandler, validateForm} = useForm({
         [FORM_NAMES.title]: editedProduct ? editedProduct.title : '',
         [FORM_NAMES.imageUrl]: editedProduct ? editedProduct.imageUrl : '',
         [FORM_NAMES.price]: editedProduct ? editedProduct.price : null,
@@ -42,6 +42,17 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
     });
 
     const submitHandler = useCallback(function () {
+        if (state.isAllFormTouched) {
+            if (state.isNotValid) {
+                return;
+            }
+        } else {
+            if (!validateForm()) {
+                return;
+            }
+        }
+
+        // console.log('Submitted');
         if (isEditPage) {
             dispatch(editProduct(prodId, state.formData as productDataType));
         } else {
@@ -49,7 +60,7 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
         }
 
         navigation.goBack();
-    }, [isEditPage, state.formData, dispatch]);
+    }, [isEditPage, state , dispatch]);
 
     useEffect(() => {
         navigation.setParams({submit: submitHandler});
