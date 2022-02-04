@@ -207,7 +207,7 @@ export default function useForm(initialState: Dictionary, validationConfig?: use
             }
         }
 
-        return !!Object.keys(state.errors).length;
+        return !Object.keys(state.errors).length;
     }, [state, validationConfigRef, onChangeHandler]);
 
     return {

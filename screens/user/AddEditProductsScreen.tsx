@@ -45,7 +45,7 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
 
     const submitHandler = useCallback(function () {
         if (state.isAllFormTouched) {
-            if (state.isNotValid) {
+             if (state.isNotValid) {
                 return;
             }
         } else {
@@ -54,7 +54,6 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
             }
         }
 
-        // console.log('Submitted');
         if (isEditPage) {
             dispatch(editProduct(prodId, state.formData as productDataType));
         } else {
