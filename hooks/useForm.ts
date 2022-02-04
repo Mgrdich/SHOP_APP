@@ -157,19 +157,21 @@ export default function useForm(initialState: Dictionary, validationConfig?: use
         // update values
         dispatch({type: USE_FORM_ACTION.UPDATE, name: name, value: value});
 
+        // console.log(validationConfigRef.current);
         if (validationConfigRef.current) {
             const validationItemConfig: itemValidationConfig = (validationConfigRef as useFormConfig).current[name];
 
-            if (FU.isArray(validationItemConfig)) {
 
+            if (FU.isArray(validationItemConfig)) {
                 for (const rule of validationItemConfig) {
                     if (!rule.validate(value)) {
                         dispatch({type: USE_FORM_ACTION.SET_INPUT_ERROR, name: name, error: rule.message});
                         // errors are in order
-                        break;
+                        return;
                     }
                 }
-                dispatch({type: USE_FORM_ACTION.SET_INPUT_ERROR, name: name});
+
+                dispatch({type: USE_FORM_ACTION.DELETE_INPUT_ERROR, name: name});
                 return;
             }
 
