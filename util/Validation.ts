@@ -40,7 +40,17 @@ export default class Validation {
         return Validation.createValidationRule(
             ValidationRules.required,
             `${inputName} required`,
-            (inputValue, formObj) => inputValue.length !== 0
+            (inputValue, formObj) => {
+                if(!inputValue) {
+                    return false
+                }
+
+                if(FU.isString(inputValue)) {
+                    return inputValue?.length !== 0
+                }
+
+                return !!inputValue;
+            }
         );
     }
 
