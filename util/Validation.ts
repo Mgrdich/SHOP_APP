@@ -57,7 +57,7 @@ export default class Validation {
     static numberRule(inputName: string | number): validationRuleType {
         return Validation.createValidationRule(
             'required',
-            `${inputName} required`,
+            `${inputName} should be a number`,
             (inputValue, formObj) => {
                 if (FU.isString(inputValue)) {
                     inputName = parseFloat(inputName as string);
