@@ -1,5 +1,7 @@
 import {Dictionary} from "../types";
 
+type RequestType = 'GET' | 'POST' | 'PATCH';
+
 export default class FunctionUtil {
 
     /**
@@ -35,16 +37,19 @@ export default class FunctionUtil {
         return isNaN(element);
     }
 
-    static async request<T>(type: 'GET' | 'POST' | 'PATCH', url: string, body?: Dictionary | null, headers?: Dictionary): Promise<T> {
+    static async request<T>(type: RequestType, url: string,
+                            body?: Dictionary | null,
+                            headers?: Dictionary
+    ): Promise<T> {
         headers = {
             'Content-Type': 'application/json',
             ...headers
-        }
+        };
 
         let config: RequestInit = {
             method: type,
             headers: headers
-        }
+        };
 
         if (type === 'POST' || type === 'PATCH') {
             config.body = JSON.stringify(body);
