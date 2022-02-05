@@ -1,8 +1,8 @@
 import {Dictionary} from "./types";
-import Config from "react-native-config";
+import {FIREBASE_URL} from "@env";
 
 const CONFIGS: Dictionary<string> = {
-    firebase_url: Config.FIREBASE_URL,
+    firebase_url: FIREBASE_URL,
     products_url: '',
 };
 
