@@ -11,8 +11,8 @@ export interface IProductsState {
 }
 
 const initialState: IProductsState = {
-    availableProducts: DUMMY_PRODUCTS,
-    userProducts: DUMMY_PRODUCTS.filter(p => p.ownerId === 'u1')
+    availableProducts: [],
+    userProducts: []
 };
 
 type productActionType = ActionType<PRODUCTS_ACTIONS>
@@ -71,10 +71,19 @@ function editProduct(state: IProductsState, action: productActionType): IProduct
     };
 }
 
+function setProducts(state: IProductsState, action: productActionType): IProductsState {
+    return {
+        ...state,
+        availableProducts: action.products,
+        userProducts: action.products
+    };
+}
+
 const productsReducer = createReducer<IProductsState, PRODUCTS_ACTIONS>(initialState, {
     [PRODUCTS_ACTIONS.DELETE_PRODUCT]: deleteProduct,
     [PRODUCTS_ACTIONS.EDIT_PRODUCT]: editProduct,
-    [PRODUCTS_ACTIONS.CREATE_PRODUCT]: createProduct
+    [PRODUCTS_ACTIONS.CREATE_PRODUCT]: createProduct,
+    [PRODUCTS_ACTIONS.SET_PRODUCTS]: setProducts
 });
 
 export default productsReducer;

@@ -59,7 +59,7 @@ export default class FunctionUtil {
         return FunctionUtil.request('POST', url, body, headers);
     }
 
-    static async get<T>(url: string, headers: Dictionary): Promise<T> {
+    static async get<T>(url: string, headers?: Dictionary): Promise<T> {
         return FunctionUtil.request('GET', url, null, headers);
     }
 }
