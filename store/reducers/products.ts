@@ -1,5 +1,4 @@
 import {Product} from "../../models/products";
-import {DUMMY_PRODUCTS} from "../../data/dummy-data";
 import {productDataType, PRODUCTS_ACTIONS} from "../actions/products";
 import createReducer from "./helper";
 import {ActionType} from "../actions/types";
