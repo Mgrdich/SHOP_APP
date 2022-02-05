@@ -99,7 +99,7 @@ export default class Validation {
     static urlRule(inputName: string): validationRuleType {
         return Validation.createValidationRule(
             ValidationRules.passwordMatch,
-            `${inputName} do not match`,
+            `${inputName} no a valid Url`,
             (inputValue) => {
                 if (!FU.isString(inputValue)) {
                     return false;

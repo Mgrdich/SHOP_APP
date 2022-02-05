@@ -6,6 +6,6 @@ const CONFIGS: Dictionary<string> = {
     products_url: '',
 };
 
-CONFIGS.products_url = `${CONFIGS.firebase_url}/products.json}`;
+CONFIGS.products_url = `${CONFIGS.firebase_url}/products.json`;
 
 export default CONFIGS;

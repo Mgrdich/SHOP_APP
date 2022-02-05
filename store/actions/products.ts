@@ -1,4 +1,6 @@
-import {ActionType} from "./types";
+import {ActionType, AppThunk} from "./types";
+import FU from "../../util/FunctionUtil";
+import CONFIGS from "../../configs";
 
 export enum PRODUCTS_ACTIONS {
     DELETE_PRODUCT = 'DELETE_PRODUCT',
@@ -8,6 +10,8 @@ export enum PRODUCTS_ACTIONS {
 
 type ProductActionType = ActionType<PRODUCTS_ACTIONS>
 
+export type productDataType = { title: string, description: string, imageUrl: string, price: number };
+
 export function deleteProduct(id: string): ProductActionType {
     return {
         type: PRODUCTS_ACTIONS.DELETE_PRODUCT,
@@ -15,18 +19,17 @@ export function deleteProduct(id: string): ProductActionType {
     }
 }
 
-
-export type productDataType = { title: string, description: string, imageUrl: string, price: number };
-
-export function createProduct(product: productDataType): ProductActionType {
-    return {
-        type: PRODUCTS_ACTIONS.CREATE_PRODUCT,
-        productData: {
-            title: product.title,
-            description: product.description,
-            imageUrl: product.imageUrl,
-            price: product.price
-        }
+export function createProduct(product: productDataType): AppThunk {
+    return async (dispatch) => {
+        try {
+            const res = await FU.post<any>(CONFIGS.products_url, product);
+            if(res) {
+                dispatch({
+                    type: PRODUCTS_ACTIONS.CREATE_PRODUCT,
+                    productData: product
+                });
+            }
+        } catch (err) {}
     }
 }
 
