@@ -12,6 +12,7 @@ import StylingColors from "../../constants/StylingColors";
 import NoDataFound from "../../components/UI/NoDateFound";
 import useLoading from "../../hooks/useLoading";
 import StyledText from "../../components/Styled/StyledText";
+import {useFocusEffect} from "@react-navigation/native";
 
 type ProductsProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsOverview>;
 
@@ -35,6 +36,11 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
         loadProducts()
             .then();
     }, [loadProducts]);
+
+    useFocusEffect(useCallback(function () {
+        loadProducts()
+            .then();
+    },[loadProducts]));
 
     const redirectToProductDetails = (id: string, title: string) => {
         navigation.navigate(
