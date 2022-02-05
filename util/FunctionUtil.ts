@@ -37,9 +37,10 @@ export default class FunctionUtil {
         return isNaN(element);
     }
 
-    static async request<T>(type: RequestType, url: string,
-                            body?: Dictionary | null,
-                            headers?: Dictionary
+    static async request<T = any>(
+        type: RequestType, url: string,
+        body?: Dictionary | null,
+        headers?: Dictionary
     ): Promise<T> {
         headers = {
             'Content-Type': 'application/json',
