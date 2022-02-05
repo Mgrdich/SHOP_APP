@@ -24,7 +24,7 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
     const loadProducts = useCallback(async function (){
         setLoading(true);
         // fix this
-        (dispatch(fetchProducts()) as Promise<void>)
+        dispatch(fetchProducts())
             .then(function () {
                 setLoading(false);
             }).catch(function (err) {

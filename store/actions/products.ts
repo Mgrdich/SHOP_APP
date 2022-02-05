@@ -21,8 +21,8 @@ export function deleteProduct(id: string): ProductActionType {
     }
 }
 
-export function createProduct(product: productDataType): AppThunk {
-    return async (dispatch): Promise<void> => {
+export function createProduct(product: productDataType) {
+    return async (dispatch) => {
         try {
             const res = await FU.post<any>(CONFIGS.products_url, product);
             if (res) {
@@ -36,20 +36,28 @@ export function createProduct(product: productDataType): AppThunk {
     }
 }
 
-export function editProduct(id: string, product: productDataType): ProductActionType {
-    return {
-        type: PRODUCTS_ACTIONS.EDIT_PRODUCT,
-        pId: id,
-        productData: {
-            title: product.title,
-            description: product.description,
-            imageUrl: product.imageUrl,
-            price: product.price
+export function editProduct(id: string, product: productDataType) {
+    return async (dispatch) => {
+        try {
+            const res = await FU.patch(CONFIGS.products_url_id.replace('{{0}}', id), product);
+            if(res.error) {
+                return Promise.reject(res.error);
+            }
+
+            if (res) {
+                return dispatch({
+                    type: PRODUCTS_ACTIONS.EDIT_PRODUCT,
+                    pId: id,
+                    productData: product
+                });
+            }
+        } catch (err) {
+            throw 'Something Went Wrong';
         }
     }
 }
 
-export function fetchProducts(): AppThunk {
+export function fetchProducts() {
     return async (dispatch): Promise<any> => {
         try {
             const res = await FU.get<any>(CONFIGS.products_url);

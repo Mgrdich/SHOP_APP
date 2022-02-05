@@ -55,9 +55,11 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
         }
 
         if (isEditPage) {
-            dispatch(editProduct(prodId, state.formData as productDataType));
+            dispatch(editProduct(prodId, state.formData as productDataType))
+                .then(function () {});
         } else {
-            dispatch(createProduct(state.formData as productDataType));
+            dispatch(createProduct(state.formData as productDataType))
+                .then(function () {});
         }
 
         navigation.goBack();
