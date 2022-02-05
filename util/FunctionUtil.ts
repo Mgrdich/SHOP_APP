@@ -36,7 +36,7 @@ export default class FunctionUtil {
         return isNaN(element);
     }
 
-    static async request<T>(type: 'GET' | 'POST', url: string, body?: Dictionary, headers?: Dictionary): Promise<T> {
+    static async request<T>(type: 'GET' | 'POST', url: string, body?: Dictionary | null, headers?: Dictionary): Promise<T> {
         headers = {
             'Content-Type': 'application/json',
             ...headers
@@ -59,7 +59,6 @@ export default class FunctionUtil {
     static async post<T>(url: string, body: any, headers): Promise<T> {
         return FunctionUtil.request('POST', url, body, headers);
     }
-
 
     static async get<T>(url: string, headers): Promise<T> {
         return FunctionUtil.request('GET', url, null, headers);
