@@ -11,7 +11,6 @@ export default class FunctionUtil {
         return '_' + Math.random().toString(36).substr(2, length);
     }
 
-
     /**
      * @description to fixed to a 2 digit number
      * default to fixed 2 numbers
@@ -56,11 +55,11 @@ export default class FunctionUtil {
             .then((res: T) => res);
     }
 
-    static async post<T>(url: string, body: any, headers): Promise<T> {
+    static async post<T>(url: string, body: Dictionary, headers?: Dictionary): Promise<T> {
         return FunctionUtil.request('POST', url, body, headers);
     }
 
-    static async get<T>(url: string, headers): Promise<T> {
+    static async get<T>(url: string, headers: Dictionary): Promise<T> {
         return FunctionUtil.request('GET', url, null, headers);
     }
 }
