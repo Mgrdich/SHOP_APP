@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ActivityIndicator, FlatList, ListRenderItemInfo, View, StyleSheet} from "react-native";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {Product} from "../../models/products";
@@ -20,16 +20,21 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
     const products: Product[] = useAppSelector(state => state.products.availableProducts);
     const dispatch = useAppDispatch();
 
-    useEffect(function () {
+    const loadProducts = useCallback(async function (){
         setLoading(true);
         // fix this
         (dispatch(fetchProducts()) as Promise<void>)
             .then(function () {
                 setLoading(false);
             }).catch(function (err) {
-                setError(err.toString());
+            setError(err.toString());
         });
-    }, [dispatch]);
+    },[dispatch]);
+
+    useEffect(function () {
+        loadProducts()
+            .then();
+    }, [loadProducts]);
 
     const redirectToProductDetails = (id: string, title: string) => {
         navigation.navigate(
@@ -44,6 +49,7 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
         return (
             <View style={styles.screen}>
                 <StyledText bold>Something went Wrong</StyledText>
+                <StyledButton style={styles.btn} primary title="Try again" onPress={loadProducts}/>
             </View>
         );
     }
@@ -92,6 +98,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent:"center",
         alignItems:"center"
+    },
+    btn: {
+        marginTop: 10
     }
 })
 
