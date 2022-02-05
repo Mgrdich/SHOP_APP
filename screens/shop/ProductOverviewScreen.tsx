@@ -10,20 +10,24 @@ import StyledButton from "../../components/Styled/StyledButton";
 import {fetchProducts} from "../../store/actions/products";
 import StylingColors from "../../constants/StylingColors";
 import NoDataFound from "../../components/UI/NoDateFound";
+import useLoading from "../../hooks/useLoading";
+import StyledText from "../../components/Styled/StyledText";
 
 type ProductsProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsOverview>;
 
 const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => {
-    const [isLoading, setIsLoading] = useState(false);
+    const {isLoading, setLoading, isError, setError} = useLoading();
     const products: Product[] = useAppSelector(state => state.products.availableProducts);
     const dispatch = useAppDispatch();
 
     useEffect(function () {
-        setIsLoading(true);
+        setLoading(true);
         // fix this
         (dispatch(fetchProducts()) as Promise<void>)
             .then(function () {
-            setIsLoading(false);
+                setLoading(false);
+            }).catch(function (err) {
+                setError(err.toString());
         });
     }, [dispatch]);
 
@@ -35,6 +39,14 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
             } as any
         );
     };
+
+    if (isError) {
+        return (
+            <View style={styles.screen}>
+                <StyledText bold>Something went Wrong</StyledText>
+            </View>
+        );
+    }
 
     if (isLoading) {
         return (
@@ -78,7 +90,8 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        justifyContent:"center"
+        justifyContent:"center",
+        alignItems:"center"
     }
 })
 

@@ -75,6 +75,7 @@ export function fetchProducts(): AppThunk {
             }
 
         } catch (err) {
+            throw Error('Something went wrong');
         }
     }
 }
