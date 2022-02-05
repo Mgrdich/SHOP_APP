@@ -1,3 +1,5 @@
+import {Dictionary} from "../types";
+
 export default class FunctionUtil {
 
     /**
@@ -32,5 +34,34 @@ export default class FunctionUtil {
 
     static isNaN(element: any): boolean {
         return isNaN(element);
+    }
+
+    static async request<T>(type: 'GET' | 'POST', url: string, body?: any, headers?:any): Promise<T> {
+        headers = {
+            'Content-Type': 'application/json',
+            ...headers
+        }
+
+        let config: RequestInit = {
+            method: type,
+            headers: headers
+        }
+
+        if (type === 'POST') {
+            config.body = body;
+        }
+
+        return fetch(url, config)
+            .then(res => res.json())
+            .then((res: T) => res);
+    }
+
+    static async post<T>(url: string, body: any, headers): Promise<T> {
+        return FunctionUtil.request('POST', url, body, headers);
+    }
+
+
+    static async get<T>(url: string, headers): Promise<T> {
+        return FunctionUtil.request('GET', url, null, headers);
     }
 }
