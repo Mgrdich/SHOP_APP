@@ -36,7 +36,7 @@ export default class FunctionUtil {
         return isNaN(element);
     }
 
-    static async request<T>(type: 'GET' | 'POST', url: string, body?: any, headers?:any): Promise<T> {
+    static async request<T>(type: 'GET' | 'POST', url: string, body?: Dictionary, headers?: Dictionary): Promise<T> {
         headers = {
             'Content-Type': 'application/json',
             ...headers
@@ -48,7 +48,7 @@ export default class FunctionUtil {
         }
 
         if (type === 'POST') {
-            config.body = body;
+            config.body = JSON.stringify(body);
         }
 
         return fetch(url, config)
