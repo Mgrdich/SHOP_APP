@@ -46,7 +46,7 @@ export default class FunctionUtil {
             headers: headers
         }
 
-        if (type === 'POST') {
+        if (type === 'POST' || type === 'PATCH') {
             config.body = JSON.stringify(body);
         }
 

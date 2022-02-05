@@ -31,15 +31,17 @@ export function createProduct(product: productDataType) {
                     productData: product
                 });
             }
-        } catch (err) {
-        }
+        } catch (err) {}
     }
 }
 
 export function editProduct(id: string, product: productDataType) {
     return async (dispatch) => {
         try {
-            const res = await FU.patch(CONFIGS.products_url_id.replace('{{0}}', id), product);
+            const res = await FU.patch(
+                CONFIGS.products_url_id.replace('{{0}}', id),
+                product
+            );
             if(res.error) {
                 return Promise.reject(res.error);
             }
