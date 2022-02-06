@@ -19,7 +19,7 @@ import useFetchDispatch from "../../hooks/useFetchDispatch";
 type ProductsProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsOverview>;
 
 const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => {
-    const {isLoading, isError, fetchAgainFn} = useFetchDispatch(fetchProducts);
+    const {isLoading,isRefreshing ,isError, fetchAgainFn, fetchAgainTimeStampFn} = useFetchDispatch(fetchProducts);
     const products: Product[] = useAppSelector(state => state.products.availableProducts);
     const dispatch = useAppDispatch();
 
@@ -51,6 +51,8 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
 
     return (
         <FlatList
+            onRefresh={fetchAgainTimeStampFn}
+            refreshing={isRefreshing}
             data={products}
             keyExtractor={item => item.id}
             renderItem={(itemData: ListRenderItemInfo<Product>) =>

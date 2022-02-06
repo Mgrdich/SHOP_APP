@@ -14,7 +14,7 @@ import useFetchDispatch from "../../hooks/useFetchDispatch";
 type OrderScreenProps = OrdersNavigatorProps<ORDERS_STACK_SCREENS.Orders>;
 
 const OrderScreen: React.FC<OrderScreenProps> = ({navigation, route}) => {
-    const {isLoading, isError, fetchAgainFn} = useFetchDispatch(fetchOrders);
+    const {isLoading, isError, isRefreshing ,fetchAgainFn , fetchAgainTimeStampFn} = useFetchDispatch(fetchOrders);
     const orders = useAppSelector(state => state.orders.orders);
 
     if (isError) {
@@ -33,6 +33,8 @@ const OrderScreen: React.FC<OrderScreenProps> = ({navigation, route}) => {
 
     return (
         <FlatList
+            onRefresh={fetchAgainTimeStampFn}
+            refreshing={isRefreshing}
             data={orders}
             keyExtractor={item => item.id}
             renderItem={itemData => (
@@ -45,7 +47,5 @@ const OrderScreen: React.FC<OrderScreenProps> = ({navigation, route}) => {
         />
     );
 };
-
-const styles = StyleSheet.create({});
 
 export default OrderScreen;
