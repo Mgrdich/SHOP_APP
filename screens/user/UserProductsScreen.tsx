@@ -26,7 +26,8 @@ const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = ({navigation})
             {text: 'No', style: 'default'},
             {
                 text: 'Yes', style: 'destructive', onPress: () => {
-                    dispatch(deleteProduct(id));
+                    dispatch(deleteProduct(id))
+                        .then(function (){}).catch(function (){});
                 }
             }
         ]);

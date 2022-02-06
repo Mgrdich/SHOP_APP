@@ -14,10 +14,27 @@ type ProductActionType = ActionType<PRODUCTS_ACTIONS>
 
 export type productDataType = { title: string, description: string, imageUrl: string, price: number };
 
-export function deleteProduct(id: string): ProductActionType {
-    return {
-        type: PRODUCTS_ACTIONS.DELETE_PRODUCT,
-        pId: id
+export function deleteProduct(id: string) {
+    return async (dispatch) => {
+        try {
+            //console.log("url", CONFIGS.products_url_id.replace('{{id}}', id));
+            const res = await FU.delete(CONFIGS.products_url_id.replace('{{id}}', id));
+            //console.log("delete", res);
+
+            if (res.error) {
+                return Promise.reject(res.error);
+            }
+
+            if (res) {
+                return dispatch({
+                    type: PRODUCTS_ACTIONS.DELETE_PRODUCT,
+                    pId: id
+                });
+            }
+        } catch (err) {
+            throw Error('Something went Wrong');
+        }
+
     }
 }
 
@@ -25,13 +42,20 @@ export function createProduct(product: productDataType) {
     return async (dispatch) => {
         try {
             const res = await FU.post<any>(CONFIGS.products_url, product);
+
+            if (res.error) {
+                return Promise.reject(res.error);
+            }
+
             if (res) {
-                dispatch({
+                return dispatch({
                     type: PRODUCTS_ACTIONS.CREATE_PRODUCT,
                     productData: product
                 });
             }
-        } catch (err) {}
+        } catch (err) {
+            throw Error('Something went Wrong');
+        }
     }
 }
 
@@ -39,10 +63,11 @@ export function editProduct(id: string, product: productDataType) {
     return async (dispatch) => {
         try {
             const res = await FU.patch(
-                CONFIGS.products_url_id.replace('{{0}}', id),
+                CONFIGS.products_url_id.replace('{{id}}', id),
                 product
             );
-            if(res.error) {
+
+            if (res.error) {
                 return Promise.reject(res.error);
             }
 
@@ -54,7 +79,7 @@ export function editProduct(id: string, product: productDataType) {
                 });
             }
         } catch (err) {
-            throw 'Something Went Wrong';
+            throw Error('Something Went Wrong');
         }
     }
 }

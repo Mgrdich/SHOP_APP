@@ -14,6 +14,6 @@ const CONFIGS: I_CONFIG = {
 
 CONFIGS.products_url = `${CONFIGS.firebase_url}/products.json`;
 
-CONFIGS.products_url_id = `${CONFIGS.firebase_url}/products/{{0}}.json`
+CONFIGS.products_url_id = `${CONFIGS.firebase_url}/products/{{id}}.json`
 
 export default CONFIGS;
