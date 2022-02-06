@@ -17,15 +17,13 @@ export type productDataType = { title: string, description: string, imageUrl: st
 export function deleteProduct(id: string) {
     return async (dispatch) => {
         try {
-            //console.log("url", CONFIGS.products_url_id.replace('{{id}}', id));
             const res = await FU.delete(CONFIGS.products_url_id.replace('{{id}}', id));
-            //console.log("delete", res);
 
             if (res.error) {
                 return Promise.reject(res.error);
             }
 
-            if (res) {
+            if (FU.isNull(res)) {
                 return dispatch({
                     type: PRODUCTS_ACTIONS.DELETE_PRODUCT,
                     pId: id

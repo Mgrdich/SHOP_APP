@@ -37,6 +37,10 @@ export default class FunctionUtil {
         return isNaN(element);
     }
 
+    static isNull(element: any): boolean {
+        return element === null;
+    }
+
     static async request<T = any>(
         type: RequestType, url: string,
         body?: Dictionary | null,
