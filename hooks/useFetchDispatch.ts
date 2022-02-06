@@ -5,7 +5,7 @@ import {useCallback, useEffect, useRef} from "react";
 type returnUseFetchDispatch = {
     isLoading: boolean;
     isError: boolean;
-    loadFetch: Function,
+    fetchAgainFn: Function,
 };
 
 export default function useFetchDispatch(actionFn: Function): returnUseFetchDispatch {
@@ -13,7 +13,7 @@ export default function useFetchDispatch(actionFn: Function): returnUseFetchDisp
     const dispatch = useAppDispatch();
     const actionFnRef = useRef(actionFn); // always constant
 
-    const loadFetch = useCallback(async function () {
+    const fetchAgainFn = useCallback(async function () {
         setLoading(true);
         dispatch(actionFnRef.current())
             .then(function () {
@@ -25,12 +25,12 @@ export default function useFetchDispatch(actionFn: Function): returnUseFetchDisp
 
     // initial Load
     useEffect(function () {
-        loadFetch().then();
-    }, [loadFetch]);
+        fetchAgainFn().then();
+    }, [fetchAgainFn]);
 
     return {
         isLoading,
         isError,
-        loadFetch: loadFetch
+        fetchAgainFn: fetchAgainFn
     }
 }

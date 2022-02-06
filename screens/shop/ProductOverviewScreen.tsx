@@ -14,31 +14,19 @@ import useLoading from "../../hooks/useLoading";
 import {useFocusEffect} from "@react-navigation/native";
 import PageLoading from "../../components/UI/PageLoading";
 import SomethingWentWrong from "../../components/UI/SomethingWentWrong";
+import useFetchDispatch from "../../hooks/useFetchDispatch";
 
 type ProductsProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsOverview>;
 
 const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => {
-    const {isLoading, setLoading, isError, setError} = useLoading();
+    const {isLoading, isError, fetchAgainFn} = useFetchDispatch(fetchProducts);
     const products: Product[] = useAppSelector(state => state.products.availableProducts);
     const dispatch = useAppDispatch();
 
-    const loadProducts = useCallback(async function (){
-        setLoading(true);
-        dispatch(fetchProducts())
-            .then(function () {
-                setLoading(false);
-            }).catch(function (err) {
-            setError(err.toString());
-        });
-    },[dispatch]);
-
-    useEffect(function () {
-        loadProducts().then();
-    }, [loadProducts]);
 
     useFocusEffect(useCallback(function () {
-        loadProducts().then();
-    },[loadProducts]));
+        fetchAgainFn().then();
+    },[fetchAgainFn]));
 
     const redirectToProductDetails = (id: string, title: string) => {
         navigation.navigate(
@@ -50,7 +38,7 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
     };
 
     if (isError) {
-        return <SomethingWentWrong onPress={loadProducts}/>;
+        return <SomethingWentWrong onPress={fetchAgainFn}/>;
     }
 
     if (isLoading) {
