@@ -1,6 +1,6 @@
 import {Dictionary} from "../types";
 
-type RequestType = 'GET' | 'POST' | 'PATCH';
+type RequestType = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
 export default class FunctionUtil {
 
@@ -71,5 +71,9 @@ export default class FunctionUtil {
 
     static async patch<T>(url: string, body: Dictionary, headers?: Dictionary): Promise<T> {
         return FunctionUtil.request('PATCH', url, body, headers);
+    }
+
+    static async delete<T>(url: string, headers?: Dictionary): Promise<T> {
+        return FunctionUtil.request('DELETE', url, null, headers);
     }
 }
