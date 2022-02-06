@@ -1,11 +1,10 @@
-import React, {useCallback, useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, FlatList} from "react-native";
 import OrderItem from '../../components/shop/OrderItem';
-import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import {useAppSelector} from "../../hooks/redux";
 import {OrdersNavigatorProps} from "../../navigation/types";
 import {ORDERS_STACK_SCREENS} from "../../navigation/OrderNavigatorTypes";
 import NoDataFound from "../../components/UI/NoDateFound";
-import useLoading from "../../hooks/useLoading";
 import {fetchOrders} from "../../store/actions/orders";
 import SomethingWentWrong from "../../components/UI/SomethingWentWrong";
 import PageLoading from "../../components/UI/PageLoading";

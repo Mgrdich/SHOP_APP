@@ -17,7 +17,8 @@ export const addOrder = (cartItems: ICartItemsElement[], totalAmount: number) =>
 
         const orderData =  {
             items: cartItems,
-            amount: totalAmount
+            amount: totalAmount,
+            date: new Date().toISOString()
         };
 
         try {
@@ -55,7 +56,7 @@ export const fetchOrders  = () => {
             for (const resKey in res) {
                 let item = res[resKey];
                 orderData.push(
-                    new Order(item.items, item.amount, new Date())
+                    new Order(item.items, item.amount, new Date(item.date))
                 );
             }
 

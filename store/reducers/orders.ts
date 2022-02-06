@@ -21,8 +21,16 @@ function addOrder(state: IOrdersState, action: orderActionType): IOrdersState {
     }
 }
 
+function setOrders(state: IOrdersState, action: orderActionType): IOrdersState {
+    return {
+        ...state,
+        orders: action.orderData
+    }
+}
+
 const ordersReducer = createReducer<IOrdersState, ORDERS_ACTIONS>(initialState, {
-    [ORDERS_ACTIONS.ADD_ORDER]: addOrder
+    [ORDERS_ACTIONS.ADD_ORDER]: addOrder,
+    [ORDERS_ACTIONS.SET_ORDERS]: setOrders
 });
 
 export default ordersReducer;
