@@ -50,7 +50,7 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
     };
 
     if (isError) {
-        return <SomethingWentWrong />;
+        return <SomethingWentWrong onPress={loadProducts}/>;
     }
 
     if (isLoading) {
