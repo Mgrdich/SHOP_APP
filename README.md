@@ -1,3 +1,4 @@
 # SHOP APP
-An Shop app built with Rreact native with Typescript 
-The backend API is a simple Firebase API
+A Shop app built with 
+* React native with Typescript
+* The backend API is a simple Firebase API
