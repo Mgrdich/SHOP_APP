@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, View} from "react-native";
 import StyledText from "../Styled/StyledText";
+import FullScreen from "./FullScreen";
 
 interface NoDataFoundProps {
     text?: string
@@ -8,18 +8,9 @@ interface NoDataFoundProps {
 
 const NoDataFound: React.FC<NoDataFoundProps> = ({text = 'No Data Found'}) => {
     return (
-        <View style={styles.screen}>
+        <FullScreen>
             <StyledText bold>{text}</StyledText>
-        </View>
+        </FullScreen>
     );
 };
-
-const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
-    }
-});
-
 export default NoDataFound;
