@@ -62,18 +62,18 @@ export default class FunctionUtil {
     }
 
     static async post<T>(url: string, body: Dictionary, headers?: Dictionary): Promise<T> {
-        return FunctionUtil.request('POST', url, body, headers);
+        return FunctionUtil.request<T>('POST', url, body, headers);
     }
 
     static async get<T>(url: string, headers?: Dictionary): Promise<T> {
-        return FunctionUtil.request('GET', url, null, headers);
+        return FunctionUtil.request<T>('GET', url, null, headers);
     }
 
     static async patch<T>(url: string, body: Dictionary, headers?: Dictionary): Promise<T> {
-        return FunctionUtil.request('PATCH', url, body, headers);
+        return FunctionUtil.request<T>('PATCH', url, body, headers);
     }
 
     static async delete<T>(url: string, headers?: Dictionary): Promise<T> {
-        return FunctionUtil.request('DELETE', url, null, headers);
+        return FunctionUtil.request<T>('DELETE', url, null, headers);
     }
 }
