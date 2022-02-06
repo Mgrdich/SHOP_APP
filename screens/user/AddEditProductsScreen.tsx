@@ -7,6 +7,10 @@ import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {createProduct, editProduct, productDataType} from "../../store/actions/products";
 import useForm from "../../hooks/useForm";
 import Validation, {ValidationRules} from "../../util/Validation";
+import useLoading from "../../hooks/useLoading";
+import SomethingWentWrong from "../../components/UI/SomethingWentWrong";
+import PageLoading from "../../components/UI/PageLoading";
+import StylingColors from "../../constants/StylingColors";
 
 
 type AddEditProductsScreenProps = UsersNavigatorProps<USERS_STACK_SCREENS.EDIT_USER>;
@@ -19,6 +23,7 @@ enum FORM_NAMES {
 }
 
 const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation, route}) => {
+    const {isLoading, setLoading, isError, setError} = useLoading();
     const prodId: string = route.params.prodId;
     const editedProduct = useAppSelector(state =>
         state.products.userProducts.find(prod => prod.id === prodId)
@@ -45,7 +50,7 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
 
     const submitHandler = useCallback(function () {
         if (state.isAllFormTouched) {
-             if (state.isNotValid) {
+            if (state.isNotValid) {
                 return;
             }
         } else {
@@ -54,23 +59,36 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
             }
         }
 
+        setLoading(true);
+        let promise: Promise<void>;
+
         if (isEditPage) {
-            dispatch(editProduct(prodId, state.formData as productDataType))
-                .then(function () {
-                    navigation.goBack();
-                });
+            promise = dispatch(editProduct(prodId, state.formData as productDataType));
         } else {
-            dispatch(createProduct(state.formData as productDataType))
-                .then(function () {
-                    navigation.goBack();
-                });
+            promise = dispatch(createProduct(state.formData as productDataType));
         }
-    }, [isEditPage, state , dispatch]);
+
+        promise.then(function () {
+            setLoading(false);
+            navigation.goBack();
+        }).catch(function (err) {
+            setError();
+        });
+
+    }, [isEditPage, state, dispatch]);
 
     useEffect(() => {
         navigation.setParams({submit: submitHandler});
     }, [submitHandler]);
 
+
+    if (isError) {
+        return <SomethingWentWrong />;
+    }
+
+    if (isLoading) {
+        return <PageLoading/>;
+    }
 
     return (
         <ScrollView>

@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {ActivityIndicator, FlatList, ListRenderItemInfo, View, StyleSheet} from "react-native";
+import React, {useCallback, useEffect} from 'react';
+import {FlatList, ListRenderItemInfo, View, StyleSheet} from "react-native";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {Product} from "../../models/products";
 import {ProductsNavigatorProps} from "../../navigation/types";
@@ -11,8 +11,9 @@ import {fetchProducts} from "../../store/actions/products";
 import StylingColors from "../../constants/StylingColors";
 import NoDataFound from "../../components/UI/NoDateFound";
 import useLoading from "../../hooks/useLoading";
-import StyledText from "../../components/Styled/StyledText";
 import {useFocusEffect} from "@react-navigation/native";
+import PageLoading from "../../components/UI/PageLoading";
+import SomethingWentWrong from "../../components/UI/SomethingWentWrong";
 
 type ProductsProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsOverview>;
 
@@ -32,13 +33,11 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
     },[dispatch]);
 
     useEffect(function () {
-        loadProducts()
-            .then();
+        loadProducts().then();
     }, [loadProducts]);
 
     useFocusEffect(useCallback(function () {
-        loadProducts()
-            .then();
+        loadProducts().then();
     },[loadProducts]));
 
     const redirectToProductDetails = (id: string, title: string) => {
@@ -51,26 +50,15 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
     };
 
     if (isError) {
-        return (
-            <View style={styles.screen}>
-                <StyledText bold>Something went Wrong</StyledText>
-                <StyledButton style={styles.btn} primary title="Try again" onPress={loadProducts}/>
-            </View>
-        );
+        return <SomethingWentWrong />;
     }
 
     if (isLoading) {
-        return (
-            <View style={styles.screen}>
-                <ActivityIndicator size="large" color={StylingColors.primary}/>
-            </View>
-        )
+        return <PageLoading/>;
     }
 
     if (!isLoading && !products.length) {
-        return (
-            <NoDataFound text="No products Found"/>
-        )
+        return <NoDataFound text="No products Found"/>;
     }
 
     return (
@@ -97,16 +85,4 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
         />
     );
 };
-
-const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        justifyContent:"center",
-        alignItems:"center"
-    },
-    btn: {
-        marginTop: 10
-    }
-})
-
 export default ProductOverviewScreen;
