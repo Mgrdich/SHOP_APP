@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, FlatList} from "react-native";
+import {FlatList} from "react-native";
 import OrderItem from '../../components/shop/OrderItem';
 import {useAppSelector} from "../../hooks/redux";
 import {OrdersNavigatorProps} from "../../navigation/types";

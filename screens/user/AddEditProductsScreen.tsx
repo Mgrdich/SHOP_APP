@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {ScrollView, StyleSheet, View} from "react-native";
 import {UsersNavigatorProps} from "../../navigation/types";
 import {USERS_STACK_SCREENS} from "../../navigation/UserNavigatorTypes";
@@ -10,7 +10,6 @@ import Validation, {ValidationRules} from "../../util/Validation";
 import useLoading from "../../hooks/useLoading";
 import SomethingWentWrong from "../../components/UI/SomethingWentWrong";
 import PageLoading from "../../components/UI/PageLoading";
-import StylingColors from "../../constants/StylingColors";
 
 
 type AddEditProductsScreenProps = UsersNavigatorProps<USERS_STACK_SCREENS.EDIT_USER>;

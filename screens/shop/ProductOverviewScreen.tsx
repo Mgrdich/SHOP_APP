@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect} from 'react';
-import {FlatList, ListRenderItemInfo, View, StyleSheet} from "react-native";
+import React, {useCallback} from 'react';
+import {FlatList, ListRenderItemInfo} from "react-native";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {Product} from "../../models/products";
 import {ProductsNavigatorProps} from "../../navigation/types";
@@ -8,9 +8,7 @@ import {PRODUCTS_STACK_SCREENS} from "../../navigation/ProductsNavigationTypes";
 import {addToCart} from "../../store/actions/cart";
 import StyledButton from "../../components/Styled/StyledButton";
 import {fetchProducts} from "../../store/actions/products";
-import StylingColors from "../../constants/StylingColors";
 import NoDataFound from "../../components/UI/NoDateFound";
-import useLoading from "../../hooks/useLoading";
 import {useFocusEffect} from "@react-navigation/native";
 import PageLoading from "../../components/UI/PageLoading";
 import SomethingWentWrong from "../../components/UI/SomethingWentWrong";
