@@ -1,4 +1,4 @@
-import {ActionType, AppThunk} from "./types";
+import {ActionType} from "./types";
 import FU from "../../util/FunctionUtil";
 import CONFIGS from "../../configs";
 import {Product} from "../../models/products";
