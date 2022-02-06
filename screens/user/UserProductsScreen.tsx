@@ -7,11 +7,14 @@ import StyledButton from "../../components/Styled/StyledButton";
 import {deleteProduct} from "../../store/actions/products";
 import {USERS_STACK_SCREENS} from "../../navigation/UserNavigatorTypes";
 import {UsersNavigatorProps} from "../../navigation/types";
+import useLoading from "../../hooks/useLoading";
+import PageLoading from "../../components/UI/PageLoading";
 
 
 type UserProductsScreenTypeProps = UsersNavigatorProps<USERS_STACK_SCREENS.USERS>;
 
 const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = ({navigation}) => {
+    const {isLoading, setLoading, setError} = useLoading();
     const userProduct = useAppSelector(state => state.products.userProducts);
     const dispatch = useAppDispatch();
 
@@ -26,12 +29,22 @@ const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = ({navigation})
             {text: 'No', style: 'default'},
             {
                 text: 'Yes', style: 'destructive', onPress: () => {
+                    setLoading(true);
                     dispatch(deleteProduct(id))
-                        .then(function (){}).catch(function (){});
+                        .then(function () {
+                            setLoading(false);
+                        })
+                        .catch(function () {
+                            setError();
+                        });
                 }
             }
         ]);
     };
+
+    if (isLoading) {
+        return <PageLoading/>;
+    }
 
     return (
         <FlatList
