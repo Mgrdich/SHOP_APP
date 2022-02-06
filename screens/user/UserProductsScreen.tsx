@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, FlatList, ListRenderItemInfo, StyleSheet} from "react-native";
+import {Alert, FlatList, ListRenderItemInfo} from "react-native";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import ProductItem from "../../components/shop/ProductItem";
 import {Product} from "../../models/products";
@@ -9,14 +9,17 @@ import {USERS_STACK_SCREENS} from "../../navigation/UserNavigatorTypes";
 import {UsersNavigatorProps} from "../../navigation/types";
 import useLoading from "../../hooks/useLoading";
 import PageLoading from "../../components/UI/PageLoading";
+import useErrorAlert from "../../hooks/useErrorAlert";
 
 
 type UserProductsScreenTypeProps = UsersNavigatorProps<USERS_STACK_SCREENS.USERS>;
 
 const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = ({navigation}) => {
-    const {isLoading, setLoading, setError} = useLoading();
+    const {isLoading, setLoading, isError, setError} = useLoading();
     const userProduct = useAppSelector(state => state.products.userProducts);
     const dispatch = useAppDispatch();
+
+    useErrorAlert(isError);
 
     const onEditRedirect = (id: string) => {
         navigation.navigate(USERS_STACK_SCREENS.EDIT_USER as any, {
@@ -63,7 +66,5 @@ const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = ({navigation})
         />
     );
 };
-
-const styles = StyleSheet.create({});
 
 export default UserProductsScreen;

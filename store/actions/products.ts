@@ -19,16 +19,17 @@ export function deleteProduct(id: string) {
         try {
             const res = await FU.delete(CONFIGS.products_url_id.replace('{{id}}', id));
 
-            if (res.error) {
-                return Promise.reject(res.error);
-            }
-
             if (FU.isNull(res)) {
                 return dispatch({
                     type: PRODUCTS_ACTIONS.DELETE_PRODUCT,
                     pId: id
                 });
             }
+
+            if (res && res.error) {
+                return Promise.reject(res.error);
+            }
+
         } catch (err) {
             throw Error('Something went Wrong');
         }
