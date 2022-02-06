@@ -10,6 +10,9 @@ type returnUseFetchDispatch = {
     fetchAgainTimeStampFn: Function
 };
 
+/**
+ * @description initial fetching and a functionality to an request indicator and re-fetching functionality
+ * */
 export default function useFetchDispatch(actionFn: Function): returnUseFetchDispatch {
     const {isLoading, setLoading, isError, setError} = useLoading();
     const [isRefreshing, setRefreshing] = useState(false);
@@ -40,7 +43,7 @@ export default function useFetchDispatch(actionFn: Function): returnUseFetchDisp
         if(!lastTimeStamp || (Math.abs(newTime_ms - lastTimeStamp?.getTime()) > interval)) {
             return fetchAgainFn();
         }
-    }, [timeStamp, fetchAgainFn])
+    }, [timeStamp, fetchAgainFn]);
 
     // initial Load
     useEffect(function () {
@@ -55,5 +58,5 @@ export default function useFetchDispatch(actionFn: Function): returnUseFetchDisp
         isError,
         fetchAgainFn: fetchAgainFn,
         fetchAgainTimeStampFn: fetchAgainTimeStampFn
-    }
+    };
 }
