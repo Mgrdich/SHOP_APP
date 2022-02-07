@@ -21,7 +21,7 @@ enum FORM_NAMES {
 
 const AuthScreen: React.FC<AuthScreenProps> = ({isLogin}) => {
     const dispatch = useAppDispatch();
-    const {isLoading , isError, setError ,setLoading} = useLoading();
+    const {isLoading , isError, setError , setLoading} = useLoading();
     const {state, onChangeHandler, isValidForSubmit} = useForm({
         [FORM_NAMES.email]: '',
         [FORM_NAMES.password]: ''
@@ -50,7 +50,7 @@ const AuthScreen: React.FC<AuthScreenProps> = ({isLogin}) => {
         } else {
             promise = dispatch(signup(username, password));
         }
-        
+
         promise.then(function (){
             setLoading(false);
         }).catch(function () {

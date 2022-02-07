@@ -7,7 +7,8 @@ interface I_CONFIG {
     products_url_id: string,
     orders_url: string,
     orders_url_id: string,
-    auth_url: string
+    auth_signup_url: string,
+    auth_signin_url: string
 }
 
 const CONFIGS: I_CONFIG = {
@@ -17,11 +18,13 @@ const CONFIGS: I_CONFIG = {
     products_url_id: '',
     orders_url: '',
     orders_url_id: '',
-    auth_url: ''
+    auth_signup_url: '',
+    auth_signin_url:''
 };
 
-CONFIGS.auth_url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${CONFIGS.api_key}`;
-console.log(CONFIGS.auth_url);
+CONFIGS.auth_signup_url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${CONFIGS.api_key}`;
+
+CONFIGS.auth_signin_url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${CONFIGS.api_key}`
 
 CONFIGS.products_url = `${CONFIGS.firebase_url}/products.json`;
 
