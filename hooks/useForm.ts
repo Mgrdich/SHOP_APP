@@ -26,7 +26,7 @@ interface State {
     isNotValid: boolean
 }
 
-interface Action extends Dictionary{
+interface Action extends Dictionary {
     type: USE_FORM_ACTION
 }
 
@@ -119,7 +119,8 @@ export default function useForm(initialState: Dictionary, validationConfig?: use
     resetFormToInitial: Function,
     deleteFormData: Function,
     onChangeHandler: Function,
-    validateForm: Function
+    validateForm: Function,
+    isValidForSubmit:Function
 } {
     const initialRedState: State = {
         formData: initialState,
@@ -217,11 +218,23 @@ export default function useForm(initialState: Dictionary, validationConfig?: use
         return !Object.keys(state.errors).length;
     });
 
+    const isValidForSubmit = useRef<() => boolean>(function () {
+        let state = stateRef.current;
+
+        if (state.isAllFormTouched) {
+            return state.isValid;
+        }
+
+        return validateForm.current();
+    });
+
+
     return {
         state,
-        validateForm:validateForm.current,
+        validateForm: validateForm.current,
         resetFormToInitial: resetFormToInitial.current,
         deleteFormData: deleteFormData.current,
-        onChangeHandler: onChangeHandler.current
+        onChangeHandler: onChangeHandler.current,
+        isValidForSubmit: isValidForSubmit.current
     };
 }

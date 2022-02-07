@@ -4,6 +4,7 @@ import Card from "../../components/UI/Card";
 import InputLabel from "../../components/UI/InputLabel";
 import useForm from "../../hooks/useForm";
 import Validation, {ValidationRules} from "../../util/Validation";
+import StyledButton from "../../components/Styled/StyledButton";
 
 interface AuthScreenProps {
 
@@ -15,7 +16,7 @@ enum FORM_NAMES {
 }
 
 const AuthScreen: React.FC<AuthScreenProps> = () => {
-    const {state, onChangeHandler, validateForm} = useForm({
+    const {state, onChangeHandler, isValidForSubmit} = useForm({
         [FORM_NAMES.email]: '',
         [FORM_NAMES.password]: ''
     }, {
@@ -26,6 +27,13 @@ const AuthScreen: React.FC<AuthScreenProps> = () => {
             [ValidationRules.required, ValidationRules.minLength]
         )
     });
+
+    const submitForm = function () {
+        if (!isValidForSubmit()) {
+            return;
+        }
+
+    };
 
     return (
         <KeyboardAvoidingView behavior="padding"
@@ -47,7 +55,12 @@ const AuthScreen: React.FC<AuthScreenProps> = () => {
                                 onChangeText={(text) => onChangeHandler(FORM_NAMES.password, text)}
                                 value={state.formData[FORM_NAMES.password]}
                                 errorMessage={state.errors[FORM_NAMES.password]}
+                                secureTextEntry
                     />
+                    <StyledButton title="Login" onPress={() => {
+                    }}/>
+                    <StyledButton title="Switch ti Sign Up" onPress={() => {
+                    }}/>
                 </ScrollView>
             </Card>
         </KeyboardAvoidingView>
@@ -55,8 +68,18 @@ const AuthScreen: React.FC<AuthScreenProps> = () => {
 };
 
 const styles = StyleSheet.create({
-    authContainer: {},
-    screen: {}
+    authContainer: {
+        width: '80%',
+        maxWidth: 400,
+        height: '50%',
+        maxHeight: 400,
+        padding: 10
+    },
+    screen: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });
 
 export default AuthScreen;
