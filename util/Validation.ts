@@ -72,7 +72,8 @@ export default class Validation {
         );
     }
 
-    static minLengthRule(inputName: string, minCharacters: number): validationRuleType {
+    // fix this
+    static minLengthRule(inputName: string, minCharacters: number = 6): validationRuleType {
         return Validation.createValidationRule(
             ValidationRules.minLength,
             `${inputName} should contain atleast ${minCharacters} characters`,
@@ -80,7 +81,7 @@ export default class Validation {
         );
     }
 
-    static maxLengthRule(inputName: string, maxCharacters: number): validationRuleType {
+    static maxLengthRule(inputName: string, maxCharacters: number = 6): validationRuleType {
         return Validation.createValidationRule(
             ValidationRules.maxLength,
             `${inputName} cannot contain more than ${maxCharacters} characters`,

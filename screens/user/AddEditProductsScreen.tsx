@@ -92,28 +92,28 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
     return (
         <ScrollView>
             <View style={styles.form}>
-                <InputLabel onChangeText={(text) => onChangeHandler('title', text)}
+                <InputLabel onChangeText={(text) => onChangeHandler(FORM_NAMES.title, text)}
                             title="Title"
                             autoCapitalize="sentences"
                             autoCorrect
-                            value={state.formData['title']}
-                            errorMessage={state.errors['title']}
+                            value={state.formData[FORM_NAMES.title]}
+                            errorMessage={state.errors[FORM_NAMES.title]}
                 />
-                <InputLabel onChangeText={(text) => onChangeHandler('imageUrl', text)}
+                <InputLabel onChangeText={(text) => onChangeHandler(FORM_NAMES.imageUrl, text)}
                             title="Image Url"
-                            value={state.formData['imageUrl']}
-                            errorMessage={state.errors['imageUrl']}
+                            value={state.formData[FORM_NAMES.imageUrl]}
+                            errorMessage={state.errors[FORM_NAMES.imageUrl]}
                 />
-                <InputLabel onChangeText={(text) => onChangeHandler('price', parseFloat(text))}
+                <InputLabel onChangeText={(text) => onChangeHandler(FORM_NAMES.price, parseFloat(text))}
                             title="Price"
                             keyboardType="decimal-pad"
-                            value={state.formData['price']}
-                            errorMessage={state.errors['price']}
+                            value={state.formData[FORM_NAMES.price]}
+                            errorMessage={state.errors[FORM_NAMES.price]}
                 />
-                <InputLabel onChangeText={(text) => onChangeHandler('description', text)}
+                <InputLabel onChangeText={(text) => onChangeHandler(FORM_NAMES.description, text)}
                             title="Description"
-                            value={state.formData['description']}
-                            errorMessage={state.errors['description']}
+                            value={state.formData[FORM_NAMES.description]}
+                            errorMessage={state.errors[FORM_NAMES.description]}
                 />
             </View>
         </ScrollView>

@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from "react-native";
 
 interface CardProps {
-    style: StyleProp<ViewStyle>,
+    style?: StyleProp<ViewStyle>,
     children: React.ReactNode
 }
 
