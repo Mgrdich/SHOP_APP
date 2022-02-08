@@ -41,6 +41,10 @@ export default class FunctionUtil {
         return element === null;
     }
 
+    static getAuthUrl(url: string, token: string): string {
+        return `${url}?auth=${token}`;
+    }
+
     static async request<T = any>(
         type: RequestType, url: string,
         body?: Dictionary | null,
@@ -73,7 +77,7 @@ export default class FunctionUtil {
         return FunctionUtil.request<T>('GET', url, null, headers);
     }
 
-    static async patch<T>(url: string, body: Dictionary, headers?: Dictionary): Promise<T> {
+    static async patch<T>(url: string, body: Dictionary, headers?: Dictionary , isAuthQuery?:boolean): Promise<T> {
         return FunctionUtil.request<T>('PATCH', url, body, headers);
     }
 

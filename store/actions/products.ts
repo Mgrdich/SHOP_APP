@@ -15,9 +15,13 @@ type ProductActionType = ActionType<PRODUCTS_ACTIONS>
 export type productDataType = { title: string, description: string, imageUrl: string, price: number };
 
 export function deleteProduct(id: string) {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
-            const res = await FU.delete(CONFIGS.products_url_id.replace('{{id}}', id));
+            let url: string = FU.getAuthUrl(
+                `${CONFIGS.products_url_id.replace('{{id}}', id)}`,
+                getState().auth.token
+            );
+            const res = await FU.delete(url);
 
             if (FU.isNull(res)) {
                 return dispatch({
@@ -38,9 +42,10 @@ export function deleteProduct(id: string) {
 }
 
 export function createProduct(product: productDataType) {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
-            const res = await FU.post<any>(CONFIGS.products_url, product);
+            let url:string =  FU.getAuthUrl(CONFIGS.products_url, getState().auth.token);
+            const res = await FU.post<any>(url, product);
 
             if (res.error) {
                 return Promise.reject(res.error);
@@ -59,12 +64,13 @@ export function createProduct(product: productDataType) {
 }
 
 export function editProduct(id: string, product: productDataType) {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
-            const res = await FU.patch(
+            let url: string = FU.getAuthUrl(
                 CONFIGS.products_url_id.replace('{{id}}', id),
-                product
+                getState().auth.token
             );
+            const res = await FU.patch(url, product);
 
             if (res.error) {
                 return Promise.reject(res.error);

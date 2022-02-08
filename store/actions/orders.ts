@@ -13,7 +13,7 @@ type OrdersAction = ActionType<ORDERS_ACTIONS>;
 
 
 export const addOrder = (cartItems: ICartItemsElement[], totalAmount: number) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
 
         const orderData =  {
             items: cartItems,
@@ -22,7 +22,8 @@ export const addOrder = (cartItems: ICartItemsElement[], totalAmount: number) =>
         };
 
         try {
-            const res = await FU.post<any>(CONFIGS.orders_url, orderData);
+            let url:string =  FU.getAuthUrl(CONFIGS.orders_url, getState().auth.token);
+            const res = await FU.post<any>(url, orderData);
 
             if (res.error) {
                 return Promise.reject(res.error);
@@ -43,9 +44,10 @@ export const addOrder = (cartItems: ICartItemsElement[], totalAmount: number) =>
 
 
 export const fetchOrders  = () => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
-            const res = await FU.get<any>(CONFIGS.orders_url);
+            let url:string =  FU.getAuthUrl(CONFIGS.orders_url, getState().auth.token);
+            const res = await FU.get<any>(url);
 
             if (res.error) {
                 return Promise.reject(res.error);
