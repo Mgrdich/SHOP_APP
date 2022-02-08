@@ -3,9 +3,14 @@ import {AUTH_ACTIONS} from "../actions/auth";
 import {ActionType} from "../actions/types";
 
 export interface IAuthState {
+    token: string | null,
+    userId: string | null
 }
 
-let initialState: IAuthState = {}
+let initialState: IAuthState = {
+    token: null,
+    userId: null
+}
 
 type authActionType = ActionType<AUTH_ACTIONS>
 

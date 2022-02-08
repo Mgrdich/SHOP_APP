@@ -15,8 +15,14 @@ export const signup = (email: string, password: string) => {
                 returnSecureToken: true
             });
 
-            dispatch({
-                type : AUTH_ACTIONS.AUTHENTICATE
+            if (res.error) {
+               return Promise.reject('Validation Issue');
+            }
+
+            return dispatch({
+                type : AUTH_ACTIONS.AUTHENTICATE,
+                token: res['idToken'],
+                userId: res['localId']
             });
         } catch (e) {
             throw Error('Something Went Wrong');
@@ -33,8 +39,14 @@ export const login = (email: string, password: string) => {
                 returnSecureToken: true
             });
 
-            dispatch({
-                type : AUTH_ACTIONS.AUTHENTICATE
+            if (res.error) {
+                return Promise.reject('Validation Issue');
+            }
+
+            return dispatch({
+                type : AUTH_ACTIONS.AUTHENTICATE,
+                token: res['idToken'],
+                userId: res['localId']
             });
         } catch (e) {
             throw Error('Something Went Wrong');

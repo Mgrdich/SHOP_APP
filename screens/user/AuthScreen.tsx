@@ -12,6 +12,7 @@ import useErrorAlert from "../../hooks/useErrorAlert";
 import StylingColors from "../../constants/StylingColors";
 import {AuthNavigatorProps} from "../../navigation/types";
 import {AUTH_STACK_SCREEN} from "../../navigation/AuthNavigatorTypes";
+import Util from "../../util/Util";
 
 
 enum FORM_NAMES {
@@ -63,7 +64,7 @@ const AuthScreen: React.FC<AuthScreenProps> = () => {
     };
 
     return (
-        <KeyboardAvoidingView behavior="padding"
+        <KeyboardAvoidingView behavior={Util.isIOS ? "padding" : "height"}
                               keyboardVerticalOffset={50}
                               style={styles.screen}
         >
@@ -87,10 +88,18 @@ const AuthScreen: React.FC<AuthScreenProps> = () => {
                         />
                         <View style={styles.btnContainer}>
                             {isLoading ? <ActivityIndicator size="small" color={StylingColors.primary}/> :
-                                <StyledButton primary title="Login" onPress={submitForm}/>
+                                <StyledButton primary
+                                              title={isLogin ? 'Login' : 'Register'}
+                                              onPress={submitForm}
+                                />
                             }
-                            <StyledButton style={styles.btn} primary title="Switch ti Sign Up" onPress={() => {
-                            }}/>
+                            <StyledButton style={styles.btn}
+                                          primary
+                                          title={`Switch to ${isLogin ? 'Sign Up' : 'Login'} `}
+                                          onPress={() => {
+                                              setLogin(prev => !prev)
+                                          }}
+                            />
                         </View>
                     </ScrollView>
                 </Card>

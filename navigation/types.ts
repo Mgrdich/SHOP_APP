@@ -25,6 +25,7 @@ export type UsersNavigatorPropsNavigationProp<T> = UsersNavigatorProps<T>['navig
 
 export type UsersNavigatorProp<T> = ProductsNavigatorProps<T>['route'];
 
+
 export type AuthNavigatorProps<T> = NativeStackScreenProps<RootAuthParams, T>;
 
 export type AuthNavigatorPropsNavigationProp<T> = AuthNavigatorProps<T>['navigation'];
