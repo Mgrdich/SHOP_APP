@@ -2,6 +2,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootProductsStackParamList} from "./ProductsNavigationTypes";
 import {RootOrdersStackParamList} from "./OrderNavigatorTypes";
 import {RootUsersStackParamList} from "./UserNavigatorTypes";
+import {RootAuthParams} from "./AuthNavigatorTypes";
 
 
 export type ProductsNavigatorProps<T> = NativeStackScreenProps<RootProductsStackParamList, T>;
@@ -23,3 +24,9 @@ export type UsersNavigatorProps<T> = NativeStackScreenProps<RootUsersStackParamL
 export type UsersNavigatorPropsNavigationProp<T> = UsersNavigatorProps<T>['navigation'];
 
 export type UsersNavigatorProp<T> = ProductsNavigatorProps<T>['route'];
+
+export type AuthNavigatorProps<T> = NativeStackScreenProps<RootAuthParams, T>;
+
+export type AuthNavigatorPropsNavigationProp<T> = AuthNavigatorProps<T>['navigation'];
+
+export type AuthNavigatorProp<T> = AuthNavigatorProps<T>['route'];

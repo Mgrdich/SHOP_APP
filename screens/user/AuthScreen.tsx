@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {KeyboardAvoidingView, ScrollView, StyleSheet} from "react-native";
+import {ActivityIndicator, KeyboardAvoidingView, ScrollView, StyleSheet, View} from "react-native";
 import Card from "../../components/UI/Card";
 import InputLabel from "../../components/UI/InputLabel";
 import useForm from "../../hooks/useForm";
@@ -9,19 +9,23 @@ import {useAppDispatch} from "../../hooks/redux";
 import {login, signup} from "../../store/actions/auth";
 import useLoading from "../../hooks/useLoading";
 import useErrorAlert from "../../hooks/useErrorAlert";
+import StylingColors from "../../constants/StylingColors";
+import {AuthNavigatorProps} from "../../navigation/types";
+import {AUTH_STACK_SCREEN} from "../../navigation/AuthNavigatorTypes";
 
-interface AuthScreenProps {
-
-}
 
 enum FORM_NAMES {
     email = 'email',
     password = 'password'
 }
 
-const AuthScreen: React.FC<AuthScreenProps> = ({isLogin}) => {
+type AuthScreenProps = AuthNavigatorProps<AUTH_STACK_SCREEN.Auth>;
+
+const AuthScreen: React.FC<AuthScreenProps> = () => {
     const dispatch = useAppDispatch();
-    const {isLoading , isError, setError , setLoading} = useLoading();
+    const [isLogin, setLogin] = useState<boolean>(false);
+    const {isLoading, isError, setError, setLoading} = useLoading();
+
     const {state, onChangeHandler, isValidForSubmit} = useForm({
         [FORM_NAMES.email]: '',
         [FORM_NAMES.password]: ''
@@ -51,10 +55,10 @@ const AuthScreen: React.FC<AuthScreenProps> = ({isLogin}) => {
             promise = dispatch(signup(username, password));
         }
 
-        promise.then(function (){
+        promise.then(function () {
             setLoading(false);
         }).catch(function () {
-           setError();
+            setError();
         });
     };
 
@@ -63,28 +67,34 @@ const AuthScreen: React.FC<AuthScreenProps> = ({isLogin}) => {
                               keyboardVerticalOffset={50}
                               style={styles.screen}
         >
-            <Card style={styles.authContainer}>
-                <ScrollView>
-                    <InputLabel title="email"
-                                keyboardType="email-address"
-                                autoCapitalize="none"
-                                onChangeText={(text) => onChangeHandler(FORM_NAMES.email, text)}
-                                value={state?.formData[FORM_NAMES.email]}
-                                errorMessage={state?.errors[FORM_NAMES.email]}
-                    />
-                    <InputLabel title="password"
-                                keyboardType="email-address"
-                                autoCapitalize="none"
-                                onChangeText={(text) => onChangeHandler(FORM_NAMES.password, text)}
-                                value={state?.formData[FORM_NAMES.password]}
-                                errorMessage={state?.errors[FORM_NAMES.password]}
-                                secureTextEntry
-                    />
-                    <StyledButton title="Login" onPress={submitForm}/>
-                    <StyledButton title="Switch ti Sign Up" onPress={() => {
-                    }}/>
-                </ScrollView>
-            </Card>
+            <View style={styles.container}>
+                <Card style={styles.authContainer}>
+                    <ScrollView>
+                        <InputLabel title="Email"
+                                    keyboardType="email-address"
+                                    autoCapitalize="none"
+                                    onChangeText={(text) => onChangeHandler(FORM_NAMES.email, text)}
+                                    value={state?.formData[FORM_NAMES.email]}
+                                    errorMessage={state?.errors[FORM_NAMES.email]}
+                        />
+                        <InputLabel title="Password"
+                                    keyboardType="email-address"
+                                    autoCapitalize="none"
+                                    onChangeText={(text) => onChangeHandler(FORM_NAMES.password, text)}
+                                    value={state?.formData[FORM_NAMES.password]}
+                                    errorMessage={state?.errors[FORM_NAMES.password]}
+                                    secureTextEntry
+                        />
+                        <View style={styles.btnContainer}>
+                            {isLoading ? <ActivityIndicator size="small" color={StylingColors.primary}/> :
+                                <StyledButton primary title="Login" onPress={submitForm}/>
+                            }
+                            <StyledButton style={styles.btn} primary title="Switch ti Sign Up" onPress={() => {
+                            }}/>
+                        </View>
+                    </ScrollView>
+                </Card>
+            </View>
         </KeyboardAvoidingView>
     );
 };
@@ -98,9 +108,18 @@ const styles = StyleSheet.create({
         padding: 10
     },
     screen: {
+        flex: 1
+    },
+    btnContainer: {
+        marginTop: 10
+    },
+    btn: {
+        marginTop: 10
+    },
+    container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: "center",
+        alignItems: "center"
     }
 });
 
