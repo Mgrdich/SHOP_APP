@@ -29,6 +29,7 @@ export default class Validation {
         [ValidationRules.maxLength]: Validation.maxLengthRule,
         [ValidationRules.passwordMatch]: Validation.passwordMatchRule,
         [ValidationRules.url]: Validation.urlRule,
+        [ValidationRules.email]: Validation.emailRule
     };
 
     private static createValidationRule(ruleName: string, errorMessage: string, validateFunc: Function): validationRuleType {

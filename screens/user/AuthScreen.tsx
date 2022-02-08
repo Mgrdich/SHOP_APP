@@ -69,15 +69,15 @@ const AuthScreen: React.FC<AuthScreenProps> = ({isLogin}) => {
                                 keyboardType="email-address"
                                 autoCapitalize="none"
                                 onChangeText={(text) => onChangeHandler(FORM_NAMES.email, text)}
-                                value={state.formData[FORM_NAMES.email]}
-                                errorMessage={state.errors[FORM_NAMES.email]}
+                                value={state?.formData[FORM_NAMES.email]}
+                                errorMessage={state?.errors[FORM_NAMES.email]}
                     />
                     <InputLabel title="password"
                                 keyboardType="email-address"
                                 autoCapitalize="none"
                                 onChangeText={(text) => onChangeHandler(FORM_NAMES.password, text)}
-                                value={state.formData[FORM_NAMES.password]}
-                                errorMessage={state.errors[FORM_NAMES.password]}
+                                value={state?.formData[FORM_NAMES.password]}
+                                errorMessage={state?.errors[FORM_NAMES.password]}
                                 secureTextEntry
                     />
                     <StyledButton title="Login" onPress={submitForm}/>

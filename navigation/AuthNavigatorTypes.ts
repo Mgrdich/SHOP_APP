@@ -2,6 +2,6 @@ export enum AUTH_STACK_SCREEN {
     Auth = 'Auth'
 }
 
-export type RootDrawerParams = {
+export type RootAUTHParams = {
     [AUTH_STACK_SCREEN.Auth]: undefined
 }
