@@ -15,7 +15,11 @@ let initialState: IAuthState = {
 type authActionType = ActionType<AUTH_ACTIONS>
 
 function authenticateUser(state: IAuthState, action: authActionType): IAuthState {
-    return state;
+    return {
+        ...state,
+        token: action.token,
+        userId: action.userId
+    };
 }
 
 function logoutUser(state: IAuthState, action: authActionType): IAuthState {

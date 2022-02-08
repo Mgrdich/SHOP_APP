@@ -24,8 +24,8 @@ type AuthScreenProps = AuthNavigatorProps<AUTH_STACK_SCREEN.Auth>;
 
 const AuthScreen: React.FC<AuthScreenProps> = () => {
     const dispatch = useAppDispatch();
-    const [isLogin, setLogin] = useState<boolean>(false);
-    const {isLoading, isError, setError, setLoading} = useLoading();
+    const [isLogin, setLogin] = useState<boolean>(true);
+    const {isLoading, isError, setError, errorMessage,setLoading} = useLoading();
 
     const {state, onChangeHandler, isValidForSubmit} = useForm({
         [FORM_NAMES.email]: '',
@@ -39,7 +39,7 @@ const AuthScreen: React.FC<AuthScreenProps> = () => {
         )
     });
 
-    useErrorAlert(isError);
+    useErrorAlert(isError, 'Error' , errorMessage);
 
     const submitForm = function () {
         if (!isValidForSubmit()) {
@@ -58,8 +58,8 @@ const AuthScreen: React.FC<AuthScreenProps> = () => {
 
         promise.then(function () {
             setLoading(false);
-        }).catch(function () {
-            setError();
+        }).catch(function (err) {
+            setError(err);
         });
     };
 

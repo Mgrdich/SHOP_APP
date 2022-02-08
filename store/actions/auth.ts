@@ -16,8 +16,17 @@ export const signup = (email: string, password: string) => {
             });
 
             if (res.error) {
-               return Promise.reject('Validation Issue');
+               let message:string;
+                console.log(res.error);
+               if(res.error.message === 'EMAIL_NOT_FOUND') {
+                   console.log('s');
+                   message = 'Email is Not Found'
+               } else if(res.error.message === 'INVALID_PASSWORD') {
+                   message = 'Invalid Password'
+               }
+               return Promise.reject(message || 'Something Went Wrong');
             }
+
 
             return dispatch({
                 type : AUTH_ACTIONS.AUTHENTICATE,
@@ -33,14 +42,20 @@ export const signup = (email: string, password: string) => {
 export const login = (email: string, password: string) => {
     return async (dispatch) => {
         try {
-            let res = await FunctionUtil.get(CONFIGS.auth_signin_url, {
+            let res = await FunctionUtil.post(CONFIGS.auth_signin_url, {
                 email,
                 password,
                 returnSecureToken: true
             });
 
             if (res.error) {
-                return Promise.reject('Validation Issue');
+                let message:string;
+                if(res.error.message === 'EMAIL_NOT_FOUND') {
+                    message = 'Email is Not Found'
+                } else if(res.error.message === 'INVALID_PASSWORD') {
+                    message = 'Invalid Password'
+                }
+                return Promise.reject(message || 'Something Went Wrong');
             }
 
             return dispatch({
