@@ -18,7 +18,7 @@ export function deleteProduct(id: string) {
     return async (dispatch, getState) => {
         try {
             let url: string = FU.getAuthUrl(
-                `${CONFIGS.products_url_id.replace('{{id}}', id)}`,
+                CONFIGS.products_url_id.replace('{{id}}', id),
                 getState().auth.token
             );
             const res = await FU.delete(url);

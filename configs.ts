@@ -30,8 +30,8 @@ CONFIGS.products_url = `${CONFIGS.firebase_url}/products.json`;
 
 CONFIGS.products_url_id = `${CONFIGS.firebase_url}/products/{{id}}.json`
 
-CONFIGS.orders_url = `${CONFIGS.firebase_url}/orders/u1.json`
+CONFIGS.orders_url = `${CONFIGS.firebase_url}/orders/{{uid}}.json`
 
-CONFIGS.orders_url_id = `${CONFIGS.firebase_url}/orders/u1/{{id}}.json`
+CONFIGS.orders_url_id = `${CONFIGS.firebase_url}/orders/{{uid}}/{{id}}.json`
 
 export default CONFIGS;

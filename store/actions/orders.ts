@@ -21,8 +21,12 @@ export const addOrder = (cartItems: ICartItemsElement[], totalAmount: number) =>
             date: new Date().toISOString()
         };
 
+        let auth = getState().auth;
         try {
-            let url:string =  FU.getAuthUrl(CONFIGS.orders_url, getState().auth.token);
+            let url:string =  FU.getAuthUrl(
+                CONFIGS.orders_url.replace('{{uid}}', auth.userId),
+                auth.token
+            );
             const res = await FU.post<any>(url, orderData);
 
             if (res.error) {
@@ -46,7 +50,11 @@ export const addOrder = (cartItems: ICartItemsElement[], totalAmount: number) =>
 export const fetchOrders  = () => {
     return async (dispatch, getState) => {
         try {
-            let url:string =  FU.getAuthUrl(CONFIGS.orders_url, getState().auth.token);
+            let auth = getState().auth;
+            let url: string = FU.getAuthUrl(
+                CONFIGS.orders_url.replace('{{uid}}', auth.userId),
+                auth.token
+            );
             const res = await FU.get<any>(url);
 
             if (res.error) {

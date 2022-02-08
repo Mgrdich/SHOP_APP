@@ -24,7 +24,7 @@ const ProductItem: React.FC<ProductItemProps> = ({imgSrc, price, title, onSelect
 
                         <View style={styles.details}>
                             <StyledText bold style={styles.title}>{title}</StyledText>
-                            <StyledText style={styles.price}>${price.toFixed(2)}</StyledText>
+                            <StyledText style={styles.price}>${price?.toFixed(2)}</StyledText>
                         </View>
                         <View style={styles.actions}>
                             {children}
