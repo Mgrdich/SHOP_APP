@@ -2,21 +2,21 @@ import FunctionUtil from "../../util/FunctionUtil";
 import CONFIGS from "../../configs";
 
 export enum AUTH_ACTIONS {
-    SIGN_UP = 'SIGN_UP',
-    LOGIN = 'LOGIN'
+    AUTHENTICATE = 'AUTHENTICATE',
+    LOGOUT = 'LOGOUT'
 }
 
 export const signup = (email: string, password: string) => {
     return async (dispatch) => {
         try {
-            let res = await FunctionUtil.post(CONFIGS.auth_url, {
+            let res = await FunctionUtil.post(CONFIGS.auth_signup_url, {
                 email,
                 password,
                 returnSecureToken: true
             });
 
             dispatch({
-                type : AUTH_ACTIONS.SIGN_UP
+                type : AUTH_ACTIONS.AUTHENTICATE
             });
         } catch (e) {
             throw Error('Something Went Wrong');
@@ -27,14 +27,14 @@ export const signup = (email: string, password: string) => {
 export const login = (email: string, password: string) => {
     return async (dispatch) => {
         try {
-            let res = await FunctionUtil.get(CONFIGS.auth_url, {
+            let res = await FunctionUtil.get(CONFIGS.auth_signin_url, {
                 email,
                 password,
                 returnSecureToken: true
             });
 
             dispatch({
-                type : AUTH_ACTIONS.LOGIN
+                type : AUTH_ACTIONS.AUTHENTICATE
             });
         } catch (e) {
             throw Error('Something Went Wrong');
