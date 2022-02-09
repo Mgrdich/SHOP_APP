@@ -54,16 +54,6 @@ const OrdersNavigator: React.FC = () => {
                     {
                         headerLeft: null,
                         title: route.params.prodId ? 'Edit Product' : 'Add Product',
-                        headerRight: () => (
-                            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                                <Item
-                                    title="Save"
-                                    iconName={Util.isAndroid ? 'md-checkmark' : 'ios-checkmark'}
-                                    onPress={() => {route.params.submit()}}
-                                />
-                            </HeaderButtons>
-                        )
-
                     }
                 )}
             />

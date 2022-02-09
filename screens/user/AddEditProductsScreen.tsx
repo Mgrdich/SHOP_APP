@@ -10,6 +10,9 @@ import Validation, {ValidationRules} from "../../util/Validation";
 import useLoading from "../../hooks/useLoading";
 import SomethingWentWrong from "../../components/UI/SomethingWentWrong";
 import PageLoading from "../../components/UI/PageLoading";
+import {HeaderButtons, Item} from "react-navigation-header-buttons";
+import HeaderButton from "../../components/UI/HeaderButton";
+import Util from "../../util/Util";
 
 
 type AddEditProductsScreenProps = UsersNavigatorProps<USERS_STACK_SCREENS.EDIT_USER>;
@@ -70,9 +73,19 @@ const AddEditProductsScreen: React.FC<AddEditProductsScreenProps> = ({navigation
 
     }, [isEditPage, state, dispatch]);
 
-    useEffect(() => {
-        navigation.setParams({submit: submitHandler});
-    }, [submitHandler]);
+    useEffect(function (){
+        navigation.setOptions({
+            headerRight: () => (
+                <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                    <Item
+                        title="Save"
+                        iconName={Util.isAndroid ? 'md-checkmark' : 'ios-checkmark'}
+                        onPress={() => {submitHandler()}}
+                    />
+                </HeaderButtons>
+            )
+        })
+    },[navigation, submitHandler]);
 
 
     if (isError) {
