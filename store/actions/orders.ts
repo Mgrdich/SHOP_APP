@@ -55,7 +55,7 @@ export const fetchOrders  = () => {
                 CONFIGS.orders_url.replace('{{uid}}', auth.userId),
                 auth.token
             );
-            const res = await FU.get<any>(url);
+            const res = await FU.get(url);
 
             if (res.error) {
                 return Promise.reject(res.error);
@@ -70,12 +70,11 @@ export const fetchOrders  = () => {
                 );
             }
 
-            if (res) {
-                return dispatch({
-                    type: ORDERS_ACTIONS.SET_ORDERS,
-                    orderData: orderData
-                });
-            }
+            return dispatch({
+                type: ORDERS_ACTIONS.SET_ORDERS,
+                orderData: orderData
+            });
+
         } catch (err) {
             throw Error('Something went Wrong');
         }

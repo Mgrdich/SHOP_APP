@@ -90,12 +90,21 @@ export function editProduct(id: string, product: productDataType) {
 }
 
 export function fetchProducts() {
-    return async (dispatch): Promise<any> => {
+    return async (dispatch, getState): Promise<any> => {
         try {
-            const res = await FU.get<any>(CONFIGS.products_url);
+            let url: string = FU.getAuthUrl(
+                CONFIGS.products_url,
+                getState().auth.token
+            );
+            const res = await FU.get<any>(url);
             let products: Product[] = [];
 
+            if (res.error) {
+                return Promise.reject('Something went Wrong');
+            }
+
             for (const resKey in res) {
+                console.log(resKey);
                 let item = res[resKey];
                 products.push(
                     new Product(resKey, 'u1',
@@ -107,12 +116,10 @@ export function fetchProducts() {
                 );
             }
 
-            if (products.length) {
-                return dispatch({
-                    type: PRODUCTS_ACTIONS.SET_PRODUCTS,
-                    products
-                });
-            }
+            return dispatch({
+                type: PRODUCTS_ACTIONS.SET_PRODUCTS,
+                products
+            });
 
         } catch (err) {
             throw Error('Something went wrong');
