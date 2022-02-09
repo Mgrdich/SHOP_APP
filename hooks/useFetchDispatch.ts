@@ -14,9 +14,14 @@ type returnUseFetchDispatch = {
  * @description initial fetching and a functionality to an request indicator and re-fetching functionality
  * */
 export default function useFetchDispatch(actionFn: Function): returnUseFetchDispatch {
-    const {isLoading, setLoading, isError, setError} = useLoading();
-    const [isRefreshing, setRefreshing] = useState(false);
+    const {isLoading, setLoading, isError, setError, unsetError} = useLoading();
+    const [isRefreshing, setterRefresh] = useState(false);
 
+    const setRefreshing = (value: boolean) => {
+        setterRefresh(value);
+        unsetError(false);
+    };
+    
     const dispatch = useAppDispatch();
     const actionFnRef = useRef(actionFn); // always constant
 
@@ -28,7 +33,7 @@ export default function useFetchDispatch(actionFn: Function): returnUseFetchDisp
             .then(function () {
                 // latest timeStamped request time
                 timeStamp.current = new Date();
-                 setRefreshing(false);
+                setRefreshing(false);
             }).catch(function (err) {
             setError(err.toString());
         });

@@ -5,7 +5,8 @@ export default function useLoading(defErrorMessage?: string): {
     setLoading: Function,
     isError: boolean,
     setError: Function,
-    errorMessage: string
+    errorMessage: string,
+    unsetError: Function
 } {
     const [isLoading, setterLoading] = useState<boolean>(false);
     const [isError, setterError] = useState<boolean>(false);
@@ -17,6 +18,10 @@ export default function useLoading(defErrorMessage?: string): {
         setterLoading(false);
     };
 
+    const unsetError  = function () {
+        setterError(false);
+    };
+
     const setLoading = function (value: boolean) {
         setterError(false);
         setterLoading(value);
@@ -26,6 +31,7 @@ export default function useLoading(defErrorMessage?: string): {
         isLoading,
         setLoading,
         isError,
+        unsetError,
         errorMessage,
         setError
     };
