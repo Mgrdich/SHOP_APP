@@ -49,6 +49,8 @@ export default function useFetchDispatch(actionFn: Function): returnUseFetchDisp
     useEffect(function () {
         fetchAgainFn().then(function () {
             setLoading(false);
+        }).catch(function (err) {
+            setError(err.toString());
         });
     }, [fetchAgainFn]);
 
