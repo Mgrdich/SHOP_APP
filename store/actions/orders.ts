@@ -3,6 +3,7 @@ import {ICartItemsElement} from "../../models/cartItem";
 import FU from "../../util/FunctionUtil";
 import CONFIGS from "../../configs";
 import Order from "../../models/Order";
+import {IAuthState} from "../reducers/auth";
 
 export enum ORDERS_ACTIONS {
     ADD_ORDER = 'ADD_ORDER',
@@ -50,7 +51,7 @@ export const addOrder = (cartItems: ICartItemsElement[], totalAmount: number) =>
 export const fetchOrders  = () => {
     return async (dispatch, getState) => {
         try {
-            let auth = getState().auth;
+            let auth: IAuthState = getState().auth;
             let url: string = FU.getAuthUrl(
                 CONFIGS.orders_url.replace('{{uid}}', auth.userId),
                 auth.token

@@ -3,13 +3,13 @@ import {AUTH_ACTIONS} from "../actions/auth";
 import {ActionType} from "../actions/types";
 
 export interface IAuthState {
-    token: string | undefined,
-    userId: string | undefined
+    token: string,
+    userId: string
 }
 
 let initialState: IAuthState = {
-    token: undefined,
-    userId: undefined
+    token: '',
+    userId: ''
 }
 
 type authActionType = ActionType<AUTH_ACTIONS>

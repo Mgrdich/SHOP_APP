@@ -65,13 +65,12 @@ function editProduct(state: IProductsState, action: productActionType): IProduct
 
     return {
         ...state,
-        userProducts:updatedUserProducts,
+        userProducts: updatedUserProducts,
         availableProducts: availableProducts
     };
 }
 
 function setProducts(state: IProductsState, action: productActionType): IProductsState {
-    console.log(action.products);
     return {
         ...state,
         availableProducts: action.products,

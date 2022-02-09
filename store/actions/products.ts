@@ -13,7 +13,7 @@ export enum PRODUCTS_ACTIONS {
 
 type ProductActionType = ActionType<PRODUCTS_ACTIONS>
 
-export type productDataType = { title: string, description: string, imageUrl: string, price: number };
+export type productDataType = { title: string, description: string, imageUrl: string, price: number, ownerId?:string };
 
 export function deleteProduct(id: string) {
     return async (dispatch, getState) => {
@@ -45,7 +45,13 @@ export function deleteProduct(id: string) {
 export function createProduct(product: productDataType) {
     return async (dispatch, getState) => {
         try {
-            let url:string =  FU.getAuthUrl(CONFIGS.products_url, getState().auth.token);
+            let authRed:IAuthState = getState().auth;
+            let url:string =  FU.getAuthUrl(CONFIGS.products_url, authRed.token);
+
+            if (!product.ownerId) {
+                product.ownerId = authRed.userId;
+            }
+
             const res = await FU.post<any>(url, product);
 
             if (res?.error) {
@@ -67,16 +73,22 @@ export function createProduct(product: productDataType) {
 export function editProduct(id: string, product: productDataType) {
     return async (dispatch, getState) => {
         try {
+            let authRed:IAuthState = getState().auth;
             let url: string = FU.getAuthUrl(
                 CONFIGS.products_url_id.replace('{{id}}', id),
-                getState().auth.token
+                authRed.token
             );
+
+            if (!product.ownerId) {
+                product.ownerId = authRed.userId;
+            }
+
             const res = await FU.patch(url, product);
 
             if (res?.error) {
                 return Promise.reject(res.error);
             }
-
+            
             if (res) {
                 return dispatch({
                     type: PRODUCTS_ACTIONS.EDIT_PRODUCT,
@@ -109,7 +121,7 @@ export function fetchProducts() {
                 let item = res[resKey];
                 products.push(
                     new Product(resKey,
-                        authRed.userId as string,
+                        item.ownerId,
                         item.title,
                         item.imageUrl,
                         item.description,
