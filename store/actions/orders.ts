@@ -29,7 +29,7 @@ export const addOrder = (cartItems: ICartItemsElement[], totalAmount: number) =>
             );
             const res = await FU.post<any>(url, orderData);
 
-            if (res.error) {
+            if (res?.error) {
                 return Promise.reject(res.error);
             }
 
@@ -57,7 +57,7 @@ export const fetchOrders  = () => {
             );
             const res = await FU.get(url);
 
-            if (res.error) {
+            if (res?.error) {
                 return Promise.reject(res.error);
             }
 

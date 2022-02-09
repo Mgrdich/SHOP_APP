@@ -18,8 +18,8 @@ export default function useFetchDispatch(actionFn: Function): returnUseFetchDisp
     const [isRefreshing, setterRefresh] = useState(false);
 
     const setRefreshing = (value: boolean) => {
-        setterRefresh(value);
         unsetError(false);
+        setterRefresh(value);
     };
 
     const dispatch = useAppDispatch();

@@ -2,6 +2,7 @@ import {ActionType} from "./types";
 import FU from "../../util/FunctionUtil";
 import CONFIGS from "../../configs";
 import {Product} from "../../models/products";
+import {IAuthState} from "../reducers/auth";
 
 export enum PRODUCTS_ACTIONS {
     DELETE_PRODUCT = 'DELETE_PRODUCT',
@@ -47,7 +48,7 @@ export function createProduct(product: productDataType) {
             let url:string =  FU.getAuthUrl(CONFIGS.products_url, getState().auth.token);
             const res = await FU.post<any>(url, product);
 
-            if (res.error) {
+            if (res?.error) {
                 return Promise.reject(res.error);
             }
 
@@ -72,7 +73,7 @@ export function editProduct(id: string, product: productDataType) {
             );
             const res = await FU.patch(url, product);
 
-            if (res.error) {
+            if (res?.error) {
                 return Promise.reject(res.error);
             }
 
@@ -92,23 +93,23 @@ export function editProduct(id: string, product: productDataType) {
 export function fetchProducts() {
     return async (dispatch, getState): Promise<any> => {
         try {
-            console.log(getState().auth.token);
+            let authRed:IAuthState = getState().auth;
             let url: string = FU.getAuthUrl(
                 CONFIGS.products_url,
-                getState().auth.token
+                authRed.token
             );
             const res = await FU.get<any>(url);
             let products: Product[] = [];
 
-            if (res.error) {
+            if (res?.error) {
                 return Promise.reject('Something went Wrong');
             }
 
             for (const resKey in res) {
-                console.log(resKey);
                 let item = res[resKey];
                 products.push(
-                    new Product(resKey, 'u1',
+                    new Product(resKey,
+                        authRed.userId as string,
                         item.title,
                         item.imageUrl,
                         item.description,

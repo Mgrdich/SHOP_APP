@@ -41,7 +41,7 @@ export default class FunctionUtil {
         return element === null;
     }
 
-    static getAuthUrl(url: string, token: string): string {
+    static getAuthUrl(url: string, token?: string): string {
         return `${url}?auth=${token}`;
     }
 

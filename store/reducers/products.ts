@@ -71,6 +71,7 @@ function editProduct(state: IProductsState, action: productActionType): IProduct
 }
 
 function setProducts(state: IProductsState, action: productActionType): IProductsState {
+    console.log(action.products);
     return {
         ...state,
         availableProducts: action.products,
