@@ -17,13 +17,13 @@ import useFetchDispatch from "../../hooks/useFetchDispatch";
 type ProductsProps = ProductsNavigatorProps<PRODUCTS_STACK_SCREENS.ProductsOverview>;
 
 const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => {
-    const {isLoading,isRefreshing ,isError, fetchAgainFn, fetchAgainTimeStampFn} = useFetchDispatch(fetchProducts);
+    const {isRefreshing ,isError, fetchAgainFn, fetchAgainTimeStampFn} = useFetchDispatch(fetchProducts);
     const products: Product[] = useAppSelector(state => state.products.availableProducts);
     const dispatch = useAppDispatch();
 
 
     useFocusEffect(useCallback(function () {
-        fetchAgainFn().then();
+        fetchAgainFn().then().catch();
     },[fetchAgainFn]));
 
     const redirectToProductDetails = (id: string, title: string) => {
@@ -39,7 +39,7 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
         return <SomethingWentWrong onPress={fetchAgainFn}/>;
     }
 
-    if (isLoading) {
+    if (isRefreshing) {
         return <PageLoading/>;
     }
 

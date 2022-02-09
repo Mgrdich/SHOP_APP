@@ -21,7 +21,7 @@ export default function useFetchDispatch(actionFn: Function): returnUseFetchDisp
         setterRefresh(value);
         unsetError(false);
     };
-    
+
     const dispatch = useAppDispatch();
     const actionFnRef = useRef(actionFn); // always constant
 

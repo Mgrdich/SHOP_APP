@@ -92,6 +92,7 @@ export function editProduct(id: string, product: productDataType) {
 export function fetchProducts() {
     return async (dispatch, getState): Promise<any> => {
         try {
+            console.log(getState().auth.token);
             let url: string = FU.getAuthUrl(
                 CONFIGS.products_url,
                 getState().auth.token

@@ -51,7 +51,7 @@ const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = ({navigation})
     }
 
     if (!userProduct.length) {
-        return <NoDataFound text="No products Found"/>;
+        return <NoDataFound text="No Products Found"/>;
     }
 
     return (
