@@ -13,9 +13,10 @@ interface SomethingWentWrongProps {
 const SomethingWentWrong: React.FC<SomethingWentWrongProps> = ({text, btnText, onPress}) => {
     return (
         <FullScreen>
-            <StyledText bold>{text && 'Something went Wrong'}</StyledText>
+            <StyledText style={styles.text} bold>{text || 'Something went Wrong'}</StyledText>
             {onPress && <StyledButton style={styles.btn}
-                                      primary title={btnText}
+                                      primary
+                                      title={btnText ? btnText : 'Try me'}
                                       onPress={onPress}
             />
             }
@@ -26,6 +27,9 @@ const SomethingWentWrong: React.FC<SomethingWentWrongProps> = ({text, btnText, o
 const styles = StyleSheet.create({
     btn: {
         marginTop: 10
+    },
+    text: {
+        fontSize: 20
     }
 });
 

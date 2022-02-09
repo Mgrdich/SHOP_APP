@@ -43,7 +43,7 @@ const ProductOverviewScreen: React.FC<ProductsProps> = ({navigation, route}) => 
         return <PageLoading/>;
     }
 
-    if (!isLoading && !products.length) {
+    if (!products.length) {
         return <NoDataFound text="No products Found"/>;
     }
 

@@ -10,6 +10,7 @@ import {UsersNavigatorProps} from "../../navigation/types";
 import useLoading from "../../hooks/useLoading";
 import PageLoading from "../../components/UI/PageLoading";
 import useErrorAlert from "../../hooks/useErrorAlert";
+import NoDataFound from "../../components/UI/NoDateFound";
 
 
 type UserProductsScreenTypeProps = UsersNavigatorProps<USERS_STACK_SCREENS.USERS>;
@@ -47,6 +48,10 @@ const UserProductsScreen: React.FC<UserProductsScreenTypeProps> = ({navigation})
 
     if (isLoading) {
         return <PageLoading/>;
+    }
+
+    if (!userProduct.length) {
+        return <NoDataFound text="No products Found"/>;
     }
 
     return (
