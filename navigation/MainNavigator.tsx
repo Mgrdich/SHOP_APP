@@ -21,8 +21,16 @@ const MainNavigator: React.FC = () => {
             if (userData) {
                 const transformedData: {
                     token: string,
-                    userId: string
+                    userId: string,
+                    expireDate:Date
                 } = JSON.parse(userData);
+
+                const expirationDate:Date = new Date(transformedData.expireDate);
+                
+                if(expirationDate <= new Date() || !transformedData.token || !transformedData.userId) {
+                    return ;
+                }
+
                 dispatch(auth(transformedData.token, transformedData.userId));
             }
         }

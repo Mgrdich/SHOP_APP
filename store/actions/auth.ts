@@ -14,7 +14,7 @@ async function saveToStorage(token: string, userId: string, date: Date): Promise
     return setItemAsync('userData', JSON.stringify({
         token,
         userId,
-        date: date.toISOString()
+        expireDate: date.toISOString()
     }));
 }
 
