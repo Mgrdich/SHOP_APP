@@ -1,6 +1,6 @@
 import FunctionUtil from "../../util/FunctionUtil";
 import CONFIGS from "../../configs";
-import {setItemAsync} from "expo-secure-store";
+import {setItemAsync, deleteItemAsync} from "expo-secure-store";
 import {ActionType} from "./types";
 
 export enum AUTH_ACTIONS {
@@ -16,6 +16,10 @@ async function saveToStorage(token: string, userId: string, date: Date): Promise
         userId,
         expireDate: date.toISOString()
     }));
+}
+
+async function deleteFromStorage(): Promise<void> {
+    return deleteItemAsync('userData');
 }
 
 function authFN(email: string, password: string, url: string): Function {
@@ -57,11 +61,24 @@ function authFN(email: string, password: string, url: string): Function {
 
 export const signup = (email: string, password: string) => {
     return authFN(email, password, CONFIGS.auth_signup_url);
-}
+};
 
 export const login = (email: string, password: string) => {
     return authFN(email, password, CONFIGS.auth_signin_url);
-}
+};
+
+export const logout = () => {
+    return async (dispatch) => {
+        try {
+            await deleteFromStorage();
+            return dispatch({
+                type: AUTH_ACTIONS.LOGOUT
+            });
+        } catch (err) {
+            throw Error(err);
+        }
+    }
+};
 
 export const auth = (token: string, userId: string): AuthAction => {
     return {
@@ -69,4 +86,4 @@ export const auth = (token: string, userId: string): AuthAction => {
         token,
         userId
     };
-}
+};

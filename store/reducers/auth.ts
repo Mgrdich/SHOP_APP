@@ -23,7 +23,9 @@ function authenticateUser(state: IAuthState, action: authActionType): IAuthState
 }
 
 function logoutUser(state: IAuthState, action: authActionType): IAuthState {
-    return initialState;
+    return {
+        ...initialState
+    };
 }
 
 const authReducer = createReducer<IAuthState, AUTH_ACTIONS>(initialState, {
