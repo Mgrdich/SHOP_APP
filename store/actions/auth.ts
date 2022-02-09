@@ -1,13 +1,24 @@
-import {AsyncStorage} from "react-native";
 import FunctionUtil from "../../util/FunctionUtil";
 import CONFIGS from "../../configs";
+import {setItemAsync} from "expo-secure-store";
+import {ActionType} from "./types";
 
 export enum AUTH_ACTIONS {
     AUTHENTICATE = 'AUTHENTICATE',
     LOGOUT = 'LOGOUT'
 }
 
-function auth(email: string, password: string, url: string):Function {
+type AuthAction = ActionType<AUTH_ACTIONS>
+
+async function saveToStorage(token: string, userId: string, date: Date): Promise<void> {
+    return setItemAsync('userData', JSON.stringify({
+        token,
+        userId,
+        date: date.toISOString()
+    }));
+}
+
+function authFN(email: string, password: string, url: string): Function {
     return async (dispatch) => {
         try {
             let res = await FunctionUtil.post(url, {
@@ -26,6 +37,12 @@ function auth(email: string, password: string, url: string):Function {
                 return Promise.reject(message || 'Something Went Wrong');
             }
 
+            const expirationDate: Date = new Date(
+                new Date().getTime() + parseInt(res['expiresIn'] as string) * 1000
+            );
+            saveToStorage(res['idToken'] as string, res['localId'] as string, expirationDate)
+                .catch(function () {
+                });
 
             return dispatch({
                 type: AUTH_ACTIONS.AUTHENTICATE,
@@ -38,11 +55,18 @@ function auth(email: string, password: string, url: string):Function {
     }
 }
 
-
 export const signup = (email: string, password: string) => {
-    return auth(email, password ,CONFIGS.auth_signup_url);
+    return authFN(email, password, CONFIGS.auth_signup_url);
 }
 
 export const login = (email: string, password: string) => {
-    return auth(email, password ,CONFIGS.auth_signin_url);
+    return authFN(email, password, CONFIGS.auth_signin_url);
+}
+
+export const auth = (token: string, userId: string): AuthAction => {
+    return {
+        type: AUTH_ACTIONS.AUTHENTICATE,
+        token,
+        userId
+    };
 }
