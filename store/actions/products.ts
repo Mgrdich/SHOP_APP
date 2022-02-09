@@ -46,7 +46,7 @@ export function createProduct(product: productDataType) {
     return async (dispatch, getState) => {
         try {
             let authRed:IAuthState = getState().auth;
-            let url:string =  FU.getAuthUrl(CONFIGS.products_url, authRed.token);
+            let url:string = FU.getAuthUrl(CONFIGS.products_url, authRed.token);
 
             if (!product.ownerId) {
                 product.ownerId = authRed.userId;
@@ -88,7 +88,7 @@ export function editProduct(id: string, product: productDataType) {
             if (res?.error) {
                 return Promise.reject(res.error);
             }
-            
+
             if (res) {
                 return dispatch({
                     type: PRODUCTS_ACTIONS.EDIT_PRODUCT,
@@ -132,7 +132,8 @@ export function fetchProducts() {
 
             return dispatch({
                 type: PRODUCTS_ACTIONS.SET_PRODUCTS,
-                products
+                products,
+                userId: authRed.userId
             });
 
         } catch (err) {

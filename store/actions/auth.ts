@@ -49,10 +49,10 @@ export const login = (email: string, password: string) => {
             });
 
             if (res.error) {
-                let message:string;
-                if(res.error.message === 'EMAIL_NOT_FOUND') {
+                let message: string;
+                if (res.error.message === 'EMAIL_NOT_FOUND') {
                     message = 'Email is Not Found'
-                } else if(res.error.message === 'INVALID_PASSWORD') {
+                } else if (res.error.message === 'INVALID_PASSWORD') {
                     message = 'Invalid Password'
                 }
                 return Promise.reject(message || 'Something Went Wrong');

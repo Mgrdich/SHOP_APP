@@ -33,6 +33,7 @@ const OrdersNavigator: React.FC = () => {
                 component={UserProductsScreen}
                 options={({route, navigation}) => (
                     {
+                        title:'My Products',
                         headerRight: () => (
                             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                                 <Item
@@ -50,7 +51,7 @@ const OrdersNavigator: React.FC = () => {
             <Users.Screen
                 name={USERS_STACK_SCREENS.EDIT_USER}
                 component={AddEditProductsScreen}
-                options={({route, navigation}) => (
+                options={({route}) => (
                     {
                         headerLeft: null,
                         title: route.params.prodId ? 'Edit Product' : 'Add Product',

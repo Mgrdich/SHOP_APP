@@ -74,7 +74,7 @@ function setProducts(state: IProductsState, action: productActionType): IProduct
     return {
         ...state,
         availableProducts: action.products,
-        userProducts: action.products
+        userProducts: action.products.filter(item => item.ownerId === action.userId)
     };
 }
 
