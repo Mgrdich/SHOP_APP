@@ -67,7 +67,7 @@ function removeFromCart(state: ICartState, action: cartActionType): ICartState {
 
 function setQuantity(state: ICartState, action: cartActionType): ICartState {
     let currentCartItems: cartItemType = {...state.items};
-    let currentCartItem: CartItem = {...currentCartItems[action.productId]}; // TODO check if this needs destructure ?
+    let currentCartItem: CartItem = {...currentCartItems[action.productId]};
     let totalAmount: number = FU.toFixedNumber(state.totalAmount - currentCartItem.sum); // remove price from cart
 
     currentCartItem.quantity = action.quantity > 0 ? action.quantity : 1;
@@ -82,7 +82,7 @@ function setQuantity(state: ICartState, action: cartActionType): ICartState {
         ...state,
         items: currentCartItems,
         totalAmount
-    }
+    };
 }
 
 function clearCart(state: ICartState, action: cartActionType): ICartState {

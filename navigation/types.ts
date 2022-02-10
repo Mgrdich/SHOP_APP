@@ -31,3 +31,10 @@ export type AuthNavigatorProps<T> = NativeStackScreenProps<RootAuthParams, T>;
 export type AuthNavigatorPropsNavigationProp<T> = AuthNavigatorProps<T>['navigation'];
 
 export type AuthNavigatorProp<T> = AuthNavigatorProps<T>['route'];
+
+
+type StartScreenProps<T> = NativeStackScreenProps<RootAuthParams, T>;
+
+export type StartScreenPropsNavigationProp<T> = StartScreenProps<T>['navigation'];
+
+export type StartScreenProp<T> = StartScreenProps<T>['route'];

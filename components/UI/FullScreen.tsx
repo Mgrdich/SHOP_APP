@@ -5,7 +5,6 @@ interface FullScreenProps {
     children: React.ReactNode
 }
 
-// TODO maybe add direction config
 const FullScreen: React.FC<FullScreenProps> = ({children}) => {
     return (
         <View style={styles.screen}>

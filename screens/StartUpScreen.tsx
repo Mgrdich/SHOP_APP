@@ -1,9 +1,12 @@
 import React from 'react';
 import PageLoading from "../components/UI/PageLoading";
+import {StartScreenPropsNavigationProp} from "../navigation/types";
+import {STARTUP_STACK_SCREENS} from "../navigation/StartUpScreenNavgator";
 
 
-// TODO fix props
-const StartUpScreen: React.FC<any> = () => {
+type StartScreenProps = StartScreenPropsNavigationProp<STARTUP_STACK_SCREENS.StartUpOverview>;
+
+const StartUpScreen: React.FC<StartScreenProps> = () => {
     return (
         <PageLoading/>
     );
