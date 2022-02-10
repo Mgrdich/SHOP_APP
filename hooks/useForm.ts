@@ -133,7 +133,7 @@ export default function useForm(initialState: Dictionary, validationConfig?: use
         isNotValid: true
     };
 
-    // TODO some kind of bug with ts-lint
+    // some kind of bug with ts-lint
     const [state, dispatch] = useReducer(formReducer, initialRedState as any);
 
     const validationConfigRef = useRef<useFormConfig | undefined>(validationConfig);
